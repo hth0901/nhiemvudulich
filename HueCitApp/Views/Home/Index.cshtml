@@ -2,7 +2,96 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: calc(100vh - 150px);
+        width: 100%;
+    }
+    .calcite-theme-light {
+        display: none
+    }
+</style>
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div id="viewDiv"></div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+        require([
+            "esri/config",
+            "esri/Map",
+            "esri/views/MapView",
+
+            "esri/layers/FeatureLayer",
+            "esri/layers/MapImageLayer",
+            "esri/Basemap",
+            "esri/layers/WMSLayer"
+
+        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer) {
+            const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
+            esriConfig.apiKey = mApiKey;
+
+            let basemap = new Basemap({
+                baseLayers: [
+                    //new MapImageLayer({
+                    //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/CayXanh_5Duong_Final/MapServer",
+                    //    title: "Basemap"
+                    //})
+                    //new WMSLayer({
+                    //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
+                    //})
+                ],
+                title: "basemap",
+                id: "basemap"
+            });
+            const layer = new MapImageLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer"
+            });
+
+            const mLayer = new WMSLayer({
+                url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
+            })
+
+
+            const layer_0 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/0",
+                id: "0",
+                outFields: ["*"],
+            });
+            const layer_1 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/1",
+                id: "1",
+                outFields: ["*"],
+            });
+            const layer_2 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/2",
+                id: "2",
+                outFields: ["*"],
+            });
+            const layer_3 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/3",
+                id: "3",
+                outFields: ["*"],
+            });
+
+
+
+            const map = new Map({
+                basemap: 'arcgis-topographic', // Basemap layer service
+                layers: [layer_0, layer_1, layer_2, layer_3],
+            });
+
+            //map.add(layer)
+            //map.add(mLayer);
+            const view = new MapView({
+                map: map,
+                center: [107.58513469042099, 16.462504990071924], // Longitude, latitude
+                zoom: 10, // Zoom level
+                container: "viewDiv" // Div element
+            });
+        });
+    </script>
+}
