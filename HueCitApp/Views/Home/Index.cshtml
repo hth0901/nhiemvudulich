@@ -48,9 +48,11 @@
             "esri/layers/FeatureLayer",
             "esri/layers/MapImageLayer",
             "esri/Basemap",
-            "esri/layers/WMSLayer"
+            "esri/layers/WMSLayer",
+            "esri/widgets/BasemapGallery",
+            "esri/widgets/Expand"
 
-        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer) {
+        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer, BasemapGallery, Expand) {
             const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
             esriConfig.apiKey = mApiKey;
 
@@ -89,6 +91,21 @@
                 //]
             });
 
+            const basemapData = [
+                {
+                    id: "arcgis-streets",
+                    text: "Đường phố",
+                },
+                {
+                    id: "arcgis-topographic",
+                    text: "Địa hình",
+                },
+                {
+                    id: "satellite",
+                    text: "Vệ tinh",
+                },
+            ]
+
             //const mLayer = new WMSLayer({
             //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
             //})
@@ -115,8 +132,6 @@
                 outFields: ["*"],
             });
 
-
-
             const map = new Map({
                 basemap: 'arcgis-topographic', // Basemap layer service
                 layers: [layer_0, layer_1, layer_2, layer_3],
@@ -131,12 +146,25 @@
                 container: "viewDiv" // Div element
             });
 
+            const basemapGallery = new BasemapGallery({
+                view: view,
+                container: document.createElement("div"),
+                source: [Basemap.fromId("arcgis-streets"), Basemap.fromId("arcgis-topographic"), Basemap.fromId("satellite")] // autocasts to LocalBasemapsSource
+            });
+
+            const bgExpand = new Expand({
+                view: view,
+                content: basemapGallery
+            });
+
+            view.ui.add(bgExpand, "bottom-right");
+
             //layer_1.when(() => {
             //    console.log(layer_1.sourceJSON);
             //})
 
 
-            let data = [
+            const data = [
                 {
                     id: "0",
                     text: "Tư nhân",
@@ -175,6 +203,9 @@
                             el.visible = false;
                         }
                     })
+                },
+                onItemClick: function () {
+                    console.log('dkmdkm')
                 }
             })
         });
