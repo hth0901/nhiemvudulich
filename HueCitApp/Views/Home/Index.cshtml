@@ -8,13 +8,33 @@
         margin: 0;
         height: calc(100vh - 150px);
         width: 100%;
+        width: calc(100% - 200px);
+        float: left
     }
     .calcite-theme-light {
         display: none
     }
+
+    .map-container {
+        position: relative;
+        overflow: hidden;
+    }
+    .map-sidebar {
+        /*position: absolute;
+        top: 0;
+        left: 0;*/
+        width: 200px;
+        height: 100%;
+        height: calc(100vh - 150px);
+        /*background-color: red;*/
+        float: left
+    }
 </style>
 
-<div class="text-center">
+<div class="map-container">
+    <div class="map-sidebar">
+        <div id="map-sidebar" style="margin-top: 10px"></div>
+    </div>
     <div id="viewDiv"></div>
 </div>
 
@@ -47,19 +67,37 @@
                 title: "basemap",
                 id: "basemap"
             });
-            const layer = new MapImageLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer"
+            const layers = new MapImageLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer",
+                //sublayers: [
+                //    {
+                //        id: 0,
+                //        visible: true
+                //    },
+                //    {
+                //        id: 1,
+                //        visible: true
+                //    },
+                //    {
+                //        id: 2,
+                //        visible: true
+                //    },
+                //    {
+                //        id: 3,
+                //        visible: true
+                //    }
+                //]
             });
 
-            const mLayer = new WMSLayer({
-                url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
-            })
+            //const mLayer = new WMSLayer({
+            //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
+            //})
 
 
             const layer_0 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/0",
                 id: "0",
-                outFields: ["*"],
+                outFields: ["*"]
             });
             const layer_1 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/1",
@@ -92,6 +130,53 @@
                 zoom: 10, // Zoom level
                 container: "viewDiv" // Div element
             });
+
+            //layer_1.when(() => {
+            //    console.log(layer_1.sourceJSON);
+            //})
+
+
+            let data = [
+                {
+                    id: "0",
+                    text: "Tư nhân",
+                },
+                {
+                    id: "1",
+                    text: "TNHH 1 TV",
+                },
+                {
+                    id: "2",
+                    text: "TNHH 2 TV",
+                },
+                {
+                    id: "3",
+                    text: "Cty Cổ Phần",
+                },
+            ];
+
+            let tree = new Tree('#map-sidebar', {
+                data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
+                closeDepth: 3,
+                loaded: function () {
+                    this.values = ['0', '1', '2', '3'];
+                    //console.log(this.selectedNodes);
+                    //console.log(this.values);
+                },
+                onChange: function () {
+                    //console.log(this.values);
+                    //console.log(map.layers.items);
+                    map.layers.items.forEach((el, idx) => {
+                        const layerId = el.id;
+                        if (this.values.includes(layerId)) {
+                            el.visible = true;
+                        }
+                        else {
+                            el.visible = false;
+                        }
+                    })
+                }
+            })
         });
     </script>
 }
