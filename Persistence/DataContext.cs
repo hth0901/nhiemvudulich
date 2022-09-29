@@ -30,7 +30,7 @@ namespace Persistence
             }
         }
 
-        //public DbSet<Activity> Activities { get; set; }
+        public DbSet<DL_TaiNguyen_LoaiDuLieu> DL_TaiNguyen_LoaiDuLieu { get; set; }
         //public DbSet<MyRoles> MyRoles { get; set; }
         //public DbSet<Authorize> Authorize { get; set; }
         //public DbSet<Image> Image { get; set; }

@@ -49,6 +49,11 @@ namespace HueCitApp
         {
             loggerFactory.AddFile("Logs/mylog-{Date}.txt");
             app.UseMiddleware<ExceptionMiddleWare>();
+
+
+         
+
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,6 +62,7 @@ namespace HueCitApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
             app.UseStaticFiles();
 
             app.UseRouting();
