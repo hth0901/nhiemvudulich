@@ -15,6 +15,7 @@ namespace HueCitApp.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
+        [Route("danhsach")]
         public async Task<IActionResult> DanhSachDiaDiem( CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachDiaDiem.Query(), ct);
@@ -22,6 +23,7 @@ namespace HueCitApp.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
+        [Route("loaihinhtainguyen")]
         public async Task<IActionResult> LoaiHinhTaiNguyenDuLich(CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachLoaiHinhTaiNguyenDuLich.Query(), ct);

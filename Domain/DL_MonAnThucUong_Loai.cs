@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class VeDiTich_DiaDiem
+    public class DL_MonAnThucUong_Loai
     {
-        public int ID { get; set; }
-        public string DiaDiem { get; set; }
+        public int ID { get; set; } 
+        public string TenLoai { get; set; }
     }
 }
