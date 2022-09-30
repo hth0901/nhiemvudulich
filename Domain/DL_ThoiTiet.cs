@@ -9,11 +9,11 @@ namespace Domain
     public class DL_ThoiTiet
     {
 
-        public int ID { get; set; }
+        public string ID { get; set; }
         public DateTime TuNgay { get; set; }
         public DateTime DenNgay { get; set; }
         public string DuBao { get; set; }
-        public int SymbolId { get; set; }
+        public string SymbolId { get; set; }
         public string Title { get; set; }
         public string Temperature { get; set; }
         public string PlainArea { get; set; }

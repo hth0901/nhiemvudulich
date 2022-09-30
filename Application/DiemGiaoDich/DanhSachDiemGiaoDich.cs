@@ -12,19 +12,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.NganHangDiemGiaoDich
+namespace Application.DiemGiaoDich
 {
     public class DanhSachDiemGiaoDich
     {
         public class Query: IRequest<Result<List<DL_DiemGiaoDich>>>
         {
-
-
         }
         public class Handler : IRequestHandler<Query, Result<List<DL_DiemGiaoDich>>>
         {
             private readonly IConfiguration _configuration;
-            private readonly DbContext _dbContext;
+        
             public Handler(IConfiguration configuration)
             {
                 _configuration = configuration;
@@ -37,7 +35,7 @@ namespace Application.NganHangDiemGiaoDich
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);
-                    var result = await connection.QueryAsync<DL_DiemGiaoDich>(new CommandDefinition(spName, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryAsync<DL_DiemGiaoDich>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<List<DL_DiemGiaoDich>>.Success(result.ToList());
                 }
             }
