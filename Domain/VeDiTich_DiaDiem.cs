@@ -8,7 +8,7 @@ namespace Domain
 {
     public class VeDiTich_DiaDiem
     {
-        int ID { get; set; }
-        string DiaDiem { get; set; }
+        public int ID { get; set; }
+        public string DiaDiem { get; set; }
     }
 }
