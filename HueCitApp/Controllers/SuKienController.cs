@@ -26,15 +26,16 @@ namespace HueCitApp.Controllers
         }
         [HttpGet("theothang/theochude={id}")]
         [AllowAnonymous]
-      
+
         public async Task<IActionResult> DanhSachSuKienThangTheoChuDe(CancellationToken ct, int ID)
         {
-            var listResult = await Mediator.Send(new DanhSachSuKienThangTheoChuDe.Query { IDChuDe=ID}, ct);
+            var listResult = await Mediator.Send(new DanhSachSuKienThangTheoChuDe.Query { IDChuDe = ID }, ct);
             return HandlerResult(listResult);
 
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
+      
       
         public async Task<IActionResult> ChiTietSuKien(CancellationToken ct,int ID)
         {

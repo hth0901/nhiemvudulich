@@ -24,11 +24,20 @@ namespace HueCitApp.Controllers
         }
         [HttpGet("danhsachnganhang")]
         [AllowAnonymous]
-     
+
         public async Task<IActionResult> DanhSachNganHang(CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachNganHang.Query(), ct);
             return HandlerResult(listResult);
         }
+        [HttpGet("danhsachnganhangdiaban/huyen={Huyen}/xaphuong={XaPhuong}")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct,string Huyen,string  XaPhuong)
+        {
+            var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBan.Query { Huyen=Huyen,XaPhuong=XaPhuong}, ct);
+            return HandlerResult(listResult);
+        }
+
     }
 }
