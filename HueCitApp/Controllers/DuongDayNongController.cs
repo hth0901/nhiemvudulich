@@ -17,8 +17,8 @@ namespace HueCitApp.Controllers
             _webHostEnvironment = hostingEnvironment;
         }
         [HttpGet]
+        [Route("danhsachduongdaynong")]
         [AllowAnonymous]
-        [Route("hostphonelist")]
         public async Task<IActionResult> DanhSachDuongDayNong(CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachDuongDayNong.Query(), ct);

@@ -17,7 +17,6 @@ namespace HueCitApp.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("cuisinelist")]
         public async Task<IActionResult> DanhSachMonAnThucUong(CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachMonAnThucUong.Query(), ct);

@@ -17,10 +17,17 @@ namespace HueCitApp.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        [Route("transactionplacelist")]
         public async Task<IActionResult> DanhSachDiemGiaoDich(CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachDiemGiaoDich.Query(), ct);
+            return HandlerResult(listResult);
+        }
+        [HttpGet("danhsachnganhang")]
+        [AllowAnonymous]
+     
+        public async Task<IActionResult> DanhSachNganHang(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new DanhSachNganHang.Query(), ct);
             return HandlerResult(listResult);
         }
     }
