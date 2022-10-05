@@ -18,8 +18,8 @@ namespace HueCitApp.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        [Route("forecastinglist")]
-        public async Task<IActionResult> DanhSachDuBaoThoiTiet(CancellationToken ct)
+        
+        public async Task<IActionResult> DanhSachDuBao (CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachDuBaoThoiTiet.Query(), ct);
             return HandlerResult(listResult);

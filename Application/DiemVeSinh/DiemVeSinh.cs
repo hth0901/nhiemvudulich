@@ -1,0 +1,44 @@
+﻿using Application.Core;
+using Domain;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Persistence;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Application.DiemVeSinh
+{
+    public class DiemVeSinh
+    {
+        public class Query : IRequest<Result<List<Domain.DiemVeSinh>>>
+        {
+        }
+        public class Handler : IRequestHandler<Query, Result<List<Domain.DiemVeSinh>>>
+        {
+            private readonly IConfiguration _configuration;
+            private readonly DataContext _context;
+
+            public Handler(DataContext context, IConfiguration configuration)
+            {
+                _context = context;
+                _configuration = configuration;
+
+            }
+
+            public async Task<Result<List<Domain.DiemVeSinh>>> Handle(Query request, CancellationToken cancellationToken)
+            {
+               var list=  await  _context.DiemVeSinh.ToListAsync();
+              
+                return Result<List<Domain.DiemVeSinh>>.Success(list);
+
+
+            }
+        }
+    }
+}

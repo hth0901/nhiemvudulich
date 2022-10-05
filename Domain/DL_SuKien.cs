@@ -17,6 +17,7 @@ namespace Domain
         public float X { get; set; }    
         public float Y { get; set; }
         public bool TrangThai { get; set; } 
+      
 
     }
 }

@@ -17,10 +17,17 @@ namespace HueCitApp.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("cuisinelist")]
         public async Task<IActionResult> DanhSachMonAnThucUong(CancellationToken ct)
         {
             var listResult = await Mediator.Send(new DanhSachMonAnThucUong.Query(), ct);
+            return HandlerResult(listResult);
+
+        }
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChiTietMonAnThucUong(int id,CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new ChiTietMonAnThucUong.Query { ID=id}, ct);
             return HandlerResult(listResult);
 
         }

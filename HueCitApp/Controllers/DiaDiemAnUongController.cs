@@ -1,27 +1,27 @@
-﻿using Application.DuongDayNong;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
-using Application.LoaiMonAnThucUong;
+using Application.DiaDiemAnUong;
 
 namespace HueCitApp.Controllers
 {
-    public class LoaiMonAnThucUongController : BaseApiController
+    public class DiaDiemAnUongController : BaseApiController
+
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public LoaiMonAnThucUongController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public DiaDiemAnUongController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
         [HttpGet]
         [AllowAnonymous]
-    
-        public async Task<IActionResult> DanhSachLoaiMonAnThucUong(CancellationToken ct)
+
+        public async Task<IActionResult> danhsachDiaDiemAnUong(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new LoaiMonAnThucUong.Query(), ct);
+            var listResult = await Mediator.Send(new DanhSachDiaDiemAnUong.Query(), ct);
             return HandlerResult(listResult);
         }
     }
