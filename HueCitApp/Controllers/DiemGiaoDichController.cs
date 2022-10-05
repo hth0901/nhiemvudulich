@@ -30,7 +30,7 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new DanhSachNganHang.Query(), ct);
             return HandlerResult(listResult);
         }
-        [HttpGet("danhsachnganhangdiaban/huyen={Huyen}/xaphuong={XaPhuong}")]
+        [HttpGet("danhsachnganhangdiaban/{Huyen}/{XaPhuong}")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct,string Huyen,string  XaPhuong)
