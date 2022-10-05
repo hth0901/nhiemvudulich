@@ -25,7 +25,7 @@ namespace HueCitApp.Controllers
 
         public IActionResult Bando()
         {
-            return View();
+            return View("GisMap");
         }
 
         public IActionResult Privacy()

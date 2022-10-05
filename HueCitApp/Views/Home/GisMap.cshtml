@@ -28,9 +28,10 @@
             "esri/Basemap",
             "esri/layers/WMSLayer",
             "esri/widgets/BasemapGallery",
-            "esri/widgets/Expand"
+            "esri/widgets/Expand",
+            "esri/widgets/Search"
 
-        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer, BasemapGallery, Expand) {
+        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer, BasemapGallery, Expand, Search) {
             const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
             esriConfig.apiKey = mApiKey;
 
@@ -41,7 +42,7 @@
                 id: "basemap"
             });
             const layers = new MapImageLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer",
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
             });
 
             const basemapData = [
@@ -66,28 +67,169 @@
 
             const layer_0 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/0",
-                id: "0",
-                outFields: ["*"]
+                id: "00",
+                outFields: ["*"],
+                popupEnabled: true,
+                popupTemplate: {
+                    title: 'Thông tin',
+                    content: [
+                        {
+                            "type": "fields",
+                            "fieldInfos": [
+                                {
+                                    "fieldName": "tendoituon",
+                                    "label": "Tên",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "diachi",
+                                    "label": "Địa chỉ",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "dienthoai",
+                                    "label": "Số điện thoại",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "tennguoida",
+                                    "label": "Người đại diện",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                }
+                            ]
+                        }
+                    ],
+                }
+                
             });
             const layer_1 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/1",
-                id: "1",
+                id: "01",
                 outFields: ["*"],
+                popupEnabled: true,
+                popupTemplate: {
+                    title: 'Thông tin',
+                    content: [
+                        {
+                            "type": "fields",
+                            "fieldInfos": [
+                                {
+                                    "fieldName": "tendoituon",
+                                    "label": "Tên",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "diachi",
+                                    "label": "Địa chỉ",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "dienthoai",
+                                    "label": "Số điện thoại",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "tennguoida",
+                                    "label": "Người đại diện",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                }
+                            ]
+                        }
+                    ],
+                }
             });
             const layer_2 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/2",
-                id: "2",
+                id: "02",
                 outFields: ["*"],
+                popupEnabled: true,
+                popupTemplate: {
+                    title: 'Thông tin',
+                    content: [
+                        {
+                            "type": "fields",
+                            "fieldInfos": [
+                                {
+                                    "fieldName": "tendoituon",
+                                    "label": "Tên",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "diachi",
+                                    "label": "Địa chỉ",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "dienthoai",
+                                    "label": "Số điện thoại",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "tennguoida",
+                                    "label": "Người đại diện",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                }
+                            ]
+                        }
+                    ],
+                }
             });
             const layer_3 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/3",
-                id: "3",
+                id: "03",
                 outFields: ["*"],
+                popupEnabled: true,
+                popupTemplate: {
+                    title: 'Thông tin',
+                    content: [
+                        {
+                            "type": "fields",
+                            "fieldInfos": [
+                                {
+                                    "fieldName": "tendoituon",
+                                    "label": "Tên",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "diachi",
+                                    "label": "Địa chỉ",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "dienthoai",
+                                    "label": "Số điện thoại",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                },
+                                {
+                                    "fieldName": "tennguoida",
+                                    "label": "Người đại diện",
+                                    "visible": true,
+                                    "stringFieldOption": "text-box"
+                                }
+                            ]
+                        }
+                    ],
+                }
             });
 
             const map = new Map({
                 basemap: 'arcgis-topographic', // Basemap layer service
-                layers: [layer_0, layer_1, layer_2, layer_3],
+                layers: [layers, layer_0, layer_1, layer_2, layer_3],
             });
             const view = new MapView({
                 map: map,
@@ -97,7 +239,16 @@
             });
 
             view.when(() => {
+                const searchWidget = new Search({
+                    view: view
+                });
 
+                // Add the search widget to the top right corner of the view
+                view.ui.add(searchWidget, {
+                    position: "top-right"
+                });
+
+                view.ui.move("zoom", "top-right");
 
                 const basemapGallery = new BasemapGallery({
                     view: view,
@@ -110,7 +261,15 @@
                     content: basemapGallery
                 });
 
-                view.ui.add(bgExpand, "top-right");
+                view.ui.add(bgExpand, "bottom-left");
+
+                var element = document.createElement("div");
+                element.className =
+                    "esri-icon-layer-list esri-widget--button esri-widget esri-interactive";
+                element.addEventListener("click", function (evt) {
+                    console.log('click')
+                });
+                view.ui.add(element, "top-right");
             })
 
 
@@ -133,31 +292,31 @@
                 },
             ];
 
-            let tree = new Tree('#map-sidebar', {
-                data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
-                closeDepth: 3,
-                loaded: function () {
-                    this.values = ['0', '1', '2', '3'];
-                    //console.log(this.selectedNodes);
-                    //console.log(this.values);
-                },
-                onChange: function () {
-                    //console.log(this.values);
-                    //console.log(map.layers.items);
-                    map.layers.items.forEach((el, idx) => {
-                        const layerId = el.id;
-                        if (this.values.includes(layerId)) {
-                            el.visible = true;
-                        }
-                        else {
-                            el.visible = false;
-                        }
-                    })
-                },
-                onItemClick: function () {
-                    console.log('dkmdkm')
-                }
-            })
+            //let tree = new Tree('#map-sidebar', {
+            //    data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
+            //    closeDepth: 3,
+            //    loaded: function () {
+            //        this.values = ['0', '1', '2', '3'];
+            //        //console.log(this.selectedNodes);
+            //        //console.log(this.values);
+            //    },
+            //    onChange: function () {
+            //        //console.log(this.values);
+            //        //console.log(map.layers.items);
+            //        map.layers.items.forEach((el, idx) => {
+            //            const layerId = el.id;
+            //            if (this.values.includes(layerId)) {
+            //                el.visible = true;
+            //            }
+            //            else {
+            //                el.visible = false;
+            //            }
+            //        })
+            //    },
+            //    onItemClick: function () {
+            //        console.log('dkmdkm')
+            //    }
+            //})
         });
     </script>
 }

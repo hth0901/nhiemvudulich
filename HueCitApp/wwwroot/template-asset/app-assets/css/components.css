@@ -265,10 +265,11 @@ footer.footer-dark {
 .main-menu.menu-light .navigation > li.active > a.mm-next {
   background-color: inherit;
 }
-.main-menu.menu-light .navigation > li.active > a {
-  color: #00b5b8;
-  font-weight: 400;
-}
+    .main-menu.menu-light .navigation > li.active > a {
+        color: #00b5b8;
+        color: #5734BA;
+        font-weight: 400;
+    }
 .main-menu.menu-light .navigation > li .active {
   background: #f0f0f0;
 }
