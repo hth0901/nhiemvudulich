@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.DiemGiaoDich
 {
-    public class DanhSachNganHang
+    public class DanhSachNganHang 
     {
         public class Query : IRequest<Result<List<DL_DiemGiaoDich>>>
         {
@@ -32,9 +32,16 @@ namespace Application.DiemGiaoDich
 
             }
 
-            public Task<Result<List<DL_DiemGiaoDich>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<DL_DiemGiaoDich>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                string spName = "SP_DiemGiaoDichNganHangGets";
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    connection.Open();
+                    //var result = await connection.QueryAsync<Place>(spName);
+                    var result = await connection.QueryAsync<DL_DiemGiaoDich>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<DL_DiemGiaoDich>>.Success(result.ToList());
+                }
             }
         }
 
