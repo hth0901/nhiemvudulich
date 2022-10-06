@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
 using Application.DiemGiaoDich;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
@@ -30,12 +31,12 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new DanhSachNganHang.Query(), ct);
             return HandlerResult(listResult);
         }
-        [HttpGet("danhsachnganhangdiaban/{Huyen}/{XaPhuong}")]
+        [HttpGet("danhsachnganhangdiaban")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct,string Huyen,string  XaPhuong)
+        public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct, [FromBody] Place_Request _request)
         {
-            var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBan.Query { Huyen=Huyen,XaPhuong=XaPhuong}, ct);
+            var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBan.Query { _request=_request}, ct);
             return HandlerResult(listResult);
         }
 

@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Dapper;
 using Domain;
+using Domain.RequestEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Persistence;
@@ -18,8 +19,7 @@ namespace Application.DiemGiaoDich
     {
         public class Query : IRequest<Result<List<DL_DiemGiaoDich>>>
         {
-            public string XaPhuong { get; set; }
-            public string Huyen { get; set; }   
+            public Place_Request _request { get; set; }
         }
         public class Handler : IRequestHandler<Query, Result<List<DL_DiemGiaoDich>>>
         {
@@ -37,8 +37,8 @@ namespace Application.DiemGiaoDich
             {
                 string spName = "SP_DiemGiaoDich_NganHangDiaBanGets";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@HUYEN", request.Huyen);
-                parameters.Add("@XA_PHUONG",request.XaPhuong);
+                parameters.Add("@HUYEN", request._request.Huyen);
+                parameters.Add("@XA_PHUONG",request._request.Xa_Phuong);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
