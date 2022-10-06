@@ -30,7 +30,7 @@ namespace Application.MonAnThucUong
 
             public async Task<Result<List<DL_MonAnThucUong>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "[SP_AmThucGets]";
+                string spName = "SP_AmThucGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
