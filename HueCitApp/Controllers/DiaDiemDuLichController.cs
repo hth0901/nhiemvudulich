@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
 {
-    public class DiaDiemController : BaseApiController
+    public class DiaDiemDuLichController : BaseApiController
     {   private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiaDiemController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public DiaDiemDuLichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
@@ -18,7 +18,7 @@ namespace HueCitApp.Controllers
    
         public async Task<IActionResult> GetPlaces( CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachDiaDiem.Query(), ct);
+            var listResult = await Mediator.Send(new DanhSachDiaDiemDuLich.Query(), ct);
             return HandlerResult(listResult);
         }
         [HttpGet]
