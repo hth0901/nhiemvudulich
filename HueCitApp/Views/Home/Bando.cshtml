@@ -1,0 +1,371 @@
+﻿@{
+    ViewData["Title"] = "Ban do";
+}
+
+<style>
+    #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: calc(100vh - 150px);
+        width: 100%;
+        width: calc(100% - 200px);
+        float: left
+    }
+
+    .calcite-theme-light {
+        display: none
+    }
+
+    .map-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .map-sidebar {
+        /*position: absolute;
+        top: 0;
+        left: 0;*/
+        width: 200px;
+        height: 100%;
+        height: calc(100vh - 150px);
+        /*background-color: red;*/
+        float: left
+    }
+</style>
+
+<div class="map-container">
+    <div class="map-sidebar">
+        <div id="map-sidebar" style="margin-top: 10px"></div>
+    </div>
+    <div id="viewDiv"></div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        require([
+            "esri/config",
+            "esri/Map",
+            "esri/views/MapView",
+
+            "esri/layers/FeatureLayer",
+            "esri/layers/MapImageLayer",
+            "esri/Basemap",
+            "esri/layers/WMSLayer",
+            "esri/widgets/BasemapGallery",
+            "esri/widgets/Expand"
+
+        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer, BasemapGallery, Expand) {
+            const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
+            esriConfig.apiKey = mApiKey;
+
+            let basemap = new Basemap({
+                baseLayers: [
+                    //new MapImageLayer({
+                    //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/CayXanh_5Duong_Final/MapServer",
+                    //    title: "Basemap"
+                    //})
+                    //new WMSLayer({
+                    //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
+                    //})
+                ],
+                title: "basemap",
+                id: "basemap"
+            });
+            const layers = new MapImageLayer({
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+                sublayers: [
+                    {
+                        id: 0,
+                        visible: true
+                    },
+                    {
+                        id: 1,
+                        visible: true
+                    },
+                    {
+                        id: 2,
+                        visible: true
+                    },
+                    {
+                        id: 3,
+                        visible: true
+                    }
+                ]
+            });
+
+            const basemapData = [
+                {
+                    id: "arcgis-streets",
+                    text: "Đường phố",
+                },
+                {
+                    id: "arcgis-topographic",
+                    text: "Địa hình",
+                },
+                {
+                    id: "satellite",
+                    text: "Vệ tinh",
+                },
+            ]
+
+            //const mLayer = new WMSLayer({
+            //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
+            //})
+
+
+            const layer_0 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/0",
+                id: "00",
+                outFields: ["*"]
+            });
+            const layer_1 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/1",
+                id: "01",
+                outFields: ["*"],
+            });
+            const layer_2 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/2",
+                id: "02",
+                outFields: ["*"],
+            });
+            const layer_3 = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/3",
+                id: "03",
+                outFields: ["*"],
+            });
+
+            const renderer = {
+                type: "simple", // autocasts as new SimpleRenderer()
+                symbol: {
+                    type: "simple-line", // autocasts as new SimpleLineSymbol()
+                    color: [255, 255, 255, 0.5],
+                    width: 0.75,
+                    style: "long-dash-dot-dot"
+                }
+            };
+
+            const dkmLayers = new MapImageLayer({
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+                sublayers: [
+                    {
+                        id: 2,
+                        visible: true
+                    },
+                    {
+                        id: 4,
+                        visible: false,
+                        title: "Railroads",
+                        renderer: renderer,
+                        source: {
+                            // indicates the source of the sublayer is a dynamic data layer
+                            type: "data-layer",
+                            // this object defines the data source of the layer
+                            // in this case it's a feature class table from a file geodatabase
+                            dataSource: {
+                                type: "table",
+                                // workspace name
+                                workspaceId: "MyDatabaseWorkspaceIDSSR2",
+                                // table name
+                                dataSourceName: "ss6.gdb.Railroads"
+                            }
+                        }
+                    },
+                    {
+                        id: 1,
+                        visible: true
+                    },
+                    {
+                        id: 0,
+                        visible: true
+                    }
+                ]
+            });
+
+            const map = new Map({
+                basemap: 'dark-gray-vector', // Basemap layer service
+                //layers: [layer_0, layer_1, layer_2, layer_3],
+                layers: [dkmLayers]
+            });
+
+            //map.add(layers)
+            //map.add(mLayer);
+            const view = new MapView({
+                map: map,
+                //center: [107.58513469042099, 16.462504990071924], // Longitude, latitude
+                //zoom: 10, // Zoom level
+                zoom: 3,
+                center: [-99, 39],
+                container: "viewDiv" // Div element
+            });
+
+            const basemapGallery = new BasemapGallery({
+                view: view,
+                container: document.createElement("div"),
+                source: [Basemap.fromId("arcgis-streets"), Basemap.fromId("arcgis-topographic"), Basemap.fromId("satellite")] // autocasts to LocalBasemapsSource
+            });
+
+            const bgExpand = new Expand({
+                view: view,
+                content: basemapGallery
+            });
+
+            view.ui.add(bgExpand, "top-right");
+
+            //layer_1.when(() => {
+            //    console.log(layer_1.sourceJSON);
+            //})
+
+
+            const data = [
+                {
+                    id: "0",
+                    text: "Tư nhân",
+                },
+                {
+                    id: "1",
+                    text: "TNHH 1 TV",
+                },
+                {
+                    id: "2",
+                    text: "TNHH 2 TV",
+                },
+                {
+                    id: "3",
+                    text: "Cty Cổ Phần",
+                },
+            ];
+
+            let tree = new Tree('#map-sidebar', {
+                data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
+                closeDepth: 3,
+                loaded: function () {
+                    this.values = ['0', '1', '2', '3'];
+                    //console.log(this.selectedNodes);
+                    //console.log(this.values);
+                },
+                onChange: function () {
+                    //console.log(this.values);
+                    //console.log(map.layers.items);
+                    map.layers.items.forEach((el, idx) => {
+                        const layerId = el.id;
+                        if (this.values.includes(layerId)) {
+                            el.visible = true;
+                        }
+                        else {
+                            el.visible = false;
+                        }
+                    })
+                },
+                onItemClick: function () {
+                    console.log('dkmdkm')
+                }
+            })
+        });
+    </script>
+
+
+@*<script type="text/javascript">
+    require(["esri/Map", "esri/views/MapView", "esri/layers/MapImageLayer"], (Map, MapView, MapImageLayer) => {
+        /*****************************************************************
+         * Create a renderer for the dynamic data layer (table).
+         *****************************************************************/
+
+        const renderer = {
+            type: "simple", // autocasts as new SimpleRenderer()
+            symbol: {
+                type: "simple-line", // autocasts as new SimpleLineSymbol()
+                color: [255, 255, 255, 0.5],
+                width: 0.75,
+                style: "long-dash-dot-dot"
+            }
+        };
+
+        /*****************************************************************
+         * Create a MapImageLayer instance pointing to a Map Service
+         * containing data about US Cities, Counties, States and Highways.
+         * Define sublayers with visibility for each layer in Map Service.
+         *****************************************************************/
+        const layer = new MapImageLayer({
+            url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+            sublayers: [
+                {
+                    id: 2,
+                    visible: true
+                },
+                {
+                    id: 4,
+                    visible: false,
+                    title: "Railroads",
+                    renderer: renderer,
+                    source: {
+                        // indicates the source of the sublayer is a dynamic data layer
+                        type: "data-layer",
+                        // this object defines the data source of the layer
+                        // in this case it's a feature class table from a file geodatabase
+                        dataSource: {
+                            type: "table",
+                            // workspace name
+                            workspaceId: "MyDatabaseWorkspaceIDSSR2",
+                            // table name
+                            dataSourceName: "ss6.gdb.Railroads"
+                        }
+                    }
+                },
+                {
+                    id: 1,
+                    visible: true
+                },
+                {
+                    id: 0,
+                    visible: true
+                }
+            ]
+        });
+
+        /*****************************************************************
+         * Add the layer to a map
+         *****************************************************************/
+        const map = new Map({
+            basemap: "dark-gray-vector",
+            layers: [layer]
+        });
+
+        const view = new MapView({
+            container: "viewDiv",
+            map: map,
+            zoom: 3,
+            center: [-99, 39]
+        });
+
+        /*****************************************************************
+         * Wait for Layer to load and update the page to refelect which
+         * layers are visible in the Map Service.
+         *****************************************************************/
+        layer.when(() => {
+            layer.sublayers.map((sublayer) => {
+                const id = sublayer.id;
+                const visible = sublayer.visible;
+                const node = document.querySelector(".sublayers-item[data-id='" + id + "']");
+                if (visible) {
+                    node.classList.add("visible-layer");
+                }
+            });
+        });
+
+        /*****************************************************************
+         * Listen for when buttons on the page have been clicked to turn
+         * layers on and off in the Map Service.
+         *****************************************************************/
+        const sublayersElement = document.querySelector(".sublayers");
+        sublayersElement.addEventListener("click", (event) => {
+            const id = event.target.getAttribute("data-id");
+            if (id) {
+                const sublayer = layer.findSublayerById(parseInt(id));
+                const node = document.querySelector(".sublayers-item[data-id='" + id + "']");
+                sublayer.visible = !sublayer.visible;
+                node.classList.toggle("visible-layer");
+            }
+        });
+    });
+</script>*@
+}
