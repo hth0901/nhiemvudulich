@@ -20,7 +20,7 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachDiemGiaoDich(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachDiemGiaoDich.Query(), ct);
+            var listResult = await Mediator.Send(new DiemGiaoDichGets.Query(), ct);
             return HandlerResult(listResult);
         }
         [HttpGet("danhsachnganhang")]
@@ -28,7 +28,7 @@ namespace HueCitApp.Controllers
 
         public async Task<IActionResult> DanhSachNganHang(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachNganHang.Query(), ct);
+            var listResult = await Mediator.Send(new DiemGiaoDichNganHangGets.Query(), ct);
             return HandlerResult(listResult);
         }
         [HttpGet("danhsachnganhangdiaban")]
@@ -36,7 +36,7 @@ namespace HueCitApp.Controllers
 
         public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct, [FromBody] Place_Request _request)
         {
-            var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBan.Query { _request=_request}, ct);
+            var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBanGets.Query { _request=_request}, ct);
             return HandlerResult(listResult);
         }
 

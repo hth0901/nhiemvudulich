@@ -20,7 +20,7 @@ namespace HueCitApp.Controllers
 
         public async Task<IActionResult> DanhSachSuKienTheoThang(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachSuKienThang.Query(), ct);
+            var listResult = await Mediator.Send(new SuKienThangGets.Query(), ct);
             return HandlerResult(listResult);
 
         }
@@ -29,7 +29,7 @@ namespace HueCitApp.Controllers
 
         public async Task<IActionResult> DanhSachSuKienThangTheoChuDe(CancellationToken ct, int ID)
         {
-            var listResult = await Mediator.Send(new DanhSachSuKienThangTheoChuDe.Query { IDChuDe = ID }, ct);
+            var listResult = await Mediator.Send(new SuKienThangTheoChuDeGets.Query { IDChuDe = ID }, ct);
             return HandlerResult(listResult);
 
         }
@@ -39,7 +39,7 @@ namespace HueCitApp.Controllers
       
         public async Task<IActionResult> ChiTietSuKien(CancellationToken ct,int ID)
         {
-            var listResult = await Mediator.Send(new ChiTietSuKien.Query{ IDSuKien=ID}, ct);
+            var listResult = await Mediator.Send(new ChiTietSuKienGet.Query{ IDSuKien=ID}, ct);
             return HandlerResult(listResult);
 
         }

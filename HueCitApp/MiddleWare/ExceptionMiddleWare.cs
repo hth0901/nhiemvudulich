@@ -25,7 +25,7 @@ namespace HueCitApp.MiddleWare
         }
 
         public async Task InvokeAsync(HttpContext context)
-        {
+        {// handle the content-type from httpcontext
             try
             {
                 await _next(context);

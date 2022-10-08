@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 
 namespace Application.SuKien
 {
-    public class DanhSachSuKienThang
+    public class ChiTietSuKienGet
     {
         public class Query : IRequest<Result<List<DL_SuKien>>>
         {// su li tham so dau vao
+           public int IDSuKien { get; set; }
 
         }
 
@@ -30,16 +31,22 @@ namespace Application.SuKien
 
             public async Task<Result<List<DL_SuKien>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_SuKienThangGets";
+                string spName = "SP_SuKienGet";
+             
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ID", request.IDSuKien);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_SuKien>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryAsync<DL_SuKien>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<List<DL_SuKien>>.Success(result.ToList());
 
                 }
 
             }
         }
+
+
+
     }
 }

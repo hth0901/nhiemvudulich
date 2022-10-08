@@ -21,7 +21,7 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachDuongDayNong(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachDuongDayNong.Query(), ct);
+            var listResult = await Mediator.Send(new DuongDayNongGets.Query(), ct);
             return HandlerResult(listResult);
         }
     }

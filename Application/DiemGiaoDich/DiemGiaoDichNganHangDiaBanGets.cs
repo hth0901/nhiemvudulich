@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.DiemGiaoDich
 {
-    public class DiemGiaoDichNganHangDiaBan
+    public class DiemGiaoDichNganHangDiaBanGets
     {
         public class Query : IRequest<Result<List<DL_DiemGiaoDich>>>
         {

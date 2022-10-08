@@ -11,18 +11,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.LoaiMonAnThucUong
+namespace Application.LoaiHinhChamSocSucKhoeSacDep
 {
-    public class LoaiMonAnThucUong
+    public class LoaiHinhChamSocSucKhoeSacDepGets
     {
-
-
-        public class Query : IRequest<Result<List<DL_MonAnThucUong_Loai>>>
+        public class Query : IRequest<Result<List<LoaiHinh>>>
         {// su li tham so dau vao
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DL_MonAnThucUong_Loai>>>
+        public class Handler : IRequestHandler<Query, Result<List<LoaiHinh>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -30,14 +28,14 @@ namespace Application.LoaiMonAnThucUong
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DL_MonAnThucUong_Loai>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<LoaiHinh>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_LoaiAmThucGets";
+                string spName = "SP_LoaiHinhDichVuCSSKSDGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_MonAnThucUong_Loai>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_MonAnThucUong_Loai>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<LoaiHinh>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<LoaiHinh>>.Success(result.ToList());
 
                 }
 

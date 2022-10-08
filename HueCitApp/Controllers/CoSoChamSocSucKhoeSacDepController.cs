@@ -19,9 +19,17 @@ namespace HueCitApp.Controllers
         [HttpGet]
         [AllowAnonymous]
 
-        public async Task<IActionResult> danhsachdiemvesinh(CancellationToken ct)
+        public async Task<IActionResult> cosochamsocsuckhoesacdep(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new  DanhSachCoSoChamSocSucKhoeSacDep.Query(), ct);
+            var listResult = await Mediator.Send(new CoSoChamSocSucKhoeSacDepGets.Query(), ct);
+            return HandlerResult(listResult);
+        }
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> chitietcosochamsocsuckhoesacdep(int ID,CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new CoSoChamSocSucKhoeSacDepGet.Query { ID=ID}, ct);
             return HandlerResult(listResult);
         }
     }

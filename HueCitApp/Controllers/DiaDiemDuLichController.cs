@@ -18,7 +18,7 @@ namespace HueCitApp.Controllers
    
         public async Task<IActionResult> GetPlaces( CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachDiaDiemDuLich.Query(), ct);
+            var listResult = await Mediator.Send(new DiaDiemDuLichGets.Query(), ct);
             return HandlerResult(listResult);
         }
         [HttpGet]
@@ -26,7 +26,7 @@ namespace HueCitApp.Controllers
         [Route("loaihinhtainguyen")]
         public async Task<IActionResult> LoaiHinhTaiNguyenDuLich(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachLoaiHinhTaiNguyenDuLich.Query(), ct);
+            var listResult = await Mediator.Send(new LoaiHinhTaiNguyenDuLichGets.Query(), ct);
             return HandlerResult(listResult);
             
         }

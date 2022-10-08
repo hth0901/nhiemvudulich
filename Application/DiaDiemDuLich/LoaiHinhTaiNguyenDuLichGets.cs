@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 namespace Application.DiaDiemDuLich
 {
-    public  class DanhSachLoaiHinhTaiNguyenDuLich
+    public  class LoaiHinhTaiNguyenDuLichGets
     {
         public class Query: IRequest<Result<List<DL_TaiNguyen_LoaiDuLieu>>>
         {

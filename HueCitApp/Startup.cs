@@ -51,7 +51,7 @@ namespace HueCitApp
             app.UseMiddleware<ExceptionMiddleWare>();
 
 
-
+            
             
             if (env.IsDevelopment())
             {
