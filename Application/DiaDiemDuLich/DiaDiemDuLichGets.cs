@@ -18,7 +18,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.DiaDiemDuLich
 {
-    public  class DanhSachDiaDiemDuLich
+    public  class DiaDiemDuLichGets
     {
         public class Query : IRequest<Result<List<LoaiHinh>>>
         {

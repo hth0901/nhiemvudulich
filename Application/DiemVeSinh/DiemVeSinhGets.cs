@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Application.DiemVeSinh
 {
-    public class DanhSachDiemVeSinh
+    public class DiemVeSinhGets
     {
         public class Query : IRequest<Result<List<Domain.DiemVeSinh>>>
         {

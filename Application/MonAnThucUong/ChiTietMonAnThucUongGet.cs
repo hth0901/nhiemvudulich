@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.MonAnThucUong
 {
-    public class ChiTietMonAnThucUong
+    public class ChiTietMonAnThucUongGet
     {
 
         public class Query : IRequest<Result<List<DL_MonAnThucUong>>>

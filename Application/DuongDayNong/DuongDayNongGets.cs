@@ -10,17 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
-namespace Application.CoSoLuuTru
+namespace Application.DuongDayNong
 {
-    public class DanhSachCoSoLuuTru
+
+
+
+    public class DuongDayNongGets
     {
-        public class Query : IRequest<Result<List<HoSo>>>
+        public class Query : IRequest<Result<List<DL_DuongDayNong>>>
         {// su li tham so dau vao
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<HoSo>>>
+        public class Handler : IRequestHandler<Query, Result<List<DL_DuongDayNong>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -28,20 +32,20 @@ namespace Application.CoSoLuuTru
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<DL_DuongDayNong>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_CoSoLuuTruGets";
+                string spName = "SP_DuongDayNongGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<HoSo>>.Success(result.ToList());// compare of list  
+                    var result = await connection.QueryAsync<DL_DuongDayNong>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<DL_DuongDayNong>>.Success(result.ToList());
 
                 }
 
             }
         }
-
-
     }
 }
+
+

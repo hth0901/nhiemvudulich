@@ -11,13 +11,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.CoSoLuuTru
+namespace Application.CoSoChamSocSucKhoeSacDep
 {
-    public class ChiTietCoSoLuuTru
+    public class CoSoChamSocSucKhoeSacDepGets
     {
         public class Query : IRequest<Result<List<HoSo>>>
         {// su li tham so dau vao
-            public int ID {get;set;}
+
         }
 
         public class Handler : IRequestHandler<Query, Result<List<HoSo>>>
@@ -29,18 +29,18 @@ namespace Application.CoSoLuuTru
             }
 
             public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
-            {   DynamicParameters dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@Id", request.ID);
-                string spName = "SP_CoSoLuuTruGet";
+            {
+                string spName = "SP_CoSoChamSocSucKhoeSacDepGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-                {   
+                {
                     connection.Open();
-                    var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<List<HoSo>>.Success(result.ToList());// compare of list  
 
                 }
 
             }
         }
+
     }
 }

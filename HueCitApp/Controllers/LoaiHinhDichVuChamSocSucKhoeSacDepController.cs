@@ -1,18 +1,18 @@
-﻿using Application.DiaDiemDuLich;
+﻿using Application.LoaiHinhCoSoLuuTru;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
-using Application.LoaiHinhCoSoLuuTru;
+using Application.LoaiHinhChamSocSucKhoeSacDep;
 
 namespace HueCitApp.Controllers
 {
-    public class LoaiHinhCoSoLuuTruController : BaseApiController
+    public class LoaiHinhDichVuChamSocSucKhoeSacDepController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public LoaiHinhCoSoLuuTruController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public LoaiHinhDichVuChamSocSucKhoeSacDepController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
@@ -20,7 +20,7 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachLoaiHinh(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new LoaiHinhCoSoLuuTruGets.Query(), ct);
+            var listResult = await Mediator.Send(new LoaiHinhChamSocSucKhoeSacDepGets.Query(), ct);
             return HandlerResult(listResult);
         }
     }

@@ -19,7 +19,7 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachMonAnThucUong(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachMonAnThucUong.Query(), ct);
+            var listResult = await Mediator.Send(new MonAnThucUongGets.Query(), ct);
             return HandlerResult(listResult);
 
         }
@@ -27,7 +27,7 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ChiTietMonAnThucUong(int id,CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new ChiTietMonAnThucUong.Query { ID=id}, ct);
+            var listResult = await Mediator.Send(new ChiTietMonAnThucUongGet.Query { ID=id}, ct);
             return HandlerResult(listResult);
 
         }

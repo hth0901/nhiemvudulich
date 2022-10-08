@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.SuKien
 {
-    public class DanhSachSuKienThangTheoChuDe
+    public class SuKienThangTheoChuDeGets
     {
         public class Query : IRequest<Result<List<SuKienChuDeThang>>>
         {// su li tham so dau vao

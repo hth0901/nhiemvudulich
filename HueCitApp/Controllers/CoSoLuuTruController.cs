@@ -20,14 +20,14 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachCoSoLuuTru(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new DanhSachCoSoLuuTru.Query(), ct);
+            var listResult = await Mediator.Send(new CoSoLuuTruGets.Query(), ct);
             return HandlerResult(listResult);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> ChiTietCoSoLuuTru(int ID,CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new ChiTietCoSoLuuTru.Query { ID=ID}, ct);
+            var listResult = await Mediator.Send(new ChiTietCoSoLuuTruGet.Query { ID=ID}, ct);
             return HandlerResult(listResult);
         }
     }
