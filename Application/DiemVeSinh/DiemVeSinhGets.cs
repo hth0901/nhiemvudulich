@@ -36,7 +36,7 @@ namespace Application.DiemVeSinh
             public async Task<Result<List<Domain.TechLife.DiemVeSinh>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "SP_DiemVeSinhGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);

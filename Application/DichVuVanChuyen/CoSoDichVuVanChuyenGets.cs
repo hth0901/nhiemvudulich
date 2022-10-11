@@ -35,7 +35,7 @@ namespace Application.DichVuVanChuyen
             public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "SP_DanhSachCoSoDichVuVanChuyenGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);

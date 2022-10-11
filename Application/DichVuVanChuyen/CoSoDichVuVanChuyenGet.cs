@@ -37,7 +37,7 @@ namespace Application.DichVuVanChuyen
             {   DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@ID", request.ID);
                 string spName = "SP_DanhSachCoSoDichVuVanChuyenGet";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);

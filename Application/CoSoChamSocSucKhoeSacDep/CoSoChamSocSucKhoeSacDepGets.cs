@@ -32,7 +32,7 @@ namespace Application.CoSoChamSocSucKhoeSacDep
             public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "SP_CoSoChamSocSucKhoeSacDepGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {
                     connection.Open();
                     var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));

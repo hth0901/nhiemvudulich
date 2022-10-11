@@ -32,7 +32,7 @@ namespace Application.LoaiCoSoVuiChoiGiaiTri
             public async Task<Result<List<DanhMuc>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "DanhMucChuDeVuiChoiGiaiTriGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {
                     connection.Open();
                     var result = await connection.QueryAsync<DanhMuc>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
