@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Dapper;
 using Domain;
+using Domain.TechLife;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Data.SqlClient;

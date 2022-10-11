@@ -1,4 +1,6 @@
 ﻿using Domain;
+using Domain.HueCit;
+using Domain.TechLife;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,9 +31,9 @@ namespace Persistence
                 }
             }
         }
-        public DbSet<DiemVeSinh> DiemVeSinh { get; set; }
+        //public DbSet<DiemVeSinh> DiemVeSinh { get; set; }
         public DbSet<DL_TaiNguyen_LoaiDuLieu> DL_TaiNguyen_LoaiDuLieu { get; set; }
-        public DbSet<VeDiTich_DiaDiem> VeDiTich_DiaDiem { get; set; }
+        //public DbSet<VeDiTich_DiaDiem> VeDiTich_DiaDiem { get; set; }
         public DbSet<Activity> Activities { get; set; }
         //public DbSet<MyRoles> MyRoles { get; set; }
         //public DbSet<Authorize> Authorize { get; set; }

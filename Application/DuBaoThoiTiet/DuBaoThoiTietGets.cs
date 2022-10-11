@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Dapper;
 using Domain;
+using Domain.HueCit;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;

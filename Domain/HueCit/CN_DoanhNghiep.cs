@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.HueCit
 {
-    public class DL_SuKien_ChuDe
+    public class CN_DoanhNghiep
     {
-        public int ID { get; set; }
-        public string ChuDe { get;set; }
 
     }
 }

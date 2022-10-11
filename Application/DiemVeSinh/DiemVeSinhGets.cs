@@ -18,10 +18,10 @@ namespace Application.DiemVeSinh
 {
     public class DiemVeSinhGets
     {
-        public class Query : IRequest<Result<List<Domain.DiemVeSinh>>>
+        public class Query : IRequest<Result<List<Domain.TechLife.DiemVeSinh>>>
         {
         }
-        public class Handler : IRequestHandler<Query, Result<List<Domain.DiemVeSinh>>>
+        public class Handler : IRequestHandler<Query, Result<List<Domain.TechLife.DiemVeSinh>>>
         {
             private readonly IConfiguration _configuration;
             private readonly DataContext _context;
@@ -33,15 +33,15 @@ namespace Application.DiemVeSinh
 
             }
 
-            public async Task<Result<List<Domain.DiemVeSinh>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Domain.TechLife.DiemVeSinh>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "SP_DiemVeSinhGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);
-                    var result = await connection.QueryAsync<Domain.DiemVeSinh>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<Domain.DiemVeSinh>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<Domain.TechLife.DiemVeSinh>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<Domain.TechLife.DiemVeSinh>>.Success(result.ToList());
                 }
 
 

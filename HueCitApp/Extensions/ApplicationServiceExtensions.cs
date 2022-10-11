@@ -25,6 +25,11 @@ namespace HueCitApp.Extensions
                 opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            });
+
             //services.AddMediatR(typeof(Details.Handler).Assembly);
             //services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddApplication();

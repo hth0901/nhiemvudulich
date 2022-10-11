@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.HueCit
 {
-    public class CN_DoanhNghiep
+    public class CN_ChupAnhCoTrang
     {
-
     }
 }
