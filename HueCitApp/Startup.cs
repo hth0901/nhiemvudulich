@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace HueCitApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v2", new OpenApiInfo { Title = "TravelApi", Version = "v2" });
+            });
             services.AddControllersWithViews();
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
@@ -50,9 +54,14 @@ namespace HueCitApp
             loggerFactory.AddFile("Logs/mylog-{Date}.txt");
             app.UseMiddleware<ExceptionMiddleWare>();
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "TravelApi");
+            });
 
-            
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
