@@ -24,7 +24,7 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new CoSoChamSocSucKhoeSacDepGets.Query(), ct);
             return HandlerResult(listResult);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{ID}")]
         [AllowAnonymous]
 
         public async Task<IActionResult> chitietcosochamsocsuckhoesacdep(int ID,CancellationToken ct)
