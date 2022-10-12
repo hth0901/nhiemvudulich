@@ -16,12 +16,12 @@ namespace Application.CoSoLuuTru
 {
     public class ChiTietCoSoLuuTruGet
     {
-        public class Query : IRequest<Result<List<HoSo>>>
+        public class Query : IRequest<Result<HoSo>>
         {// su li tham so dau vao
             public int ID {get;set;}
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<HoSo>>>
+        public class Handler : IRequestHandler<Query, Result<HoSo>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -29,15 +29,15 @@ namespace Application.CoSoLuuTru
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<HoSo>> Handle(Query request, CancellationToken cancellationToken)
             {   DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@Id", request.ID);
                 string spName = "SP_CoSoLuuTruGet";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {   
                     connection.Open();
-                    var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<HoSo>>.Success(result.ToList());// compare of list  
+                    var result = await connection.QueryFirstOrDefaultAsync<HoSo>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<HoSo>.Success(result);// compare of list  
 
                 }
 
