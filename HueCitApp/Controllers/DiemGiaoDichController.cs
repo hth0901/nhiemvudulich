@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using System.Threading;
 using Application.DiemGiaoDich;
 using Domain.RequestEntity;
+using Application.Core;
+using Application.DiaDiemMuaSamGiaiTri;
+using Domain.ResponseEntity;
+using System.Drawing.Printing;
 
 namespace HueCitApp.Controllers
 {
@@ -16,20 +20,38 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        [HttpGet]
+        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-        public async Task<IActionResult> DanhSachDiemGiaoDich(CancellationToken ct)
+        public async Task<IActionResult> DanhSachDiemGiaoDich(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
-            var listResult = await Mediator.Send(new DiemGiaoDichGets.Query(), ct);
-            return HandlerResult(listResult);
+
+            var listResult = await Mediator.Send(new DiemGiaoDichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var result = new DanhSachDiemGiaoDichResponse();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSachDiemGiaoDichResponse>.Success(result));
+          
         }
-        [HttpGet("danhsachnganhang")]
+        [HttpGet("danhsachnganhang/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachNganHang(CancellationToken ct)
-        {
-            var listResult = await Mediator.Send(new DiemGiaoDichNganHangGets.Query(), ct);
-            return HandlerResult(listResult);
+        public async Task<IActionResult> DanhSachNganHang(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        {   
+            var listResult = await Mediator.Send(new DiemGiaoDichNganHangGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var result = new DanhSachDiemGiaoDichResponse();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSachDiemGiaoDichResponse>.Success(result));
         }
         [HttpGet("danhsachnganhangdiaban")]
         [AllowAnonymous]

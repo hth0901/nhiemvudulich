@@ -33,7 +33,7 @@ namespace Application.CoSoLuuTru
             {   DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@Id", request.ID);
                 string spName = "SP_CoSoLuuTruGet";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {   
                     connection.Open();
                     var result = await connection.QueryFirstOrDefaultAsync<HoSo>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));

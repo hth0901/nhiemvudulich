@@ -2,6 +2,7 @@
 using Dapper;
 using Domain;
 using Domain.HueCit;
+using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,12 +17,14 @@ namespace Application.MonAnThucUong
 {
     public class MonAnThucUongGets
     {
-        public class Query : IRequest<Result<List<DL_MonAnThucUong>>>
+        public class Query : IRequest<Result<List<MonAnThucUongItemResponse>>>
         {// su li tham so dau vao
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DL_MonAnThucUong>>>
+        public class Handler : IRequestHandler<Query, Result<List<MonAnThucUongItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -29,14 +32,17 @@ namespace Application.MonAnThucUong
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DL_MonAnThucUong>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<MonAnThucUongItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_AmThucGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@PPAGEINDEX", request.pageindex);
+                parameters.Add("@PPAGESIZE", request.pagesize);
+                string spName = "SP_DSAmThucGets";
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_MonAnThucUong>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_MonAnThucUong>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<MonAnThucUongItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<MonAnThucUongItemResponse>>.Success(result.ToList());
 
                 }
 

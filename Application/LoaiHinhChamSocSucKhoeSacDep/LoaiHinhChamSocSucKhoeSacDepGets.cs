@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Dapper;
 using Domain;
+using Domain.ResponseEntity;
 using Domain.TechLife;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -16,12 +17,13 @@ namespace Application.LoaiHinhChamSocSucKhoeSacDep
 {
     public class LoaiHinhChamSocSucKhoeSacDepGets
     {
-        public class Query : IRequest<Result<List<LoaiHinh>>>
+        public class Query : IRequest<Result<List<LoaiHinhItemResponse>>>
         {// su li tham so dau vao
-
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<LoaiHinh>>>
+        public class Handler : IRequestHandler<Query, Result<List<LoaiHinhItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -29,14 +31,18 @@ namespace Application.LoaiHinhChamSocSucKhoeSacDep
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<LoaiHinh>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<LoaiHinhItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@PPAGEINDEX", request.pageindex);
+                parameters.Add("@PPAGESIZE", request.pagesize);
+               
                 string spName = "SP_LoaiHinhDichVuCSSKSDGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<LoaiHinh>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<LoaiHinh>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<LoaiHinhItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<LoaiHinhItemResponse>>.Success(result.ToList());
 
                 }
 

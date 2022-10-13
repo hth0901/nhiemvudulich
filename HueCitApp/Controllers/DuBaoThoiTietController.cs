@@ -16,12 +16,12 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         
-        public async Task<IActionResult> DanhSachDuBao (CancellationToken ct)
-        {
-            var listResult = await Mediator.Send(new DuBaoThoiTietGets.Query(), ct);
+        public async Task<IActionResult> ThongTinDuBao (CancellationToken ct, string id )
+        {   
+            var listResult = await Mediator.Send(new DuBaoThoiTietGets.Query { ID=id}, ct);
             return HandlerResult(listResult);
         }
     }

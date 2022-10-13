@@ -18,7 +18,7 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        [HttpGet("danhsachhosoluutru/{pagesize?}/{pageindex?}")] 
+        [HttpGet("danhsachcosoluutru/{pagesize?}/{pageindex?}")] 
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachCoSoLuuTru(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {

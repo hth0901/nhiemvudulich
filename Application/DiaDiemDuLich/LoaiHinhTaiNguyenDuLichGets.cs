@@ -37,7 +37,7 @@ namespace Application.DiaDiemDuLich
                 
                             
 
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     var result = from st in _context.DL_TaiNguyen_LoaiDuLieu
