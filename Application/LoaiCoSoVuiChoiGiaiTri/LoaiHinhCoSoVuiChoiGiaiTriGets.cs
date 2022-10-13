@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Dapper;
 using Domain;
+using Domain.ResponseEntity;
 using Domain.TechLife;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -16,12 +17,13 @@ namespace Application.LoaiCoSoVuiChoiGiaiTri
 {
     public class LoaiHinhCoSoVuiChoiGiaiTriGets
     {
-        public class Query : IRequest<Result<List<DanhMuc>>>
+        public class Query : IRequest<Result<List<HoSoLuTruItemResponse>>>
         {// su li tham so dau vao
-
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DanhMuc>>>
+        public class Handler : IRequestHandler<Query, Result<List<HoSoLuTruItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -29,14 +31,17 @@ namespace Application.LoaiCoSoVuiChoiGiaiTri
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DanhMuc>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<HoSoLuTruItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@PPAGEINDEX", request.pageindex);
+                parameters.Add("@PPAGESIZE", request.pagesize);
                 string spName = "DanhMucChuDeVuiChoiGiaiTriGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DanhMuc>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DanhMuc>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<HoSoLuTruItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<HoSoLuTruItemResponse>>.Success(result.ToList());
 
                 }
 

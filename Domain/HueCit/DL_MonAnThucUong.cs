@@ -18,5 +18,6 @@ namespace Domain.HueCit
         public string ThanhPhan { get; set; }   
         public string KhuyenNghiKhiDung { get; set; }   
         public int AmThucID { get; set; }
+        public int NguoiDongBo { get; set; }
     }
 }

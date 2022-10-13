@@ -2,6 +2,7 @@
 using Dapper;
 using Domain;
 using Domain.HueCit;
+using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -20,12 +21,14 @@ namespace Application.DuongDayNong
 
     public class DuongDayNongGets
     {
-        public class Query : IRequest<Result<List<DL_DuongDayNong>>>
+        public class Query : IRequest<Result<List<DuongDayNongItemResponse>>>
         {// su li tham so dau vao
 
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DL_DuongDayNong>>>
+        public class Handler : IRequestHandler<Query, Result<List<DuongDayNongItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -33,14 +36,16 @@ namespace Application.DuongDayNong
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DL_DuongDayNong>>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                string spName = "SP_DuongDayNongGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            public async Task<Result<List<DuongDayNongItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            {   DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@@PPAGEINDEX", request.pagesize);
+                parameters.Add("@PPAGESIZE",request.pageindex);
+                string spName = "SP_DSDuongDayNongGets";
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_DuongDayNong>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_DuongDayNong>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<DuongDayNongItemResponse>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<DuongDayNongItemResponse>>.Success(result.ToList());
 
                 }
 

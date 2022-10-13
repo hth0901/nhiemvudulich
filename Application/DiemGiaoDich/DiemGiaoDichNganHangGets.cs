@@ -2,6 +2,7 @@
 using Dapper;
 using Domain;
 using Domain.HueCit;
+using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,10 +19,13 @@ namespace Application.DiemGiaoDich
 {
     public class DiemGiaoDichNganHangGets 
     {
-        public class Query : IRequest<Result<List<DL_DiemGiaoDich>>>
+        public class Query : IRequest<Result<List<DiemGiaoDichItemResponse>>>
         {
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
+
         }
-        public class Handler : IRequestHandler<Query, Result<List<DL_DiemGiaoDich>>>
+        public class Handler : IRequestHandler<Query, Result<List<DiemGiaoDichItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             private readonly DataContext _context;
@@ -33,15 +37,18 @@ namespace Application.DiemGiaoDich
 
             }
 
-            public async Task<Result<List<DL_DiemGiaoDich>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<DiemGiaoDichItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@PPAGEINDEX", request.pageindex);
+                parameters.Add("@PPAGESIZE", request.pagesize);
                 string spName = "SP_DiemGiaoDichNganHangGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);
-                    var result = await connection.QueryAsync<DL_DiemGiaoDich>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_DiemGiaoDich>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<DiemGiaoDichItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<DiemGiaoDichItemResponse>>.Success(result.ToList());
                 }
             }
         }

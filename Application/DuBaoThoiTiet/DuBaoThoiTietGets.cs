@@ -19,6 +19,7 @@ namespace Application.DuBaoThoiTiet
     {
         public class Query : IRequest<Result<List<DL_ThoiTiet>>>
         {
+            public string ID { get;set; }
         }
         public class Handler : IRequestHandler<Query, Result<List<DL_ThoiTiet>>>
         {
@@ -31,12 +32,14 @@ namespace Application.DuBaoThoiTiet
             }
             public async Task<Result<List<DL_ThoiTiet>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_ThoiTietGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@Id",request.ID);
+                string spName = "SP_ThoiTietGet";
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);
-                    var result = await connection.QueryAsync<DL_ThoiTiet>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryAsync<DL_ThoiTiet>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<List<DL_ThoiTiet>>.Success(result.ToList());
                 }
             }

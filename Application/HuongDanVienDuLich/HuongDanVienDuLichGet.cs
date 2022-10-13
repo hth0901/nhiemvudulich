@@ -1,6 +1,5 @@
 ﻿using Application.Core;
 using Dapper;
-using Domain;
 using Domain.HueCit;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -12,17 +11,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.SuKien
+namespace Application.HuongDanVienDuLich
 {
-    public class ChiTietSuKienGet
+    public class HuongDanVienDuLichGet
     {
-        public class Query : IRequest<Result<List<DL_SuKien>>>
+        public class Query : IRequest<Result<List<Domain.HueCit.HuongDanVienDuLich>>>
         {// su li tham so dau vao
-           public int IDSuKien { get; set; }
+            public int ID { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DL_SuKien>>>
+        public class Handler : IRequestHandler<Query, Result<List<Domain.HueCit.HuongDanVienDuLich>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -30,24 +29,21 @@ namespace Application.SuKien
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DL_SuKien>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Domain.HueCit.HuongDanVienDuLich>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_SuKienGet";
-             
+                string spName = "SP_HuongDanVienDuLichGet";
+
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request.IDSuKien);
+                parameters.Add("@ID", request.ID);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_SuKien>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_SuKien>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<Domain.HueCit.HuongDanVienDuLich>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<Domain.HueCit.HuongDanVienDuLich>>.Success(result.ToList());
 
                 }
 
             }
         }
-
-
-
     }
 }

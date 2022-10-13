@@ -2,6 +2,7 @@
 using Dapper;
 using Domain;
 using Domain.HueCit;
+using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,12 +17,16 @@ namespace Application.SuKien
 {
     public class SuKienThangGets
     {
-        public class Query : IRequest<Result<List<DL_SuKien>>>
+        public class Query : IRequest<Result<List<SuKienItemResponse>>>
         {// su li tham so dau vao
+            public int Month { get; set; }  
+            public int Year { get; set; }
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DL_SuKien>>>
+        public class Handler : IRequestHandler<Query, Result<List<SuKienItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -29,14 +34,18 @@ namespace Application.SuKien
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DL_SuKien>>> Handle(Query request, CancellationToken cancellationToken)
-            {
+            public async Task<Result<List<SuKienItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            {   DynamicParameters dynamicParameters = new DynamicParameters();
+                dynamicParameters.Add("@Month", request.Month);
+                dynamicParameters.Add("@Year", request.Year);
+                dynamicParameters.Add("@PPAGEINDEX", request.pageindex);
+                dynamicParameters.Add("@PPAGESIZE", request.pagesize);
                 string spName = "SP_SuKienThangGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_SuKien>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_SuKien>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<SuKienItemResponse>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<SuKienItemResponse>>.Success(result.ToList());
 
                 }
 

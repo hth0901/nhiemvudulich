@@ -35,7 +35,7 @@ namespace Application.MonAnThucUong
                 string spName = "[SP_AmThucGet]";
                 DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@ID", request.ID);
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     var result = await connection.QueryAsync<DL_MonAnThucUong>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));

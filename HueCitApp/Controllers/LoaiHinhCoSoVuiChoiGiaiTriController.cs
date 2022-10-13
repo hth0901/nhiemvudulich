@@ -1,29 +1,30 @@
-﻿using Application.DuBaoThoiTiet;
+﻿
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
-using Application.DiaDiemMuaSamGiaiTri;
 using Application.Core;
-using Application.DiaDiemDuLich;
+using Application.MonAnThucUong;
 using Domain.ResponseEntity;
+using System.Drawing.Printing;
+using Application.LoaiCoSoVuiChoiGiaiTri;
 
 namespace HueCitApp.Controllers
 {
-    public class DiaDiemVuiChoiGiaiTriController : BaseApiController
+    public class LoaiHinhCoSoVuiChoiGiaiTriController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiaDiemVuiChoiGiaiTriController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public LoaiHinhCoSoVuiChoiGiaiTriController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-
-        public async Task<IActionResult> DanhSachDuBao(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        public async Task<IActionResult> DanhSachLoaiHinhCoSoVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
-            var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var listResult = await Mediator.Send(new LoaiHinhCoSoVuiChoiGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSachHoSoLuTruResponse();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
@@ -33,7 +34,6 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSachHoSoLuTruResponse>.Success(result));
-   
         }
     }
 }

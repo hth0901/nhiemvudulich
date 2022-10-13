@@ -40,7 +40,7 @@ namespace Application.DiemGiaoDich
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@HUYEN", request._request.Huyen);
                 parameters.Add("@XA_PHUONG",request._request.Xa_Phuong);
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     var result = await connection.QueryAsync<DL_DiemGiaoDich>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
