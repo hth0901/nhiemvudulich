@@ -26,12 +26,16 @@
             "esri/layers/FeatureLayer",
             "esri/layers/MapImageLayer",
             "esri/Basemap",
-            "esri/layers/WMSLayer",
             "esri/widgets/BasemapGallery",
             "esri/widgets/Expand",
-            "esri/widgets/Search"
+            "esri/widgets/Search",
+            "esri/widgets/Locate",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+            "esri/geometry/Polyline",
+            "esri/geometry/SpatialReference"
 
-        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, WMSLayer, BasemapGallery, Expand, Search) {
+        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, BasemapGallery, Expand, Search, Locate, Graphic, GraphicsLayer, Polyline, SpatialReference) {
             const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
             esriConfig.apiKey = mApiKey;
 
@@ -41,9 +45,9 @@
                 title: "basemap",
                 id: "basemap"
             });
-            const layers = new MapImageLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
-            });
+            //const layers = new MapImageLayer({
+            //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
+            //});
 
             const basemapData = [
                 {
@@ -103,8 +107,18 @@
                             ]
                         }
                     ],
-                }
-                
+                    actions: [
+                        {
+                            title: "Chi tiết",
+                            id: "routes",
+                            className: "test",
+                            type: "button",
+                        },
+                    ],
+                },
+                spatialReference: new SpatialReference({
+                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                })
             });
             const layer_1 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/1",
@@ -144,7 +158,18 @@
                             ]
                         }
                     ],
-                }
+                    actions: [
+                        {
+                            title: "Chi tiết",
+                            id: "routes",
+                            className: "test",
+                            type: "button",
+                        },
+                    ],
+                },
+                spatialReference: new SpatialReference({
+                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                })
             });
             const layer_2 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/2",
@@ -184,7 +209,18 @@
                             ]
                         }
                     ],
-                }
+                    actions: [
+                        {
+                            title: "Chi tiết",
+                            id: "routes",
+                            className: "test",
+                            type: "button",
+                        },
+                    ],
+                },
+                spatialReference: new SpatialReference({
+                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                })
             });
             const layer_3 = new FeatureLayer({
                 url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/3",
@@ -224,18 +260,34 @@
                             ]
                         }
                     ],
-                }
+                    actions: [
+                        {
+                            title: "Chi tiết",
+                            id: "routes",
+                            className: "test",
+                            type: "button",
+                        },
+                    ],
+                },
+                spatialReference: new SpatialReference({
+                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                })
             });
 
             const map = new Map({
                 basemap: 'arcgis-topographic', // Basemap layer service
-                layers: [layers, layer_0, layer_1, layer_2, layer_3],
+                layers: [layer_0, layer_1, layer_2, layer_3],
             });
+
+            const graphicsLayer = new GraphicsLayer();
+            map.add(graphicsLayer);
+
             const view = new MapView({
                 map: map,
                 center: [107.58513469042099, 16.462504990071924], // Longitude, latitude
                 zoom: 10, // Zoom level
-                container: "viewDiv" // Div element
+                container: "viewDiv", // Div element
+                //spatialReference: SpatialReference.WGS84
             });
 
             view.when(() => {
@@ -270,6 +322,79 @@
                     console.log('click')
                 });
                 view.ui.add(element, "top-right");
+
+                const locateBtn = new Locate({
+                    view: view
+                });
+
+                // Add the locate widget to the top left corner of the view
+                //view.ui.add(locateBtn, {
+                //    position: "top-left"
+                //});
+
+                //locateBtn.locate().then(function (pos) {
+                //    console.log(pos)
+                //});
+
+                view.popup.on("trigger-action", (evt) => {
+                    //console.log(evt);
+                    const mPopup = view.popup;
+                    //console.log(mPopup.selectedFeature.geometry);
+                    const { latitude: mLat, longitude: mLong } = mPopup.selectedFeature.geometry
+                    //const selectedFeature =
+                    //    mPopup.selectedFeature && mPopup.selectedFeature.isAggregate;
+
+                    //// console.log(view.popup.selectedFeature.getObjectId());
+                    //displayFeature(mPopup.selectedFeature);
+
+                    locateBtn.locate().then(function (pos) {
+                        const { latitude: curLat, longitude: curLong } = pos.coords
+                        fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf624851a99071ab2944ee85a0f5e9f5e40c36&start=${curLong},${curLat}&end=${mLong},${mLat}`)
+                            .then(res => {
+                                console.log(res)
+                                return res.json()
+                            })
+                            .then(data => {
+                                //console.log(data.features[0].geometry.coordinates)
+                                const { features } = data;
+                                const [resultFeature] = features;
+                                const { geometry, properties } = resultFeature;
+                                const { segments } = properties;
+                                const [segmentResult] = segments
+                                const { steps } = segmentResult
+                                const { coordinates } = geometry;
+                                console.log(steps);
+
+                                const polylineGraphic = new Graphic({
+                                    //geometry: {
+                                    //    type: "polyline",
+                                    //    paths: [...coordinates]
+                                    //},
+                                    geometry: new Polyline({
+                                        hasZ: false,
+                                        hasM: true,
+                                        paths: [...coordinates],
+                                        //spatialReference: SpatialReference.WGS84
+
+                                        spatialReference: new SpatialReference({
+                                            wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                                        })
+                                    }),
+                                    symbol: {
+                                        type: "simple-line",
+                                        color: [226, 119, 40], // Orange
+                                        width: 3
+                                    }
+                                });
+
+                                console.log(graphicsLayer.graphics);
+                                graphicsLayer.add(polylineGraphic);
+                            })
+                            .catch(er => {
+                                console.log(er)
+                            })
+                    });
+                });
             })
 
 
