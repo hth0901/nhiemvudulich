@@ -18,11 +18,68 @@
 
 @section Scripts {
     <script type="text/javascript">
+
+        const pointsArr = [
+            [
+                107.581872,
+                16.459045
+            ],
+            [
+                107.581508,
+                16.45953
+            ],
+            [
+                107.580759,
+                16.458885
+            ],
+            [
+                107.580236,
+                16.45844
+            ],
+            [
+                107.579285,
+                16.457616
+            ],
+            [
+                107.579092,
+                16.457441
+            ],
+            [
+                107.579031,
+                16.457379
+            ],
+            [
+                107.578698,
+                16.45707
+            ],
+            [
+                107.578591,
+                16.456976
+            ],
+            [
+                107.578372,
+                16.457165
+            ],
+            [
+                107.578289,
+                16.457229
+            ],
+            [
+                107.578155,
+                16.457297
+            ],
+            [
+                107.577923,
+                16.45741
+            ]
+        ]
+
+        let polylineGraphic = null;
+        let graphicsLayer = null;
         require([
             "esri/config",
             "esri/Map",
             "esri/views/MapView",
-
             "esri/layers/FeatureLayer",
             "esri/layers/MapImageLayer",
             "esri/Basemap",
@@ -39,12 +96,12 @@
             const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
             esriConfig.apiKey = mApiKey;
 
-            let basemap = new Basemap({
-                baseLayers: [
-                ],
-                title: "basemap",
-                id: "basemap"
-            });
+            //let basemap = new Basemap({
+            //    baseLayers: [
+            //    ],
+            //    title: "basemap",
+            //    id: "basemap"
+            //});
             //const layers = new MapImageLayer({
             //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
             //});
@@ -109,7 +166,7 @@
                     ],
                     actions: [
                         {
-                            title: "Chi tiết",
+                            title: "Chỉ đường",
                             id: "routes",
                             className: "test",
                             type: "button",
@@ -117,7 +174,7 @@
                     ],
                 },
                 spatialReference: new SpatialReference({
-                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
                 })
             });
             const layer_1 = new FeatureLayer({
@@ -160,7 +217,7 @@
                     ],
                     actions: [
                         {
-                            title: "Chi tiết",
+                            title: "Chỉ đường",
                             id: "routes",
                             className: "test",
                             type: "button",
@@ -168,7 +225,7 @@
                     ],
                 },
                 spatialReference: new SpatialReference({
-                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
                 })
             });
             const layer_2 = new FeatureLayer({
@@ -211,7 +268,7 @@
                     ],
                     actions: [
                         {
-                            title: "Chi tiết",
+                            title: "Chỉ đường",
                             id: "routes",
                             className: "test",
                             type: "button",
@@ -219,7 +276,7 @@
                     ],
                 },
                 spatialReference: new SpatialReference({
-                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
                 })
             });
             const layer_3 = new FeatureLayer({
@@ -262,7 +319,7 @@
                     ],
                     actions: [
                         {
-                            title: "Chi tiết",
+                            title: "Chỉ đường",
                             id: "routes",
                             className: "test",
                             type: "button",
@@ -270,16 +327,17 @@
                     ],
                 },
                 spatialReference: new SpatialReference({
-                    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
                 })
             });
 
             const map = new Map({
+                //basemap: basemap
                 basemap: 'arcgis-topographic', // Basemap layer service
                 layers: [layer_0, layer_1, layer_2, layer_3],
             });
 
-            const graphicsLayer = new GraphicsLayer();
+            graphicsLayer = new GraphicsLayer();
             map.add(graphicsLayer);
 
             const view = new MapView({
@@ -288,6 +346,9 @@
                 zoom: 10, // Zoom level
                 container: "viewDiv", // Div element
                 //spatialReference: SpatialReference.WGS84
+                //spatialReference: new SpatialReference({
+                //    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
+                //})
             });
 
             view.when(() => {
@@ -323,14 +384,43 @@
                 });
                 view.ui.add(element, "top-right");
 
+                const btnClearRoute = document.createElement('div');
+                btnClearRoute.className =
+                    "esri-icon-layer-list esri-widget--button esri-widget esri-interactive";
+                btnClearRoute.addEventListener("click", function (evt) {
+                    if (graphicsLayer && polylineGraphic) {
+                        graphicsLayer.remove(polylineGraphic);
+                    }
+                });
+                view.ui.add(btnClearRoute, "bottom-right");
+
                 const locateBtn = new Locate({
                     view: view
                 });
 
-                // Add the locate widget to the top left corner of the view
-                //view.ui.add(locateBtn, {
-                //    position: "top-left"
-                //});
+                 //Add the locate widget to the top left corner of the view
+                view.ui.add(locateBtn, {
+                    position: "top-left"
+                });
+                //locateBtn.on('locate', evt => {
+                //    if (polylineGraphic) {
+                //        graphicsLayer.remove(polylineGraphic);
+                //    }
+
+                //    polylineGraphic = new Graphic({
+                //        geometry: new Polyline({
+                //            hasZ: false,
+                //            hasM: true,
+                //            paths: [...pointsArr],
+                //        }),
+                //        symbol: {
+                //            type: "simple-line",
+                //            color: [226, 119, 40], // Orange
+                //            width: 3
+                //        }
+                //    });
+                //    graphicsLayer.add(polylineGraphic);
+                //})
 
                 //locateBtn.locate().then(function (pos) {
                 //    console.log(pos)
@@ -346,6 +436,9 @@
 
                     //// console.log(view.popup.selectedFeature.getObjectId());
                     //displayFeature(mPopup.selectedFeature);
+                    if (polylineGraphic) {
+                        graphicsLayer.remove(polylineGraphic);
+                    }
 
                     locateBtn.locate().then(function (pos) {
                         const { latitude: curLat, longitude: curLong } = pos.coords
@@ -365,20 +458,16 @@
                                 const { coordinates } = geometry;
                                 console.log(steps);
 
-                                const polylineGraphic = new Graphic({
-                                    //geometry: {
-                                    //    type: "polyline",
-                                    //    paths: [...coordinates]
-                                    //},
+                                polylineGraphic = new Graphic({
                                     geometry: new Polyline({
                                         hasZ: false,
                                         hasM: true,
                                         paths: [...coordinates],
                                         //spatialReference: SpatialReference.WGS84
 
-                                        spatialReference: new SpatialReference({
-                                            wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
-                                        })
+                                        //spatialReference: new SpatialReference({
+                                        //    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
+                                        //})
                                     }),
                                     symbol: {
                                         type: "simple-line",
@@ -387,7 +476,7 @@
                                     }
                                 });
 
-                                console.log(graphicsLayer.graphics);
+                                //console.log(graphicsLayer.graphics);
                                 graphicsLayer.add(polylineGraphic);
                             })
                             .catch(er => {
