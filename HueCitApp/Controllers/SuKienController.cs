@@ -45,7 +45,7 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> DanhSachSuKienThangTheoChuDe(CancellationToken ct, [FromBody] SuKienChuDeThang search)
         {
 
-            var listResult = await Mediator.Send(new SuKienThangTheoChuDeGets.Query {search=search  }, ct);
+            var listResult = await Mediator.Send(new SuKienThangTheoChuDeGets .Query {search=search  }, ct);
             var result = new DanhSachSuKienResponse();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)

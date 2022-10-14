@@ -43,7 +43,7 @@ namespace Application.DiaDiemDuLich
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
-                string spName = "SP_DiemDuLichGets";
+                string spName = "SP_DSDiemDuLichGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {      
                     connection.Open();

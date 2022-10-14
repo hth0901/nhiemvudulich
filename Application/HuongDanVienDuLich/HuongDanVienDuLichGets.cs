@@ -35,7 +35,7 @@ namespace Application.HuongDanVienDuLich
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@@PPAGEINDEX", request.pagesize);
                 parameters.Add("@PPAGESIZE", request.pageindex);
-                string spName = "SP_DSDuongDayNongGets";
+                string spName = "SP_DSHuongDanVienDuLichGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

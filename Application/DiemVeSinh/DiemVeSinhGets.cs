@@ -43,7 +43,7 @@ namespace Application.DiemVeSinh
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
               
-                string spName = "SP_DiemVeSinhGets";
+                string spName = "SP_DSDiemVeSinhGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

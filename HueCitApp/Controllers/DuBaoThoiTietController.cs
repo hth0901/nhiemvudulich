@@ -21,7 +21,7 @@ namespace HueCitApp.Controllers
         
         public async Task<IActionResult> ThongTinDuBao (CancellationToken ct, string id )
         {   
-            var listResult = await Mediator.Send(new DuBaoThoiTietGets.Query { ID=id}, ct);
+            var listResult = await Mediator.Send(new DuBaoThoiTietGet.Query { ID=id}, ct);
             return HandlerResult(listResult);
         }
     }

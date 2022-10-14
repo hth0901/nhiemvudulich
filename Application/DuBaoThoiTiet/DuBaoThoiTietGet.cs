@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.DuBaoThoiTiet
 {
-    public class DuBaoThoiTietGets
+    public class DuBaoThoiTietGet
     {
         public class Query : IRequest<Result<List<DL_ThoiTiet>>>
         {

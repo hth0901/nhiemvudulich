@@ -37,7 +37,7 @@ namespace Application.CoSoChamSocSucKhoeSacDep
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
-                string spName = "SP_CoSoChamSocSucKhoeSacDepGets";
+                string spName = "SP_DSCoSoChamSocSucKhoeSacDepGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

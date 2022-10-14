@@ -36,7 +36,7 @@ namespace Application.LoaiCoSoVuiChoiGiaiTri
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
-                string spName = "DanhMucChuDeVuiChoiGiaiTriGets";
+                string spName = "SP_DSDanhMucChuDeVuiChoiGiaiTriGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
