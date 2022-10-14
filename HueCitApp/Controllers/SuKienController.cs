@@ -20,12 +20,12 @@ namespace HueCitApp.Controllers
         {
         }
 
-        [HttpGet("{month}/{year}/{pagesize?}/{pageindex?}")]
+        [HttpGet("theothang")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachSuKienTheoThang(CancellationToken ct,int Month, int Year,int pagesize = 10, int pageindex = 1)
+        public async Task<IActionResult> DanhSachSuKienTheoThang(CancellationToken ct, [FromBody] SuKienChuDeThang search)
         {
-            var listResult = await Mediator.Send(new SuKienThangGets.Query {Month=Month,Year=Year, pagesize = pagesize, pageindex = pageindex }, ct);
+            var listResult = await Mediator.Send(new SuKienThangGets.Query {search= search }, ct);
             var result = new DanhSachSuKienResponse();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)

@@ -19,10 +19,7 @@ namespace Application.SuKien
     {
         public class Query : IRequest<Result<List<SuKienItemResponse>>>
         {// su li tham so dau vao
-            public int Month { get; set; }  
-            public int Year { get; set; }
-            public int pagesize { get; set; }
-            public int pageindex { get; set; }
+         public SuKienChuDeThang search { get; set; }
 
         }
 
@@ -36,10 +33,10 @@ namespace Application.SuKien
 
             public async Task<Result<List<SuKienItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {   DynamicParameters dynamicParameters = new DynamicParameters();
-                dynamicParameters.Add("@Month", request.Month);
-                dynamicParameters.Add("@Year", request.Year);
-                dynamicParameters.Add("@PPAGEINDEX", request.pageindex);
-                dynamicParameters.Add("@PPAGESIZE", request.pagesize);
+                dynamicParameters.Add("@Month", request.search.Month);
+                dynamicParameters.Add("@Year", request.search.Year);
+                dynamicParameters.Add("@PPAGEINDEX", request.search.pageindex);
+                dynamicParameters.Add("@PPAGESIZE", request.search.pagesize);
                 string spName = "SP_SuKienThangGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
