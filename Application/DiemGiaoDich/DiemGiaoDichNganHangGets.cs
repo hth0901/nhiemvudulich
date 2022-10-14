@@ -42,7 +42,7 @@ namespace Application.DiemGiaoDich
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
-                string spName = "SP_DiemGiaoDichNganHangGets";
+                string spName = "SP_DSDiemGiaoDichNganHangGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

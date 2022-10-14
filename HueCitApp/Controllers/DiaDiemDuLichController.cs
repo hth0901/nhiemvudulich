@@ -33,15 +33,7 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSachHoSoLuTruResponse>.Success(result));
         }
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("loaihinhtainguyen")]
-        public async Task<IActionResult> LoaiHinhTaiNguyenDuLich(CancellationToken ct)
-        {
-            var listResult = await Mediator.Send(new LoaiHinhTaiNguyenDuLichGets.Query(), ct);
-            return HandlerResult(listResult);
-            
-        }
+   
 
     }
 }

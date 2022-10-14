@@ -33,7 +33,7 @@ namespace Application.CoSoLuuTru
 
             public async Task<Result<List<HoSoLuTruItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_CoSoLuuTruGets";
+                string spName = "SP_DSCoSoLuuTruGets";
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);

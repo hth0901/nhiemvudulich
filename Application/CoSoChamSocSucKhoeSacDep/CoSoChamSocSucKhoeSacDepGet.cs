@@ -33,7 +33,7 @@ namespace Application.CoSoChamSocSucKhoeSacDep
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@ID", request.ID);
-                string spName = "SP_CoSoChamSocSucKhoeSacDepGet";
+                string spName = "SP_DSCoSoChamSocSucKhoeSacDepGet";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

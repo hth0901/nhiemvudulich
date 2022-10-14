@@ -37,7 +37,7 @@ namespace Application.LoaiHinhChamSocSucKhoeSacDep
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
                
-                string spName = "SP_LoaiHinhDichVuCSSKSDGets";
+                string spName = "SP_DSLoaiHinhDichVuCSSKSDGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

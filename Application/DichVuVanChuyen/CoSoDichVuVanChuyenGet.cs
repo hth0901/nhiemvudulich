@@ -36,7 +36,7 @@ namespace Application.DichVuVanChuyen
             public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
             {   DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@ID", request.ID);
-                string spName = "SP_DanhSachCoSoDichVuVanChuyenGet";
+                string spName = "SP_DSCoSoDichVuVanChuyenGet";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

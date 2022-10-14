@@ -32,7 +32,7 @@ namespace Application.MonAnThucUong
 
             public async Task<Result<List<DL_MonAnThucUong>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "[SP_AmThucGet]";
+                string spName = "[SP_DSAmThucGet]";
                 DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@ID", request.ID);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))

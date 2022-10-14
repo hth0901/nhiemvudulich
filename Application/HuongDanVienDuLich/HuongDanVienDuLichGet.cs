@@ -31,7 +31,7 @@ namespace Application.HuongDanVienDuLich
 
             public async Task<Result<List<Domain.HueCit.HuongDanVienDuLich>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_HuongDanVienDuLichGet";
+                string spName = "SP_DSHuongDanVienDuLichGet";
 
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@ID", request.ID);

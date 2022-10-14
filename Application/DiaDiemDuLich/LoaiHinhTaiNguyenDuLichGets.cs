@@ -2,6 +2,7 @@
 using Dapper;
 using Domain;
 using Domain.HueCit;
+using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,12 @@ namespace Application.DiaDiemDuLich
 {
     public  class LoaiHinhTaiNguyenDuLichGets
     {
-        public class Query: IRequest<Result<List<DL_TaiNguyen_LoaiDuLieu>>>
+        public class Query: IRequest<Result<List<LoaiHinhTaiNguyenItemResponse>>>
         {
-
+            public int pagesize { get; set; }
+            public int pageindex { get; set; }
         }
-        public class Handler: IRequestHandler<Query, Result<List<DL_TaiNguyen_LoaiDuLieu>>>
+        public class Handler: IRequestHandler<Query, Result<List<LoaiHinhTaiNguyenItemResponse>>>
         { private readonly DataContext _context;
             private readonly IConfiguration _configuration; 
             public  Handler (IConfiguration configuration,DataContext context)// constructor
@@ -32,19 +34,22 @@ namespace Application.DiaDiemDuLich
                 _context = context;
             }
 
-            public async Task<Result<List<DL_TaiNguyen_LoaiDuLieu>>> Handle(Query request, CancellationToken cancellationToken)
-            { 
-                
-                            
+            public async Task<Result<List<LoaiHinhTaiNguyenItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            {
 
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@PPAGEINDEX", request.pageindex);
+                parameters.Add("@PPAGESIZE", request.pagesize);
+                string spName = "SP_DSLoaiHinhTaiNguyen";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = from st in _context.DL_TaiNguyen_LoaiDuLieu
-                                select st;
-                    return Result<List<DL_TaiNguyen_LoaiDuLieu>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<LoaiHinhTaiNguyenItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<LoaiHinhTaiNguyenItemResponse>>.Success(result.ToList());
+
                 }
-                 
+
             }
         }
 

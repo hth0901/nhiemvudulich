@@ -41,7 +41,7 @@ namespace Application.DichVuVanChuyen
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
-                string spName = "SP_DanhSachCoSoDichVuVanChuyenGets";
+                string spName = "SP_DSCoSoDichVuVanChuyenGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnetion")))
                 {
                     connection.Open();
