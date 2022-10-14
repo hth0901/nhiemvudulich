@@ -17,5 +17,7 @@ namespace Domain.HueCit
         public float X { get; set; }
         public float Y { get; set; }
         public int DiemGiaoDichID { get; set; }
+        public int PhuongXaId { get; set; }
+        public int QuanHuyenId { get; set; }
     }
 }

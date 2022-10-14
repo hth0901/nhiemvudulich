@@ -8,7 +8,7 @@ namespace Domain.RequestEntity
 {
     public class Place_Request
     {
-        public string Huyen { get; set; }
-        public string Xa_Phuong { get; set; }
+        public int QuanHuyen { get; set; }
+        public int XaPhuong { get; set; }
     }
 }

@@ -38,8 +38,8 @@ namespace Application.DiemGiaoDich
             {
                 string spName = "SP_DSDiemGiaoDich_NganHangDiaBanGets";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@HUYEN", request._request.Huyen);
-                parameters.Add("@XA_PHUONG",request._request.Xa_Phuong);
+                parameters.Add("@QuanHuyenId", request._request.QuanHuyen);
+                parameters.Add("@PhuongXaId", request._request.XaPhuong);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
