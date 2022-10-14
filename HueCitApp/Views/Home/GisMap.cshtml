@@ -10,9 +10,41 @@
         width: 100%;
         float: left
     }
+
+    .map-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .map-sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        /*background-color: #fff;*/
+        z-index: 1;
+        /*display: none*/
+    }
+
+    .toggle-display {
+        display: none;
+    }
 </style>
 
 <div class="map-container">
+    <div class="card map-sidebar toggle-display">
+        <div class="card-body">
+            <h5 class="card-title" style="cursor: pointer" id="map-sidebar-header"><i class="ft-arrow-left"></i>&nbsp;&nbsp;lớp bản đồ</h5>
+            <div id="map-sidebar" style="margin-top: 10px"></div>
+        </div>
+    </div>
+    @*<div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <div id="map-sidebar" style="margin-top: 10px"></div>
+        </div>
+    </div>*@
     <div id="viewDiv"></div>
 </div>
 
@@ -380,7 +412,8 @@
                 element.className =
                     "esri-icon-layer-list esri-widget--button esri-widget esri-interactive";
                 element.addEventListener("click", function (evt) {
-                    console.log('click')
+                    //console.log('click')
+                    document.querySelector('.map-sidebar').classList.toggle('toggle-display');
                 });
                 view.ui.add(element, "top-right");
 
@@ -489,48 +522,49 @@
 
             const data = [
                 {
-                    id: "0",
+                    id: "00",
                     text: "Tư nhân",
                 },
                 {
-                    id: "1",
+                    id: "01",
                     text: "TNHH 1 TV",
                 },
                 {
-                    id: "2",
+                    id: "02",
                     text: "TNHH 2 TV",
                 },
                 {
-                    id: "3",
+                    id: "03",
                     text: "Cty Cổ Phần",
                 },
             ];
 
-            //let tree = new Tree('#map-sidebar', {
-            //    data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
-            //    closeDepth: 3,
-            //    loaded: function () {
-            //        this.values = ['0', '1', '2', '3'];
-            //        //console.log(this.selectedNodes);
-            //        //console.log(this.values);
-            //    },
-            //    onChange: function () {
-            //        //console.log(this.values);
-            //        //console.log(map.layers.items);
-            //        map.layers.items.forEach((el, idx) => {
-            //            const layerId = el.id;
-            //            if (this.values.includes(layerId)) {
-            //                el.visible = true;
-            //            }
-            //            else {
-            //                el.visible = false;
-            //            }
-            //        })
-            //    },
-            //    onItemClick: function () {
-            //        console.log('dkmdkm')
-            //    }
-            //})
+            let tree = new Tree('#map-sidebar', {
+                data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
+                closeDepth: 3,
+                loaded: function () {
+                    this.values = ['00', '01', '02', '03'];
+                },
+                onChange: function () {
+                    //console.log(map.layers.items);
+                    map.layers.items.forEach((el, idx) => {
+                        const layerId = el.id;
+                        if (this.values.includes(layerId) || el.type === "graphics") {
+                            el.visible = true;
+                        }
+                        else {
+                            el.visible = false;
+                        }
+                    })
+                },
+                onItemClick: function () {
+                    console.log('dkmdkm')
+                }
+            })
         });
+
+        document.getElementById('map-sidebar-header').addEventListener('click', evt => {
+            document.querySelector('.map-sidebar').classList.toggle('toggle-display');
+        })
     </script>
 }
