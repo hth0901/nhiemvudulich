@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using Application.DiaDiemAnUong;
 using Application.DiaDiemDuLich;
+using Application.SuKien;
 using Domain.ResponseEntity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +34,17 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSachHoSoLuTruResponse>.Success(result));
         }
-   
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+
+
+        public async Task<IActionResult> ChiTietDiemDuLich(CancellationToken ct, int ID)
+        {
+            var listResult = await Mediator.Send(new DiemDuLichGet.Query { ID = ID }, ct);
+            return HandlerResult(listResult);
+
+        }
+
 
     }
 }

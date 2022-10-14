@@ -22,7 +22,7 @@ namespace HueCitApp.Controllers
         }
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-        public async Task<IActionResult> DanhSachLoaiHinh(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        public async Task<IActionResult> DanhSachLoaiHinhDichVuChamSocSucKhoeSacDep(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new LoaiHinhChamSocSucKhoeSacDepGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSachLoaiHinhResponse();
