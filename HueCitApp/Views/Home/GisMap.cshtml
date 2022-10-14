@@ -134,9 +134,10 @@
             //    title: "basemap",
             //    id: "basemap"
             //});
-            //const layers = new MapImageLayer({
-            //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
-            //});
+            const imageLayer = new MapImageLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
+                id: "05"
+            });
 
             const basemapData = [
                 {
@@ -156,6 +157,16 @@
             //const mLayer = new WMSLayer({
             //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
             //})
+
+
+            const baseMapQuanHuyen = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/4",
+                id: "10",
+            });
+            const baseMapPhuongXa = new FeatureLayer({
+                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/5",
+                id: "11",
+            });
 
 
             const layer_0 = new FeatureLayer({
@@ -366,7 +377,10 @@
             const map = new Map({
                 //basemap: basemap
                 basemap: 'arcgis-topographic', // Basemap layer service
-                layers: [layer_0, layer_1, layer_2, layer_3],
+                //basemap: new Basemap({
+                //    baseLayers: [baseMapQuanHuyen, baseMapPhuongXa],
+                //}),
+                layers: [baseMapQuanHuyen, baseMapPhuongXa, layer_0, layer_1, layer_2, layer_3],
             });
 
             graphicsLayer = new GraphicsLayer();
@@ -537,16 +551,28 @@
                     id: "03",
                     text: "Cty Cổ Phần",
                 },
+                //{
+                //    id: "05",
+                //    text: "Bản đồ hành chính",
+                //},
+                {
+                    id: "10",
+                    text: "Quận huyện",
+                },
+                {
+                    id: "11",
+                    text: "Phường xã",
+                },
             ];
 
             let tree = new Tree('#map-sidebar', {
                 data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
                 closeDepth: 3,
                 loaded: function () {
-                    this.values = ['00', '01', '02', '03'];
+                    this.values = ['00', '01', '02', '03', '10', '11'];
                 },
                 onChange: function () {
-                    //console.log(map.layers.items);
+                    console.log(map.layers.items);
                     map.layers.items.forEach((el, idx) => {
                         const layerId = el.id;
                         if (this.values.includes(layerId) || el.type === "graphics") {
