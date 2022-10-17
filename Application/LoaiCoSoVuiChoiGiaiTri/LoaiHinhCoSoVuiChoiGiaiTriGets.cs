@@ -17,13 +17,13 @@ namespace Application.LoaiCoSoVuiChoiGiaiTri
 {
     public class LoaiHinhCoSoVuiChoiGiaiTriGets
     {
-        public class Query : IRequest<Result<List<HoSoLuTruItemResponse>>>
+        public class Query : IRequest<Result<List<LoaiHinh_ID_Ten>>>
         {// su li tham so dau vao
             public int pagesize { get; set; }
             public int pageindex { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<HoSoLuTruItemResponse>>>
+        public class Handler : IRequestHandler<Query, Result<List<LoaiHinh_ID_Ten>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -31,17 +31,16 @@ namespace Application.LoaiCoSoVuiChoiGiaiTri
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<HoSoLuTruItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<LoaiHinh_ID_Ten>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@PPAGEINDEX", request.pageindex);
-                parameters.Add("@PPAGESIZE", request.pagesize);
+          
                 string spName = "SP_DSDanhMucChuDeVuiChoiGiaiTriGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<HoSoLuTruItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<HoSoLuTruItemResponse>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<LoaiHinh_ID_Ten>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<LoaiHinh_ID_Ten>>.Success(result.ToList());
 
                 }
 

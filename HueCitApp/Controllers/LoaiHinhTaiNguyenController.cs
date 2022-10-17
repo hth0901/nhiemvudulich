@@ -9,33 +9,36 @@ using System.Threading;
 
 namespace HueCitApp.Controllers
 {
-    public class LoaiHinhTaiNguyenController : Controller
+    public class LoaiHinhTaiNguyenController : BaseApiController
     {
-        public class DiaDiemDuLichController : BaseApiController
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public LoaiHinhTaiNguyenController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
-            private readonly IWebHostEnvironment _webHostEnvironment;
-            public DiaDiemDuLichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
-            {
-                _webHostEnvironment = hostingEnvironment;
-            }
-            [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
-            [AllowAnonymous]
-
-            public async Task<IActionResult>DanhSachLoaiHinhTaiNguyen(CancellationToken ct, int pagesize = 10, int pageindex = 1)
-            {
-                var listResult = await Mediator.Send(new LoaiHinhTaiNguyenDuLichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-                var result = new DanhSachLoaiHinhTaiNguyenResponse();
-                result.TotalRows = 0;
-                if (listResult.Value.Count > 0)
-                {
-                    result.Data = listResult.Value;
-                    result.TotalRows = result.Data[0].TotalRows;
-                }
-                //return HandlerResult(listResult);
-                return HandlerResult(Result<DanhSachLoaiHinhTaiNguyenResponse>.Success(result));
-            }
-          
-
+            _webHostEnvironment = hostingEnvironment;
         }
+        [HttpGet("tainguyen")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachLoaiHinhTaiNguyen(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhTaiNguyenDuLichGets.Query(), ct);
+
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+        }
+        [HttpGet("disanvanhoa")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> LoaiHinhDiSanVanHoa(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhDiSanVanHoaGets.Query(), ct);
+
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+        }
+
+
+
     }
 }

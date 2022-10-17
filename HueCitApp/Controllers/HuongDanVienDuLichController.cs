@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Application.HuongDanVienDuLich;
 using Application.SuKien;
+using Domain.HueCit;
 
 namespace HueCitApp.Controllers
 {
@@ -25,7 +26,7 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> danhsachhuongdanviendulich(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new HuongDanVienDuLichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-            var result = new DanhSachHuongDanVienDuLichResponse();
+            var result = new DanhSach<HuongDanVienDuLichItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
             {
@@ -33,7 +34,7 @@ namespace HueCitApp.Controllers
                 result.TotalRows = result.Data[0].TotalRows;
             }
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSachHuongDanVienDuLichResponse>.Success(result));
+            return HandlerResult(Result<DanhSach<HuongDanVienDuLichItemResponse>>.Success(result));
 
         }
         [HttpGet("{id}")]
@@ -45,5 +46,6 @@ namespace HueCitApp.Controllers
             return HandlerResult(listResult);
 
         }
+    
     }
 }

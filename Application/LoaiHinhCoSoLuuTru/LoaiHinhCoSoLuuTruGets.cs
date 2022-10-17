@@ -19,8 +19,7 @@ namespace Application.LoaiHinhCoSoLuuTru
     {
         public class Query : IRequest<Result<List<LoaiHinhItemResponse>>>
         {// su li tham so dau vao
-            public int pagesize { get; set; }
-            public int pageindex { get; set; }
+         
 
         }
 
@@ -34,14 +33,12 @@ namespace Application.LoaiHinhCoSoLuuTru
 
             public async Task<Result<List<LoaiHinhItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@PPAGEINDEX", request.pageindex);
-                parameters.Add("@PPAGESIZE", request.pagesize);
+  
                 string spName = "SP_DSLoaiHinh_LuuTruGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<LoaiHinhItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryAsync<LoaiHinhItemResponse>(new CommandDefinition(spName, parameters:null, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<List<LoaiHinhItemResponse>>.Success(result.ToList());
 
                 }
