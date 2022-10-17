@@ -1,10 +1,9 @@
 ﻿using Application.Core;
 using Dapper;
-using Domain;
 using Domain.ResponseEntity;
-using Domain.TechLife;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,29 +12,29 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.LoaiHinhChamSocSucKhoeSacDep
+namespace Application.DiaDiemDuLich
 {
-    public class LoaiHinhChamSocSucKhoeSacDepGets
+    public class LoaiHinhDiSanVanHoaGets
     {
         public class Query : IRequest<Result<List<LoaiHinh_ID_Ten>>>
-        {// su li tham so dau vao
-         
+        {
+        
         }
-
         public class Handler : IRequestHandler<Query, Result<List<LoaiHinh_ID_Ten>>>
         {
+            private readonly DataContext _context;
             private readonly IConfiguration _configuration;
-            public Handler(IConfiguration configuration)
+            public Handler(IConfiguration configuration, DataContext context)// constructor
             {
                 _configuration = configuration;
+                _context = context;
             }
 
             public async Task<Result<List<LoaiHinh_ID_Ten>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                DynamicParameters parameters = new DynamicParameters();
-             
-               
-                string spName = "SP_DSLoaiHinhDichVuCSSKSDGets";
+
+ 
+                string spName = "SP_DSLoaiHinhDiSanVanHoa";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();

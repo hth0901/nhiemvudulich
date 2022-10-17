@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.ResponseEntity
 {
-    public class LoaiHinhItemResponse
+    public class DanhSach<T>
     {
-        public int Id { get; set; }
-        public string TenLoai { get; set; }
-   
+        
+            public List<T> Data { get; set; } = new List<T>();
+            public int TotalRows { get; set;}
+        
     }
 }

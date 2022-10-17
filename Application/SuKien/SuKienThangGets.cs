@@ -1,7 +1,7 @@
 ﻿using Application.Core;
 using Dapper;
-using Domain;
 using Domain.HueCit;
+using Domain.RequestEntity;
 using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;

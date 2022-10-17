@@ -26,7 +26,7 @@ namespace HueCitApp.Controllers
         {
 
             var listResult = await Mediator.Send(new DiemGiaoDichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-            var result = new DanhSachDiemGiaoDichResponse();
+            var result = new DanhSach<DiemGiaoDichItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
             {
@@ -34,7 +34,7 @@ namespace HueCitApp.Controllers
                 result.TotalRows = result.Data[0].TotalRows;
             }
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSachDiemGiaoDichResponse>.Success(result));
+            return HandlerResult(Result<DanhSach<DiemGiaoDichItemResponse>>.Success(result));
           
         }
         [HttpGet("danhsachnganhang/{pagesize?}/{pageindex?}")]
@@ -43,7 +43,7 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> DanhSachNganHang(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {   
             var listResult = await Mediator.Send(new DiemGiaoDichNganHangGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-            var result = new DanhSachDiemGiaoDichResponse();
+            var result = new DanhSach<DiemGiaoDichItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
             {
@@ -51,7 +51,7 @@ namespace HueCitApp.Controllers
                 result.TotalRows = result.Data[0].TotalRows;
             }
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSachDiemGiaoDichResponse>.Success(result));
+            return HandlerResult(Result<DanhSach<DiemGiaoDichItemResponse>>.Success(result));
         }
         [HttpGet("danhsachnganhangdiaban")]
         [AllowAnonymous]

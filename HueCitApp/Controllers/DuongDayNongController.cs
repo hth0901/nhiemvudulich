@@ -25,7 +25,7 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> DanhSachDuongDayNong(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new DuongDayNongGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-            var result = new DanhSachDuongDayNongResponse();
+            var result = new DanhSach<DuongDayNongItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
             {
@@ -33,7 +33,7 @@ namespace HueCitApp.Controllers
                 result.TotalRows = result.Data[0].TotalRows;
             }
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSachDuongDayNongResponse>.Success(result));
+            return HandlerResult(Result<DanhSach<DuongDayNongItemResponse>>.Success(result));
 
 
       

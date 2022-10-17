@@ -20,20 +20,13 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> DanhSachLoaiHinhDichVuChamSocSucKhoeSacDep(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        public async Task<IActionResult> DanhSachLoaiHinhDichVuChamSocSucKhoeSacDep(CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new LoaiHinhChamSocSucKhoeSacDepGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-            var result = new DanhSachLoaiHinhResponse();
-            result.TotalRows = 0;
-            if (listResult.Value.Count > 0)
-            {
-                result.Data = listResult.Value;
-                result.TotalRows = result.Data[0].TotalRows;
-            }
+            var listResult = await Mediator.Send(new LoaiHinhChamSocSucKhoeSacDepGets.Query(), ct);
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSachLoaiHinhResponse>.Success(result));
+            return HandlerResult(listResult);
 
            
         }
