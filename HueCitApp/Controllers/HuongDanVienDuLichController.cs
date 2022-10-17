@@ -34,7 +34,7 @@ namespace HueCitApp.Controllers
                 result.TotalRows = result.Data[0].TotalRows;
             }
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSachHuongDanVienDuLichResponse>.Success(result));
+            return HandlerResult(Result<DanhSach<HuongDanVienDuLichItemResponse>>.Success(result));
 
         }
         [HttpGet("{id}")]
