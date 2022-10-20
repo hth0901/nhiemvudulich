@@ -61,6 +61,22 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBanGets.Query { _request=_request}, ct);
             return HandlerResult(listResult);
         }
+        [HttpGet("diemgiaodichgandukhach")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        {
+            var listResult = await Mediator.Send(new DiemGiaoDichGanViTriDuKhach.Query {infor=_request  }, ct);
+            var result = new DanhSach<DiemGiaoDichItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<DiemGiaoDichItemResponse>>.Success(result));
+        }
 
     }
 }
