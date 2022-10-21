@@ -9,6 +9,8 @@ using Application.DiemVeSinh;
 using Application.Core;
 using Domain.ResponseEntity;
 using System.Drawing.Printing;
+using Application.CoSoLuuTru;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
@@ -37,6 +39,22 @@ namespace HueCitApp.Controllers
 
 
          
+        }
+        [HttpGet("ganvitridukhach")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachDiemVeSinhGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        {
+            var listResult = await Mediator.Send(new DiemVeSinhGanViTriDuKhachGets.Query { infor = _request }, ct);
+            var result = new DanhSach<HoSoLuTruItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
     }
 }

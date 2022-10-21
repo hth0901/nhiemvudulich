@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
 using Application.CoSoKhamChuaBenh;
+using Application.DiaDiemAnUong;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
@@ -34,6 +36,22 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
 
+        }
+        [HttpGet("ganvitridukhach")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachCoSoKhamChuaBenhGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        {
+            var listResult = await Mediator.Send(new CoSoKhamChuaBenhGanViTriDuKhachGets.Query { infor = _request }, ct);
+            var result = new DanhSach<HoSoLuTruItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
     }
 }
