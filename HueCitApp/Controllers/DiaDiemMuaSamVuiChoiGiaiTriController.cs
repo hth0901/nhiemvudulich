@@ -8,13 +8,15 @@ using Application.DiaDiemMuaSamGiaiTri;
 using Application.Core;
 using Application.DiaDiemDuLich;
 using Domain.ResponseEntity;
+using Application.DiemGiaoDich;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
-    public class DiaDiemVuiChoiGiaiTriController : BaseApiController
+    public class DiaDiemMuaSamVuiChoiGiaiTriController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiaDiemVuiChoiGiaiTriController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public DiaDiemMuaSamVuiChoiGiaiTriController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
@@ -34,6 +36,22 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
    
+        }
+        [HttpGet("ganvitridukhach")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        {
+            var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGanViTriDuKhachGets.Query { infor = _request }, ct);
+            var result = new DanhSach<HoSoLuTruItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
     }
 }

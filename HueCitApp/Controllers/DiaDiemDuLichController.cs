@@ -1,7 +1,9 @@
 ﻿using Application.Core;
 using Application.DiaDiemAnUong;
 using Application.DiaDiemDuLich;
+using Application.DiemGiaoDich;
 using Application.SuKien;
+using Domain.RequestEntity;
 using Domain.ResponseEntity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +45,22 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new DiemDuLichGet.Query { ID = ID }, ct);
             return HandlerResult(listResult);
 
+        }
+        [HttpGet("ganvitridukhach")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachDiemDuLichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        {
+            var listResult = await Mediator.Send(new DiaDiemDuLichGanViTriDuKhachGets.Query { infor = _request }, ct);
+            var result = new DanhSach<HoSoLuTruItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
 
 

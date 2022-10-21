@@ -8,6 +8,8 @@ using System.Threading;
 using Application.CoSoLuuTru;
 using Domain.ResponseEntity;
 using Application.Core;
+using Application.DiaDiemDuLich;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
@@ -40,5 +42,23 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new ChiTietCoSoLuuTruGet.Query { ID = ID }, ct);
             return HandlerResult(listResult);
         }
+
+        [HttpGet("ganvitridukhach")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachCoSoLuuTruGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        {
+            var listResult = await Mediator.Send(new CoSoLuuTruGanViTriDuKhachGets.Query { infor = _request }, ct);
+            var result = new DanhSach<HoSoLuTruItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+
     }
 }
