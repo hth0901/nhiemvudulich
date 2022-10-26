@@ -1,596 +1,120 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
-<style>
-    #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: calc(100vh - 150px);
-        width: 100%;
-        float: left
-    }
-
-    .map-container {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .map-sidebar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 250px;
-        height: 100%;
-        /*background-color: #fff;*/
-        z-index: 1;
-        /*display: none*/
-    }
-
-    .toggle-display {
-        display: none;
-    }
-</style>
+@section Css {
+	<link rel="stylesheet" href="~/css/style.css" />
+}
 
 <div class="map-container">
-    <div class="card map-sidebar toggle-display">
-        <div class="card-body">
-            <h5 class="card-title" style="cursor: pointer" id="map-sidebar-header"><i class="ft-arrow-left"></i>&nbsp;&nbsp;lớp bản đồ</h5>
-            <div id="map-sidebar" style="margin-top: 10px"></div>
-        </div>
-    </div>
-    @*<div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <div id="map-sidebar" style="margin-top: 10px"></div>
-        </div>
-    </div>*@
-    <div id="viewDiv"></div>
+	<div id="map-slider" class="card map-sidebar toggle-display">
+		<div class="card-body">
+			<h5 class="card-title" style="cursor: pointer" id="map-sidebar-header"><i class="ft-arrow-left"></i>&nbsp;&nbsp;lớp bản đồ</h5>
+			<div id="map-sidebar" style="margin-top: 10px"></div>
+		</div>
+	</div>
+	<div id="filter-slider" class="card map-sidebar toggle-display">
+		<div class="card-body">
+			<h5 class="card-title" style="cursor: pointer" id="filter-sidebar-header"><i class="ft-arrow-left"></i>&nbsp;&nbsp;Tìm kiếm nâng cao</h5>
+			<div id="filter-sidebar" class="m-custom-group" style="margin-top: 10px">
+				<div class="row">
+					<div class="col-lg-4 m-custom-col">
+						<fieldset class="form-group">
+							<label class="d-block">Loại tìm kiếm</label>
+							<select class="form-control select2-hidesearch" id="filter-type-slt">
+								<option value="nc" selected>Tìm kiếm nâng cao</option>
+								<option value="xq">Tìm kiếm xung quanh</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="col-lg-4 m-custom-col">
+						<fieldset class="form-group">
+							<label class="d-block">Lĩnh vực</label>
+							<select class="form-control select2-hidesearch" id="filter-lv-slt">
+							</select>
+						</fieldset>
+					</div>
+					<div class="col-lg-4 m-custom-col">
+						<fieldset class="form-group">
+							<label class="d-block">Loại hình</label>
+							<select class="form-control select2 hidesearch" id="filter-lh-slt">
+							</select>
+						</fieldset>
+					</div>
+					<section class="w-100" id="adv-filter-content">
+						<div class="col-12 m-custom-col">
+							<fieldset class="form-group">
+								<label>Tìm kiếm</label>
+								<input type="text" class="form-control" id="search-input">
+							</fieldset>
+						</div>
+						<section class="col-12 m-custom-col" id="adv-diemdulich">
+							<div class="row">
+								<div class="col-lg-4 m-custom-col">
+									<fieldset class="form-group">
+										<label>Địa chỉ</label>
+										<select class="form-control select2" id="filter-ddl-ch-slt">
+											<option value="1" selected>Thành phố Huế</option>
+											<option value="2">Tự nhiên</option>
+											<option value="3">Di tích lịch sử</option>
+										</select>
+									</fieldset>
+								</div>
+								<div class="col-lg-4 m-custom-col">
+									<fieldset class="form-group no-label-space">
+										<label></label>
+										<select class="form-control select2" id="filter-ddl-cx-slt">
+											<option value="1" selected>Thuận Hòa</option>
+											<option value="2">Tự nhiên</option>
+											<option value="3">Di tích lịch sử</option>
+										</select>
+									</fieldset>
+								</div>
+								<div class="col-lg-4 m-custom-col">
+									<fieldset class="form-group">
+										<label></label>
+										<input type="text" class="form-control no-label-space" id="filter-ddl-duong-input" placeholder="Nhập tên đường phố">
+									</fieldset>
+								</div>
+							</div>
+						</section>
+					</section>
+					<section class="w-100 d-none" id="adv-filter-xq-content">
+						<div class="col-12 m-custom-col">
+							<fieldset class="form-group">
+								<label>Bán kính tìm kiếm</label>
+								<input type="number" class="form-control" value="100" id="bk-input">
+							</fieldset>
+						</div>
+					</section>
+					<div class="col-12 d-flex justify-content-end">
+						<button type="button" class="btn btn-primary m-primary-color btn-min-width mr-1 mb-1" id="filter-btn">Tìm kiếm</button>
+						<button type="button" class="btn btn-outline-light mb-1" id="filter-cancel-btn">Hủy</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="result-slider" class="card map-sidebar toggle-display">
+		<div class="card-body">
+			<h5 class="card-title" style="cursor: pointer" id="result-sidebar-header"><i class="ft-arrow-left"></i>&nbsp;&nbsp;Kết quả tìm kiếm</h5>
+			<div id="result-sidebar" class="m-custom-group" style="margin-top: 10px">
+				<div class="row" id="result-content">
+				</div>
+			</div>
+		</div>
+	</div>
+	@*
+	<div class="card" style="width: 18rem;">
+		<div class="card-body">
+			<h5 class="card-title">Card title</h5>
+			<div id="map-sidebar" style="margin-top: 10px"></div>
+		</div>
+	</div>
+	*@
+	<div id="viewDiv"></div>
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
-
-        const pointsArr = [
-            [
-                107.581872,
-                16.459045
-            ],
-            [
-                107.581508,
-                16.45953
-            ],
-            [
-                107.580759,
-                16.458885
-            ],
-            [
-                107.580236,
-                16.45844
-            ],
-            [
-                107.579285,
-                16.457616
-            ],
-            [
-                107.579092,
-                16.457441
-            ],
-            [
-                107.579031,
-                16.457379
-            ],
-            [
-                107.578698,
-                16.45707
-            ],
-            [
-                107.578591,
-                16.456976
-            ],
-            [
-                107.578372,
-                16.457165
-            ],
-            [
-                107.578289,
-                16.457229
-            ],
-            [
-                107.578155,
-                16.457297
-            ],
-            [
-                107.577923,
-                16.45741
-            ]
-        ]
-
-        let polylineGraphic = null;
-        let graphicsLayer = null;
-        require([
-            "esri/config",
-            "esri/Map",
-            "esri/views/MapView",
-            "esri/layers/FeatureLayer",
-            "esri/layers/MapImageLayer",
-            "esri/Basemap",
-            "esri/widgets/BasemapGallery",
-            "esri/widgets/Expand",
-            "esri/widgets/Search",
-            "esri/widgets/Locate",
-            "esri/Graphic",
-            "esri/layers/GraphicsLayer",
-            "esri/geometry/Polyline",
-            "esri/geometry/SpatialReference"
-
-        ], function (esriConfig, Map, MapView, FeatureLayer, MapImageLayer, Basemap, BasemapGallery, Expand, Search, Locate, Graphic, GraphicsLayer, Polyline, SpatialReference) {
-            const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
-            esriConfig.apiKey = mApiKey;
-
-            //let basemap = new Basemap({
-            //    baseLayers: [
-            //    ],
-            //    title: "basemap",
-            //    id: "basemap"
-            //});
-            const imageLayer = new MapImageLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BDHC/HueBDHC/MapServer",
-                id: "05"
-            });
-
-            const basemapData = [
-                {
-                    id: "arcgis-streets",
-                    text: "Đường phố",
-                },
-                {
-                    id: "arcgis-topographic",
-                    text: "Địa hình",
-                },
-                {
-                    id: "satellite",
-                    text: "Vệ tinh",
-                },
-            ]
-
-            //const mLayer = new WMSLayer({
-            //    url: 'https://gishue.thuathienhue.gov.vn/server/services/BDHC/HueBDHC/MapServer/WMSServer'
-            //})
-
-
-            const baseMapQuanHuyen = new FeatureLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/4",
-                id: "10",
-            });
-            const baseMapPhuongXa = new FeatureLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/5",
-                id: "11",
-            });
-
-
-            const layer_0 = new FeatureLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/0",
-                id: "00",
-                outFields: ["*"],
-                popupEnabled: true,
-                popupTemplate: {
-                    title: 'Thông tin',
-                    content: [
-                        {
-                            "type": "fields",
-                            "fieldInfos": [
-                                {
-                                    "fieldName": "tendoituon",
-                                    "label": "Tên",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "diachi",
-                                    "label": "Địa chỉ",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "dienthoai",
-                                    "label": "Số điện thoại",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "tennguoida",
-                                    "label": "Người đại diện",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                }
-                            ]
-                        }
-                    ],
-                    actions: [
-                        {
-                            title: "Chỉ đường",
-                            id: "routes",
-                            className: "test",
-                            type: "button",
-                        },
-                    ],
-                },
-                spatialReference: new SpatialReference({
-                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
-                })
-            });
-            const layer_1 = new FeatureLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/1",
-                id: "01",
-                outFields: ["*"],
-                popupEnabled: true,
-                popupTemplate: {
-                    title: 'Thông tin',
-                    content: [
-                        {
-                            "type": "fields",
-                            "fieldInfos": [
-                                {
-                                    "fieldName": "tendoituon",
-                                    "label": "Tên",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "diachi",
-                                    "label": "Địa chỉ",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "dienthoai",
-                                    "label": "Số điện thoại",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "tennguoida",
-                                    "label": "Người đại diện",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                }
-                            ]
-                        }
-                    ],
-                    actions: [
-                        {
-                            title: "Chỉ đường",
-                            id: "routes",
-                            className: "test",
-                            type: "button",
-                        },
-                    ],
-                },
-                spatialReference: new SpatialReference({
-                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
-                })
-            });
-            const layer_2 = new FeatureLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/2",
-                id: "02",
-                outFields: ["*"],
-                popupEnabled: true,
-                popupTemplate: {
-                    title: 'Thông tin',
-                    content: [
-                        {
-                            "type": "fields",
-                            "fieldInfos": [
-                                {
-                                    "fieldName": "tendoituon",
-                                    "label": "Tên",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "diachi",
-                                    "label": "Địa chỉ",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "dienthoai",
-                                    "label": "Số điện thoại",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "tennguoida",
-                                    "label": "Người đại diện",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                }
-                            ]
-                        }
-                    ],
-                    actions: [
-                        {
-                            title: "Chỉ đường",
-                            id: "routes",
-                            className: "test",
-                            type: "button",
-                        },
-                    ],
-                },
-                spatialReference: new SpatialReference({
-                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
-                })
-            });
-            const layer_3 = new FeatureLayer({
-                url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/3",
-                id: "03",
-                outFields: ["*"],
-                popupEnabled: true,
-                popupTemplate: {
-                    title: 'Thông tin',
-                    content: [
-                        {
-                            "type": "fields",
-                            "fieldInfos": [
-                                {
-                                    "fieldName": "tendoituon",
-                                    "label": "Tên",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "diachi",
-                                    "label": "Địa chỉ",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "dienthoai",
-                                    "label": "Số điện thoại",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                },
-                                {
-                                    "fieldName": "tennguoida",
-                                    "label": "Người đại diện",
-                                    "visible": true,
-                                    "stringFieldOption": "text-box"
-                                }
-                            ]
-                        }
-                    ],
-                    actions: [
-                        {
-                            title: "Chỉ đường",
-                            id: "routes",
-                            className: "test",
-                            type: "button",
-                        },
-                    ],
-                },
-                spatialReference: new SpatialReference({
-                    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
-                })
-            });
-
-            const map = new Map({
-                //basemap: basemap
-                basemap: 'arcgis-topographic', // Basemap layer service
-                //basemap: new Basemap({
-                //    baseLayers: [baseMapQuanHuyen, baseMapPhuongXa],
-                //}),
-                layers: [baseMapQuanHuyen, baseMapPhuongXa, layer_0, layer_1, layer_2, layer_3],
-            });
-
-            graphicsLayer = new GraphicsLayer();
-            map.add(graphicsLayer);
-
-            const view = new MapView({
-                map: map,
-                center: [107.58513469042099, 16.462504990071924], // Longitude, latitude
-                zoom: 10, // Zoom level
-                container: "viewDiv", // Div element
-                //spatialReference: SpatialReference.WGS84
-                //spatialReference: new SpatialReference({
-                //    wkt: 'PROJCS["dh10000",GEOGCS["dh10000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",108.0],PARAMETER["Scale_Factor",0.9999],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]],VERTCS["VN2000",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]',
-                //})
-            });
-
-            view.when(() => {
-                const searchWidget = new Search({
-                    view: view
-                });
-
-                // Add the search widget to the top right corner of the view
-                view.ui.add(searchWidget, {
-                    position: "top-right"
-                });
-
-                view.ui.move("zoom", "top-right");
-
-                const basemapGallery = new BasemapGallery({
-                    view: view,
-                    container: document.createElement("div"),
-                    source: [Basemap.fromId("arcgis-streets"), Basemap.fromId("arcgis-topographic"), Basemap.fromId("satellite")] // autocasts to LocalBasemapsSource
-                });
-
-                const bgExpand = new Expand({
-                    view: view,
-                    content: basemapGallery
-                });
-
-                view.ui.add(bgExpand, "bottom-left");
-
-                var element = document.createElement("div");
-                element.className =
-                    "esri-icon-layer-list esri-widget--button esri-widget esri-interactive";
-                element.addEventListener("click", function (evt) {
-                    //console.log('click')
-                    document.querySelector('.map-sidebar').classList.toggle('toggle-display');
-                });
-                view.ui.add(element, "top-right");
-
-                const btnClearRoute = document.createElement('div');
-                btnClearRoute.className =
-                    "esri-icon-layer-list esri-widget--button esri-widget esri-interactive";
-                btnClearRoute.addEventListener("click", function (evt) {
-                    if (graphicsLayer && polylineGraphic) {
-                        graphicsLayer.remove(polylineGraphic);
-                    }
-                });
-                view.ui.add(btnClearRoute, "bottom-right");
-
-                const locateBtn = new Locate({
-                    view: view
-                });
-
-                 //Add the locate widget to the top left corner of the view
-                view.ui.add(locateBtn, {
-                    position: "top-left"
-                });
-                //locateBtn.on('locate', evt => {
-                //    if (polylineGraphic) {
-                //        graphicsLayer.remove(polylineGraphic);
-                //    }
-
-                //    polylineGraphic = new Graphic({
-                //        geometry: new Polyline({
-                //            hasZ: false,
-                //            hasM: true,
-                //            paths: [...pointsArr],
-                //        }),
-                //        symbol: {
-                //            type: "simple-line",
-                //            color: [226, 119, 40], // Orange
-                //            width: 3
-                //        }
-                //    });
-                //    graphicsLayer.add(polylineGraphic);
-                //})
-
-                //locateBtn.locate().then(function (pos) {
-                //    console.log(pos)
-                //});
-
-                view.popup.on("trigger-action", (evt) => {
-                    //console.log(evt);
-                    const mPopup = view.popup;
-                    //console.log(mPopup.selectedFeature.geometry);
-                    const { latitude: mLat, longitude: mLong } = mPopup.selectedFeature.geometry
-                    //const selectedFeature =
-                    //    mPopup.selectedFeature && mPopup.selectedFeature.isAggregate;
-
-                    //// console.log(view.popup.selectedFeature.getObjectId());
-                    //displayFeature(mPopup.selectedFeature);
-                    if (polylineGraphic) {
-                        graphicsLayer.remove(polylineGraphic);
-                    }
-
-                    locateBtn.locate().then(function (pos) {
-                        const { latitude: curLat, longitude: curLong } = pos.coords
-                        fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf624851a99071ab2944ee85a0f5e9f5e40c36&start=${curLong},${curLat}&end=${mLong},${mLat}`)
-                            .then(res => {
-                                console.log(res)
-                                return res.json()
-                            })
-                            .then(data => {
-                                //console.log(data.features[0].geometry.coordinates)
-                                const { features } = data;
-                                const [resultFeature] = features;
-                                const { geometry, properties } = resultFeature;
-                                const { segments } = properties;
-                                const [segmentResult] = segments
-                                const { steps } = segmentResult
-                                const { coordinates } = geometry;
-                                console.log(steps);
-
-                                polylineGraphic = new Graphic({
-                                    geometry: new Polyline({
-                                        hasZ: false,
-                                        hasM: true,
-                                        paths: [...coordinates],
-                                        //spatialReference: SpatialReference.WGS84
-
-                                        //spatialReference: new SpatialReference({
-                                        //    wkt: 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]',
-                                        //})
-                                    }),
-                                    symbol: {
-                                        type: "simple-line",
-                                        color: [226, 119, 40], // Orange
-                                        width: 3
-                                    }
-                                });
-
-                                //console.log(graphicsLayer.graphics);
-                                graphicsLayer.add(polylineGraphic);
-                            })
-                            .catch(er => {
-                                console.log(er)
-                            })
-                    });
-                });
-            })
-
-
-            const data = [
-                {
-                    id: "00",
-                    text: "Tư nhân",
-                },
-                {
-                    id: "01",
-                    text: "TNHH 1 TV",
-                },
-                {
-                    id: "02",
-                    text: "TNHH 2 TV",
-                },
-                {
-                    id: "03",
-                    text: "Cty Cổ Phần",
-                },
-                //{
-                //    id: "05",
-                //    text: "Bản đồ hành chính",
-                //},
-                {
-                    id: "10",
-                    text: "Quận huyện",
-                },
-                {
-                    id: "11",
-                    text: "Phường xã",
-                },
-            ];
-
-            let tree = new Tree('#map-sidebar', {
-                data: [{ id: '-1', text: 'Lớp bản đồ', children: data }],
-                closeDepth: 3,
-                loaded: function () {
-                    this.values = ['00', '01', '02', '03', '10', '11'];
-                },
-                onChange: function () {
-                    console.log(map.layers.items);
-                    map.layers.items.forEach((el, idx) => {
-                        const layerId = el.id;
-                        if (this.values.includes(layerId) || el.type === "graphics") {
-                            el.visible = true;
-                        }
-                        else {
-                            el.visible = false;
-                        }
-                    })
-                },
-                onItemClick: function () {
-                    console.log('dkmdkm')
-                }
-            })
-        });
-
-        document.getElementById('map-sidebar-header').addEventListener('click', evt => {
-            document.querySelector('.map-sidebar').classList.toggle('toggle-display');
-        })
-    </script>
+	<script src="~/js/map.js" type="text/javascript"></script>
 }
