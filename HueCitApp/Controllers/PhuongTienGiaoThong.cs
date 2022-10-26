@@ -9,16 +9,21 @@ using Application.Core;
 using Application.CoSoChamSocSucKhoeSacDep;
 using Domain.ResponseEntity;
 using System.Drawing.Printing;
+using Application.DiaDiemDuLich;
+using Application.LoaiPhuongtienGiaoThong;
 
 namespace HueCitApp.Controllers
 {
-    public class CoSoKinhDoanhDichVuVanChuyenController : BaseApiController
+    public class PhuongTienGiaoThong : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CoSoKinhDoanhDichVuVanChuyenController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public PhuongTienGiaoThong(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
+
+
+
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachCoSoKinhDoanhDichVuVanChuyen(CancellationToken ct, int pagesize = 10, int pageindex = 1)
@@ -43,6 +48,16 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> ChiTietCoSoKinhDoanhDichVuVanChuyen(int ID,CancellationToken ct)
         {
             var listResult = await Mediator.Send(new CoSoDichVuVanChuyenGet.Query { ID=ID}, ct);
+            return HandlerResult(listResult);
+        }
+        [HttpGet("loaiphuongtien")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachLoaiPhuongTien(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiPhuongTienGiaoThongGets.Query(), ct);
+
+            //return HandlerResult(listResult);
             return HandlerResult(listResult);
         }
     }

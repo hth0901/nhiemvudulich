@@ -13,10 +13,10 @@ using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
-    public class CoSoLuuTruController : BaseApiController
+    public class CoSoLuuTruDuLichController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CoSoLuuTruController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public CoSoLuuTruDuLichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
@@ -58,6 +58,18 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+        [HttpGet("loaihinh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DanhSachLoaiHinhLuuTru(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhCoSoLuuTruGets.Query(), ct);
+
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+
+
+
         }
 
     }

@@ -12,13 +12,14 @@ using Domain.ResponseEntity;
 using System.Drawing.Printing;
 using Application.CoSoKhamChuaBenh;
 using Domain.RequestEntity;
+using Application.LoaiHinhChamSocSucKhoeSacDep;
 
 namespace HueCitApp.Controllers
 {
-    public class CoSoChamSocSucKhoeSacDepController : BaseApiController
+    public class ChamSocSucKhoeSacDepController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CoSoChamSocSucKhoeSacDepController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public ChamSocSucKhoeSacDepController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
@@ -62,6 +63,16 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+        [HttpGet("loahinh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DanhSachLoaiHinhDichVuChamSocSucKhoeSacDep(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhChamSocSucKhoeSacDepGets.Query(), ct);
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+
+
         }
     }
 }

@@ -1,29 +1,47 @@
 ﻿using Application.Core;
-using Application.DiaDiemAnUong;
 using Application.DiaDiemDuLich;
-using Application.DiemGiaoDich;
-using Application.SuKien;
-using Domain.RequestEntity;
 using Domain.ResponseEntity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Printing;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
-    public class DiaDiemDuLichController : BaseApiController
-    {   private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiaDiemDuLichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+    public class KhuDuLichDiaDiemDuLichController : BaseApiController
+    {
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public KhuDuLichDiaDiemDuLichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
+        [HttpGet("loaihinhtainguyen")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachLoaiHinhTaiNguyen(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhTaiNguyenDuLichGets.Query(), ct);
+
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+        }
+        [HttpGet("loaihinhdisanvanhoa")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> LoaiHinhDiSanVanHoa(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhDiSanVanHoaGets.Query(), ct);
+
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+        }
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-   
-        public async Task<IActionResult> GetPlaces( CancellationToken ct, int pagesize = 10, int pageindex = 1)
+
+        public async Task<IActionResult> GetPlaces(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new DiaDiemDuLichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
@@ -62,6 +80,9 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
+
+
+
 
 
     }

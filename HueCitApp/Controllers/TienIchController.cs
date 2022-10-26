@@ -1,29 +1,58 @@
-﻿using Application.DiemGiaoDich;
+﻿using Application.DuBaoThoiTiet;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
-using Application.DiemVeSinh;
+using Application.DuongDayNong;
 using Application.Core;
+using Application.DiemVeSinh;
 using Domain.ResponseEntity;
 using System.Drawing.Printing;
-using Application.CoSoLuuTru;
 using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
-    public class DiemVeSinhController : BaseApiController
+    public class TienIchController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiemVeSinhController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public TienIchController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-    
+        public async Task<IActionResult> DanhSachDuongDayNong(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        {
+            var listResult = await Mediator.Send(new DuongDayNongGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var result = new DanhSach<DuongDayNongItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<DuongDayNongItemResponse>>.Success(result));
+
+
+      
+        }
+
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> ThongTinDuBao(CancellationToken ct, string id)
+        {
+            var listResult = await Mediator.Send(new DuBaoThoiTietGet.Query { ID = id }, ct);
+            return HandlerResult(listResult);
+        }
+
+     
+        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
+        [AllowAnonymous]
+
         public async Task<IActionResult> danhsachdiemvesinh(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new DiemVeSinhGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
@@ -38,7 +67,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
 
 
-         
+
         }
         [HttpGet("ganvitridukhach")]
         [AllowAnonymous]
@@ -58,4 +87,3 @@ namespace HueCitApp.Controllers
         }
     }
 }
-

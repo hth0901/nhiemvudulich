@@ -10,6 +10,8 @@ using System.Threading;
 using Application.CoSoKhamChuaBenh;
 using Application.DiaDiemAnUong;
 using Domain.RequestEntity;
+using Application.LoaiHinhChamSocSucKhoeSacDep;
+using Application.LoaiHinhDanhMucCoSoKhamChuaBenh;
 
 namespace HueCitApp.Controllers
 {
@@ -52,6 +54,16 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+        [HttpGet("loahinh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DanhSachLoaiHinhCoSoKhamChuaBenh(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new DanhMucLoaiHinhCoSoKhamChuaBenh.Query(), ct);
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
+
+
         }
     }
 }
