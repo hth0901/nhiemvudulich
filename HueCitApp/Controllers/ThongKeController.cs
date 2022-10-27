@@ -85,5 +85,65 @@ namespace HueCitApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("khachsantheoloaiphong")]
+        public async Task<IActionResult> KhachSanTheoLoaiPhong()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_KHACHSAN_THONGKE_THEOLOAIPHONG", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("soluonghuongdanvientheongonngu")]
+        public async Task<IActionResult> HuongDanVienTheoNgonNgu()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_HDV_THANHTHAO_NGOAINGU_THEONGONNGU", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("soluonghuongdanvientheosoluongngonngu")]
+        public async Task<IActionResult> HuongDanVienTheoSoLuongNgonNgu()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_HDV_THANHTHAO_NGOAINGU_THEOSOLUONGNGONNGU", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

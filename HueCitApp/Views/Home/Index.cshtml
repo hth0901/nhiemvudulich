@@ -124,7 +124,6 @@
                         </div>
                         <div class="col-10">
                             <div id="column-chart" style="height: 500px"></div>
-                            @*<canvas id="column-chart" height="400"></canvas>*@
                         </div>
                     </div>
                 </div>
@@ -138,11 +137,11 @@
     <div class="col-xl-12 col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Tình hình khách tham quan du lịch</h4>
+                <h4 class="card-title">Số lượng khách sạn theo loại phòng</h4>
                 <a class="heading-elements-toggle">
                     <i class="fa fa-ellipsis-v font-medium-3"></i>
                 </a>
-                <div class="heading-elements">
+                @*<div class="heading-elements">
                     <fieldset class="form-group">
                         <select class="form-control" id="basicSelect">
                             <option>Chọn năm</option>
@@ -151,11 +150,11 @@
                             <option selected>2022</option>
                         </select>
                     </fieldset>
-                </div>
+                </div>*@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <canvas id="khachthamquan_status" height="400"></canvas>
+                    <div id="khachsan_theoloaiphong" style="height: 500px"></div>
                 </div>
             </div>
         </div>
@@ -163,6 +162,35 @@
 </div>
 
 <div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Số lượng hướng dẫn viên thành thạo các ngôn ngữ</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-8">
+                            <div id="huongdanvientheosoluongngonngu" style="height: 300px"></div>
+
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="margin-top: 15px">
+                        <div class="col-12">
+                            <div id="huongdanvien" style="height: 500px"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row match-height">
     <div class="col-xl-6 col-lg-12">
         <div class="card">
             <div class="card-header">
@@ -213,7 +241,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <!--/ Product sale & buyers -->
 
 @section Scripts {
@@ -221,6 +249,15 @@
     <script>
         const numberWithCommas = (num) => {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        }
+
+        const getRandomColor = () => {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
         $(document).ready(function () {
             const currentYear = (new Date()).getFullYear();
@@ -247,6 +284,15 @@
             })
             const mChart = $('#column-chart').dxChart({
                 dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
                 palette: 'soft',
                 title: {
                     text: '',
@@ -262,6 +308,115 @@
                     nameField: 'LinhVuc',
                 },
             }).dxChart("instance");
+
+            const khachsan_theoloaiphong = $('#khachsan_theoloaiphong').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                legend: {
+                    visible: false,
+                },
+                customizePoint() {
+                    return { color: getRandomColor() };
+                },
+                //palette: 'soft',
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'Ten',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'Ten',
+                },
+            }).dxChart("instance");
+
+            const chartHuongDanVienTheoNgonNgu = $('#huongdanvien').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                //palette: 'Violet',
+                palette: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'TenNgoaiNgu',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'TenNgoaiNgu',
+                },
+            }).dxChart("instance");
+
+            const huongDanVienTheoSoLuongNgonNgu = $('#huongdanvientheosoluongngonngu').dxPieChart({
+                type: 'doughnut',
+                palette: 'Soft Pastel',
+                dataSource: [],
+                //title: 'The Population of Continents and Regions',
+                tooltip: {
+                    enabled: false,
+                    format: 'millions',
+                    customizeTooltip(arg) {
+                        return {
+                            text: `${arg.valueText} - ${(arg.percent * 100).toFixed(2)}%`,
+                        };
+                    },
+                },
+                legend: {
+                    horizontalAlignment: 'right',
+                    verticalAlignment: 'top',
+                    margin: 0,
+                },
+                export: {
+                    enabled: false,
+                },
+                series: [{
+                    argumentField: 'Name',
+                    valueField: 'TongSo',
+                    label: {
+                        visible: true,
+                        //format: 'millions',
+                        connector: {
+                            visible: true,
+                        },
+                    },
+                }],
+                centerTemplate(pieChart, container) {
+                    const total = pieChart
+                        .getAllSeries()[0]
+                        .getVisiblePoints()
+                        .reduce((s, p) => s + p.originalValue, 0);
+                    const content = $(`<svg><circle cx="100" cy="100" fill="#eee" r="${pieChart.getInnerRadius() - 6}"></circle>`
+                        + '<text text-anchor="middle" style="font-size: 18px" x="100" y="120" fill="#494949">'
+                        + `<tspan x="100" >Tổng số HDV</tspan>`
+                        + `<tspan x="100" dy="20px" style="font-weight: 600">${numberWithCommas(total)
+                        }</tspan></text></svg>`);
+
+                    container.appendChild(content.get(0));
+                },
+            }).dxPieChart("instance");
 
             fetch(`/api/ThongKe/phananhientruongtong/${currentYear}`)
                 .then(res => res.json())
@@ -287,6 +442,53 @@
                 })
                 .catch(err => {
                     console.log(err);
+                })
+
+            fetch(`/api/ThongKe/khachsantheoloaiphong`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    khachsan_theoloaiphong.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/ThongKe/soluonghuongdanvientheongonngu`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    chartHuongDanVienTheoNgonNgu.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+
+            fetch(`/api/ThongKe/soluonghuongdanvientheosoluongngonngu`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    huongDanVienTheoSoLuongNgonNgu.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
                 })
         });
     </script>
