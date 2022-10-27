@@ -37,7 +37,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<HuongDanVienDuLichItemResponse>>.Success(result));
 
         }
-        [HttpGet("{id}")]
+        [HttpGet("{ID}")]
         [AllowAnonymous]
 
         public async Task<IActionResult> ChiTietHuongDanVienDuLich(CancellationToken ct, int ID)
