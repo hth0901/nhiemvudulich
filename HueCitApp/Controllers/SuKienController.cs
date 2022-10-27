@@ -60,7 +60,7 @@ namespace HueCitApp.Controllers
       
 
         }
-        [HttpGet("{id}")]
+        [HttpGet("{ID}")]
         [AllowAnonymous]
       
       
