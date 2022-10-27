@@ -10,20 +10,21 @@ using Application.DiaDiemDuLich;
 using Domain.ResponseEntity;
 using Application.DiemGiaoDich;
 using Domain.RequestEntity;
+using Application.LoaiCoSoVuiChoiGiaiTri;
 
 namespace HueCitApp.Controllers
 {
-    public class DiaDiemMuaSamVuiChoiGiaiTriController : BaseApiController
+    public class MuaSamVuiChoiGiaiTriController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiaDiemMuaSamVuiChoiGiaiTriController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public MuaSamVuiChoiGiaiTriController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        public async Task<IActionResult> DanhSachDiaDiemMuaSamVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
@@ -37,10 +38,10 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
    
         }
-        [HttpGet("ganvitridukhach")]
+        [HttpPost("ganvitridukhach")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        public async Task<IActionResult> DiemMuaSamGiaiTriGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
         {
             var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGanViTriDuKhachGets.Query { infor = _request }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
@@ -52,6 +53,15 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> DanhSachLoaiHinhCoSoVuiChoiGiaiTri(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new LoaiHinhCoSoVuiChoiGiaiTriGets.Query(), ct);
+
+            //return HandlerResult(listResult);
+            return HandlerResult(listResult);
         }
     }
 }

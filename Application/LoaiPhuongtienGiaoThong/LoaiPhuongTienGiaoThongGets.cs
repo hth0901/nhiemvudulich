@@ -1,7 +1,6 @@
 ﻿using Application.Core;
 using Dapper;
-using Domain.HueCit;
-using Domain.TechLife;
+using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -12,17 +11,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.DiaDiemDuLich
+namespace Application.LoaiPhuongtienGiaoThong
 {
-    public class DiemDuLichGet 
+    public class LoaiPhuongTienGiaoThongGets
     {
-        public class Query : IRequest<Result<HoSo>>
+        public class Query : IRequest<Result<List<LoaiHinh_ID_Ten>>>
         {// su li tham so dau vao
-            public int ID { get; set; }
+
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<HoSo>>
+        public class Handler : IRequestHandler<Query, Result<List<LoaiHinh_ID_Ten>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -30,21 +29,21 @@ namespace Application.DiaDiemDuLich
                 _configuration = configuration;
             }
 
-            public async Task<Result<HoSo>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<LoaiHinh_ID_Ten>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_DSDiemDuLichGet";
-
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request.ID);
+                string spName = "SP_DSPhuongTienGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryFirstAsync<HoSo>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<HoSo>.Success(result);
+                    var result = await connection.QueryAsync<LoaiHinh_ID_Ten>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<LoaiHinh_ID_Ten>>.Success(result.ToList());
 
                 }
 
             }
         }
+
+
     }
 }

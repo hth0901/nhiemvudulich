@@ -8,7 +8,7 @@ namespace Domain.ResponseEntity
 {
     public class DiemGiaoDichItemResponse
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string TenDiaDiem { get; set; }
         public int TotalRows { get; set; }
     }

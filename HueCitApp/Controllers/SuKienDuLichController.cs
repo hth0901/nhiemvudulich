@@ -14,13 +14,13 @@ using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
-    public class SuKienController : BaseApiController
+    public class SuKienDuLichController : BaseApiController
     {
-        public SuKienController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public SuKienDuLichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
         }
 
-        [HttpGet("theothang")]
+        [HttpPost("theothang")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachSuKienTheoThang(CancellationToken ct, [FromBody] SuKienChuDeThang search)
@@ -39,7 +39,7 @@ namespace HueCitApp.Controllers
           
 
         }
-        [HttpGet("theothang/theochude")]
+        [HttpPost("theothang/theochude")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachSuKienThangTheoChuDe(CancellationToken ct, [FromBody] SuKienChuDeThang search)

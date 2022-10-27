@@ -10,6 +10,7 @@ using System.Threading;
 using Application.DoanhNghiep;
 using Domain.TechLife;
 using Application.SuKien;
+using Application.TourDuLich;
 
 namespace HueCitApp.Controllers
 {
@@ -39,7 +40,7 @@ namespace HueCitApp.Controllers
 
 
         }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> ChiTietDoanhNghiepLuHanh(CancellationToken ct, int ID)
         {
@@ -50,5 +51,23 @@ namespace HueCitApp.Controllers
 
 
         }
+        [HttpGet("danhsachtour/{pagesize?}/{pageindex?}")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachTourDuLich(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        {
+            var listResult = await Mediator.Send(new TourDuLichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var result = new DanhSach<TourItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<TourItemResponse>>.Success(result));
+
+        }
+
     }
 }

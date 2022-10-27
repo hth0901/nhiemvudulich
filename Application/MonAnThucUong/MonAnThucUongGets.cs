@@ -21,7 +21,6 @@ namespace Application.MonAnThucUong
         {// su li tham so dau vao
             public int pagesize { get; set; }
             public int pageindex { get; set; }
-
         }
 
         public class Handler : IRequestHandler<Query, Result<List<MonAnThucUongItemResponse>>>
@@ -34,6 +33,7 @@ namespace Application.MonAnThucUong
 
             public async Task<Result<List<MonAnThucUongItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
+
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
@@ -42,7 +42,7 @@ namespace Application.MonAnThucUong
                 {
                     connection.Open();
                     var result = await connection.QueryAsync<MonAnThucUongItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<MonAnThucUongItemResponse>>.Success(result.ToList());
+                    return Result<List<MonAnThucUongItemResponse>>.Success(result.ToList());// compare of list  
 
                 }
 

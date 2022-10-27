@@ -13,10 +13,10 @@ using System.Drawing.Printing;
 
 namespace HueCitApp.Controllers
 {
-    public class DiemGiaoDichController : BaseApiController
+    public class NganHangDiemGiaoDichController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public DiemGiaoDichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public NganHangDiemGiaoDichController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
@@ -37,23 +37,8 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<DiemGiaoDichItemResponse>>.Success(result));
           
         }
-        [HttpGet("danhsachnganhang/{pagesize?}/{pageindex?}")]
-        [AllowAnonymous]
-
-        public async Task<IActionResult> DanhSachNganHang(CancellationToken ct, int pagesize = 10, int pageindex = 1)
-        {   
-            var listResult = await Mediator.Send(new DiemGiaoDichNganHangGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
-            var result = new DanhSach<DiemGiaoDichItemResponse>();
-            result.TotalRows = 0;
-            if (listResult.Value.Count > 0)
-            {
-                result.Data = listResult.Value;
-                result.TotalRows = result.Data[0].TotalRows;
-            }
-            //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSach<DiemGiaoDichItemResponse>>.Success(result));
-        }
-        [HttpGet("danhsachnganhangdiaban")]
+  
+        [HttpPost("danhsachnganhangdiaban")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct, [FromBody] Place_Request _request)
@@ -61,7 +46,7 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBanGets.Query { _request=_request}, ct);
             return HandlerResult(listResult);
         }
-        [HttpGet("ganvitridukhach")]
+        [HttpPost("ganvitridukhach")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)

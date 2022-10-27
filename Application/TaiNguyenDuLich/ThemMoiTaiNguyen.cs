@@ -45,9 +45,6 @@ namespace Application.TaiNguyenDuLich
                 DynamicParameters parameters = new DynamicParameters();
                
 
-
-
-
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
