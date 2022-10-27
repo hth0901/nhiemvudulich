@@ -8,7 +8,7 @@ namespace Domain.HueCit
 {
     public class HuongDanVienDuLich
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string HoVaTen { get; set; }
         public bool GioiTinh { get; set; }
         public string CMND { get; set; }

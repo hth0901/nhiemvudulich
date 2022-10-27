@@ -69,7 +69,7 @@ namespace HueCitApp.Controllers
 
 
         }
-        [HttpGet("ganvitridukhach")]
+        [HttpPost("diemvesinh/ganvitridukhach")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachDiemVeSinhGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)

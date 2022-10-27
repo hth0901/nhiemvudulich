@@ -46,7 +46,7 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new DiemGiaoDichNganHangDiaBanGets.Query { _request=_request}, ct);
             return HandlerResult(listResult);
         }
-        [HttpGet("ganvitridukhach")]
+        [HttpPost("ganvitridukhach")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)

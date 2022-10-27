@@ -17,11 +17,11 @@ namespace Application.DichVuVanChuyen
 {
     public class CoSoDichVuVanChuyenGet
     {
-        public class Query : IRequest<Result<List<HoSo>>>
+        public class Query : IRequest<Result<HoSo>>
         {
             public int ID { get; set; } 
         }
-        public class Handler : IRequestHandler<Query, Result<List<HoSo>>>
+        public class Handler : IRequestHandler<Query, Result<HoSo>>
         {
             private readonly IConfiguration _configuration;
             private readonly DataContext _context;
@@ -33,7 +33,7 @@ namespace Application.DichVuVanChuyen
 
             }
 
-            public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<HoSo>> Handle(Query request, CancellationToken cancellationToken)
             {   DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@ID", request.ID);
                 string spName = "SP_DSCoSoDichVuVanChuyenGet";
@@ -41,8 +41,8 @@ namespace Application.DichVuVanChuyen
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);
-                    var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<HoSo>>.Success(result.ToList());
+                    var result = await connection.QueryFirstAsync<HoSo>(new CommandDefinition(spName, dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<HoSo>.Success(result);
                 }
             }
         }

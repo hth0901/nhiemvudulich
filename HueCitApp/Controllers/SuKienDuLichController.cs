@@ -20,7 +20,7 @@ namespace HueCitApp.Controllers
         {
         }
 
-        [HttpGet("theothang")]
+        [HttpPost("theothang")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachSuKienTheoThang(CancellationToken ct, [FromBody] SuKienChuDeThang search)
@@ -39,7 +39,7 @@ namespace HueCitApp.Controllers
           
 
         }
-        [HttpGet("theothang/theochude")]
+        [HttpPost("theothang/theochude")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachSuKienThangTheoChuDe(CancellationToken ct, [FromBody] SuKienChuDeThang search)

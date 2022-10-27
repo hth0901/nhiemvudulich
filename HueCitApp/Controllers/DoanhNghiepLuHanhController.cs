@@ -40,7 +40,7 @@ namespace HueCitApp.Controllers
 
 
         }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> ChiTietDoanhNghiepLuHanh(CancellationToken ct, int ID)
         {

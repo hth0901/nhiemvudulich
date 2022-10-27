@@ -17,12 +17,12 @@ namespace Application.MonAnThucUong
     public class ChiTietMonAnThucUongGet
     {
 
-        public class Query : IRequest<Result<List<DL_MonAnThucUong>>>
+        public class Query : IRequest<Result<DL_MonAnThucUong>>
         {// su li tham so dau vao
             public int ID { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<DL_MonAnThucUong>>>
+        public class Handler : IRequestHandler<Query, Result<DL_MonAnThucUong>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -30,7 +30,7 @@ namespace Application.MonAnThucUong
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<DL_MonAnThucUong>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<DL_MonAnThucUong>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "[SP_DSAmThucGet]";
                 DynamicParameters dynamicParameters = new DynamicParameters();
@@ -38,8 +38,8 @@ namespace Application.MonAnThucUong
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DL_MonAnThucUong>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<DL_MonAnThucUong>>.Success(result.ToList());
+                    var result = await connection.QueryFirstAsync<DL_MonAnThucUong>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<DL_MonAnThucUong>.Success(result);
 
                 }
 

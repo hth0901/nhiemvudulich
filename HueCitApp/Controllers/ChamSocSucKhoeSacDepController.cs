@@ -48,7 +48,7 @@ namespace HueCitApp.Controllers
             var listResult = await Mediator.Send(new CoSoChamSocSucKhoeSacDepGet.Query { ID=ID}, ct);
             return HandlerResult(listResult);
         }
-        [HttpGet("ganvitridukhach")]
+        [HttpPost("ganvitridukhach")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachCoSoChamSocSucKhoeSacDepGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)

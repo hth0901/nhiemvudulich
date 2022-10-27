@@ -16,13 +16,13 @@ namespace Application.DiaDiemDuLich
 {
     public class DiemDuLichGet 
     {
-        public class Query : IRequest<Result<List<HoSo>>>
+        public class Query : IRequest<Result<HoSo>>
         {// su li tham so dau vao
             public int ID { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<HoSo>>>
+        public class Handler : IRequestHandler<Query, Result<HoSo>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -30,7 +30,7 @@ namespace Application.DiaDiemDuLich
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<HoSo>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<HoSo>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "SP_DSDiemDuLichGet";
 
@@ -39,8 +39,8 @@ namespace Application.DiaDiemDuLich
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<HoSo>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<HoSo>>.Success(result.ToList());
+                    var result = await connection.QueryFirstAsync<HoSo>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<HoSo>.Success(result);
 
                 }
 

@@ -38,7 +38,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
    
         }
-        [HttpGet("ganvitridukhach")]
+        [HttpPost("ganvitridukhach")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
