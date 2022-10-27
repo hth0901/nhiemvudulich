@@ -56,8 +56,6 @@ namespace HueCitApp.Controllers
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-
-
         public async Task<IActionResult> ChiTietDiemDuLich(CancellationToken ct, int ID)
         {
             var listResult = await Mediator.Send(new DiemDuLichGet.Query { ID = ID }, ct);

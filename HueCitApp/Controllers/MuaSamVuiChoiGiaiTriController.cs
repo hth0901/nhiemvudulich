@@ -24,7 +24,7 @@ namespace HueCitApp.Controllers
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        public async Task<IActionResult> DanhSachDiaDiemMuaSamVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
@@ -41,7 +41,7 @@ namespace HueCitApp.Controllers
         [HttpPost("ganvitridukhach")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
+        public async Task<IActionResult> DiemMuaSamGiaiTriGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
         {
             var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGanViTriDuKhachGets.Query { infor = _request }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();

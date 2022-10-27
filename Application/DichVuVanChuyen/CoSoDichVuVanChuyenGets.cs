@@ -42,7 +42,7 @@ namespace Application.DichVuVanChuyen
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
                 string spName = "SP_DSCoSoDichVuVanChuyenGets";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnetion")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);

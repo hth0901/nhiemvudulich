@@ -15,13 +15,13 @@ namespace Application.HuongDanVienDuLich
 {
     public class HuongDanVienDuLichGet
     {
-        public class Query : IRequest<Result<List<Domain.HueCit.HuongDanVienDuLich>>>
+        public class Query : IRequest<Result<Domain.HueCit.HuongDanVienDuLich>>
         {// su li tham so dau vao
             public int ID { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<Domain.HueCit.HuongDanVienDuLich>>>
+        public class Handler : IRequestHandler<Query, Result<Domain.HueCit.HuongDanVienDuLich>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -29,7 +29,7 @@ namespace Application.HuongDanVienDuLich
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<Domain.HueCit.HuongDanVienDuLich>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Domain.HueCit.HuongDanVienDuLich>> Handle(Query request, CancellationToken cancellationToken)
             {
                 string spName = "SP_DSHuongDanVienDuLichGet";
 
@@ -38,8 +38,8 @@ namespace Application.HuongDanVienDuLich
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<Domain.HueCit.HuongDanVienDuLich>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<Domain.HueCit.HuongDanVienDuLich>>.Success(result.ToList());
+                    var result = await connection.QueryFirstAsync<Domain.HueCit.HuongDanVienDuLich>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<Domain.HueCit.HuongDanVienDuLich>.Success(result);
 
                 }
 

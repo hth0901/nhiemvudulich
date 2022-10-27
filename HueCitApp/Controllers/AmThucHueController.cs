@@ -24,7 +24,7 @@ namespace HueCitApp.Controllers
             _webHostEnvironment = hostingEnvironment;
         }
         
-        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
+        [HttpGet("danhsachdiadiemanuong/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
 
         public async Task<IActionResult> danhsachDiaDiemAnUong(CancellationToken ct, int pagesize = 10, int pageindex = 1)
@@ -66,7 +66,7 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(listResult);
         }
-        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
+        [HttpGet("danhsachmonanthucuong/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachMonAnThucUong(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
@@ -82,6 +82,9 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<MonAnThucUongItemResponse>>.Success(result));
 
         }
+
+   
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> ChiTietMonAnThucUong(int id, CancellationToken ct)

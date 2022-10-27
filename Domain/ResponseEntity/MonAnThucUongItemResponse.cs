@@ -8,8 +8,8 @@ namespace Domain.ResponseEntity
 {
     public class MonAnThucUongItemResponse
     {
-        int ID { get; set; }
-        string TenMon { get; set; }
+        public int ID { get; set; }
+        public string TenMon { get; set; }
         public int TotalRows { get; set; }
     }
 }

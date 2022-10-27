@@ -21,7 +21,7 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
+        [HttpGet("danhsachduongdaynong/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachDuongDayNong(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
@@ -50,7 +50,7 @@ namespace HueCitApp.Controllers
         }
 
      
-        [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
+        [HttpGet("danhsachdiemvesinh/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
 
         public async Task<IActionResult> danhsachdiemvesinh(CancellationToken ct, int pagesize = 10, int pageindex = 1)

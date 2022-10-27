@@ -38,7 +38,7 @@ namespace HueCitApp.Controllers
           
         }
   
-        [HttpGet("danhsachnganhangdiaban")]
+        [HttpPost("danhsachnganhangdiaban")]
         [AllowAnonymous]
 
         public async Task<IActionResult> DanhSachNganHangDiaBan(CancellationToken ct, [FromBody] Place_Request _request)

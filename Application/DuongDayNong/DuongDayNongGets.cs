@@ -44,7 +44,7 @@ namespace Application.DuongDayNong
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<DuongDayNongItemResponse>(new CommandDefinition(spName, parameters: null, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryAsync<DuongDayNongItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<List<DuongDayNongItemResponse>>.Success(result.ToList());
 
                 }
