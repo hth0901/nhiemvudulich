@@ -45,9 +45,9 @@ namespace HueCitApp.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> ChiTietCoSoKinhDoanhDichVuVanChuyen(int ID,CancellationToken ct)
+        public async Task<IActionResult> ChiTietCoSoKinhDoanhDichVuVanChuyen(int id,CancellationToken ct)
         {
-            var listResult = await Mediator.Send(new CoSoDichVuVanChuyenGet.Query { ID=ID}, ct);
+            var listResult = await Mediator.Send(new CoSoDichVuVanChuyenGet.Query { ID=id}, ct);
             return HandlerResult(listResult);
         }
         [HttpGet("loaiphuongtien")]

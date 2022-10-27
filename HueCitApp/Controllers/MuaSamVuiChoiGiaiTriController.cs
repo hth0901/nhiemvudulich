@@ -11,6 +11,7 @@ using Domain.ResponseEntity;
 using Application.DiemGiaoDich;
 using Domain.RequestEntity;
 using Application.LoaiCoSoVuiChoiGiaiTri;
+using Application.DiaDiemMuaSamVuiChoiGiaiTri;
 
 namespace HueCitApp.Controllers
 {
@@ -26,7 +27,7 @@ namespace HueCitApp.Controllers
 
         public async Task<IActionResult> DanhSachDiaDiemMuaSamVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
-            var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var listResult = await Mediator.Send(new DiaDiemMuaSamVuiChoiGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
@@ -54,7 +55,7 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
-        [HttpGet]
+        [HttpGet("loaihinh")]
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachLoaiHinhCoSoVuiChoiGiaiTri(CancellationToken ct)
         {
@@ -62,6 +63,23 @@ namespace HueCitApp.Controllers
 
             //return HandlerResult(listResult);
             return HandlerResult(listResult);
+        }
+        [HttpGet("vuichoigiaitri/{pagesize?}/{pageindex?}")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> DanhSachDiaDiemVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
+        {
+            var listResult = await Mediator.Send(new DiaDiemVuiChoiGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var result = new DanhSach<HoSoLuTruItemResponse>();
+            result.TotalRows = 0;
+            if (listResult.Value.Count > 0)
+            {
+                result.Data = listResult.Value;
+                result.TotalRows = result.Data[0].TotalRows;
+            }
+            //return HandlerResult(listResult);
+            return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+
         }
     }
 }

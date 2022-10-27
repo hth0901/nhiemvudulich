@@ -11,13 +11,9 @@ namespace Domain.TechLife
     {
         public int? Id { get; set; } 
         public string Ten { get; set; }
-
         public int? LinhVucKinhDoanhId { get; set; }
-
         public int? HangSao { get; set; }
-
         public string SoQuyetDinh { get; set; }
-
         public DateTime? NgayQuyetDinh { get; set; }
         public int? LoaiHinhId { get; set; }
         public decimal? TongVonDauTuBanDau { get; set; }
