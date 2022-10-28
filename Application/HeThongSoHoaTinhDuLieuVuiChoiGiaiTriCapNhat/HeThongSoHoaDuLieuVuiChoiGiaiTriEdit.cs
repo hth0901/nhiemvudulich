@@ -14,9 +14,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
+namespace Application.HeThongSoHoaTinhDuLieuVuiChoiGiaiTriCapNhat
 {
-    public class HeThongSoHoaDoanhNghiepDaiLiLuHanhEdit
+    public class HeThongSoHoaDuLieuVuiChoiGiaiTriEdit
     {
         public class Command : IRequest<Result<int>>
         {
@@ -69,9 +69,6 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
 
 
 
-
-
-
             }
         }
 
@@ -101,7 +98,7 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_DoanhNghiepDaiLiLuHanh";
+                string spName = "SP_EDIT_VuiChoiGiaiTri";
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@ID", request.infor.Id);
                 parameters.Add("@Ten", request.infor.Ten);

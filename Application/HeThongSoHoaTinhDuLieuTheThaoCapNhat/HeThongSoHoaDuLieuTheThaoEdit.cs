@@ -14,9 +14,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
+namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
 {
-    public class HeThongSoHoaDoanhNghiepDaiLiLuHanhEdit
+    public class HeThongSoHoaDuLieuTheThaoEdit
     {
         public class Command : IRequest<Result<int>>
         {
@@ -68,10 +68,6 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 RuleFor(x => x.NgonNguId).NotEmpty().NotNull();
 
 
-
-
-
-
             }
         }
 
@@ -101,9 +97,9 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_DoanhNghiepDaiLiLuHanh";
+                string spName = "SP_EDIT_DuLieuTheThao";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request.infor.Id);
+                parameters.Add("@Id", request.infor.Id);
                 parameters.Add("@Ten", request.infor.Ten);
                 parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
                 parameters.Add("@HangSao", request.infor.HangSao);
@@ -178,6 +174,13 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 parameters.Add("@MaDoanhNghiep", request.infor.MaDoanhNghiep);
                 parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
                 parameters.Add("@DongBoID", request.infor.DongBoID);
+
+
+
+
+
+
+
 
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {

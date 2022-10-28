@@ -2,7 +2,6 @@
 using AutoMapper;
 using Dapper;
 using Domain.HueCit;
-using Domain.TechLife;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -17,8 +16,9 @@ using System.Threading.Tasks;
 
 namespace Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat
 {
-    public class HeThongSoHoaTaiLieuLienquanEdit
+    public class HeThongSoHoaTaiLieuLienQuanAdd
     {
+
         public class Command : IRequest<Result<int>>
         {
             public FileUploads infor { get; set; }
@@ -28,7 +28,9 @@ namespace Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Fileid).NotEmpty().NotNull();
+
+
+     
                 RuleFor(x => x.FileName).NotEmpty().NotNull();
                 RuleFor(x => x.FileUrl).NotEmpty().NotNull();
                 RuleFor(x => x.Id).NotEmpty().NotNull();
@@ -62,9 +64,11 @@ namespace Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_TaiLieuLienQuan";
+
+                string spName = "SP_ADD_TaiLieuLienQuan";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request.infor.Fileid);
+
+
                 parameters.Add("@FileName", request.infor.FileName);
                 parameters.Add("@FileUrl", request.infor.FileUrl);
                 parameters.Add("@Type", request.infor.Type);
@@ -83,10 +87,12 @@ namespace Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat
                     var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
                     var result = affectRow > 0;
                     if (!result)
-                        return Result<int>.Failure("editing not success");
+                        return Result<int>.Failure("adding not success");
                     return Result<int>.Success(affectRow);
                 }
             }
         }
+
+
     }
 }

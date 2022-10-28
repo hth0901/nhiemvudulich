@@ -1,3 +1,12 @@
+using Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat;
+using Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat;
+using Application.HeThongSoHoaTinhDuLieuAnUongCapNhat;
+using Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat;
+using Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat;
+using Application.HeThongSoHoaTinhDuLieuVuiChoiGiaiTriCapNhat;
+using Application.HeThongSoHoaTinhHuongDanVienCapNhat;
+using Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat;
+using FluentValidation.AspNetCore;
 using HueCitApp.Extensions;
 using HueCitApp.MiddleWare;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace HueCitApp
 {
@@ -32,12 +42,39 @@ namespace HueCitApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddControllersWithViews();
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TravelApi", Version = "v1" });
             });
+            services.AddControllersWithViews().AddFluentValidation(config =>
+            {
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongEdit>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongAdd>();
 
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDoanhNghiepDaiLiLuHanhAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDoanhNghiepDaiLiLuHanhEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaCoSoLuuTruAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaCoSoLuuTruEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuMuaSamAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuMuaSamEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuTheThaoAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuTheThaoEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaTaiLieuLienQuanAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaTaiLieuLienquanEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriAdd>();
+                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriEdit>();
+
+            });
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
 

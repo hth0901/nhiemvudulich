@@ -2,6 +2,7 @@
 using Dapper;
 using Domain.RequestEntity;
 using Domain.ResponseEntity;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -20,6 +21,18 @@ namespace Application.DiaDiemAnUong
         {
             public Distance_Request infor { get; set; }
 
+        }
+        public class CommandValidator : AbstractValidator<Distance_Request>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.x).NotEmpty().WithMessage("toạ độ x không được rỗng");
+                RuleFor(x => x.y).NotEmpty().WithMessage("toạ độ y không được rỗng");
+
+
+
+
+            }
         }
         public class Handler : IRequestHandler<Query, Result<List<HoSoLuTruItemResponse>>>
         {

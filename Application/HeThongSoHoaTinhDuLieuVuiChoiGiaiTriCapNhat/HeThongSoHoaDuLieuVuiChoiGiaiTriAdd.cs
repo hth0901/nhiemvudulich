@@ -1,6 +1,8 @@
 ﻿using Application.Core;
 using AutoMapper;
 using Dapper;
+using Domain.HueCit;
+using Domain.RequestEntity;
 using Domain.TechLife;
 using FluentValidation;
 using MediatR;
@@ -14,20 +16,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
+namespace Application.HeThongSoHoaTinhDuLieuVuiChoiGiaiTriCapNhat
 {
-    public class HeThongSoHoaDoanhNghiepDaiLiLuHanhEdit
+    public class HeThongSoHoaDuLieuVuiChoiGiaiTriAdd
     {
         public class Command : IRequest<Result<int>>
         {
-            public HoSo infor { get; set; }
+            public HoSoRequestAdd infor { get; set; }
 
         }
-        public class CommandValidator : AbstractValidator<HoSo>
+        public class CommandValidator : AbstractValidator<HoSoRequestAdd>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Id).NotEmpty().NotNull();
+
+           
                 RuleFor(x => x.Ten).NotEmpty().NotNull();
                 RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().NotNull();
                 RuleFor(x => x.HangSao).NotEmpty().NotNull();
@@ -72,6 +75,8 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
 
 
 
+
+
             }
         }
 
@@ -101,9 +106,9 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_DoanhNghiepDaiLiLuHanh";
+                string spName = "SP_ADD_VuiChoiGiaiTri";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request.infor.Id);
+              
                 parameters.Add("@Ten", request.infor.Ten);
                 parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
                 parameters.Add("@HangSao", request.infor.HangSao);
@@ -185,7 +190,7 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                     var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
                     var result = affectRow > 0;
                     if (!result)
-                        return Result<int>.Failure("editing not success");
+                        return Result<int>.Failure("adding not success");
                     return Result<int>.Success(affectRow);
                 }
             }

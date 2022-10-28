@@ -2,7 +2,6 @@
 using AutoMapper;
 using Dapper;
 using Domain.HueCit;
-using Domain.TechLife;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -15,23 +14,25 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat
+namespace Application.HeThongSoHoaTinhDuLieuAnUongCapNhat
 {
-    public class HeThongSoHoaTaiLieuLienquanEdit
+    public class HeThongSoHoaDuLieuAnUongEdit
     {
+
         public class Command : IRequest<Result<int>>
         {
-            public FileUploads infor { get; set; }
+            public DL_MonAnThucUong infor { get; set; }
 
         }
-        public class CommandValidator : AbstractValidator<FileUploads>
+        public class CommandValidator : AbstractValidator<DL_MonAnThucUong>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Fileid).NotEmpty().NotNull();
-                RuleFor(x => x.FileName).NotEmpty().NotNull();
-                RuleFor(x => x.FileUrl).NotEmpty().NotNull();
-                RuleFor(x => x.Id).NotEmpty().NotNull();
+
+                RuleFor(x => x.ID).NotEmpty().NotNull();
+                RuleFor(x => x.TenMon).NotEmpty().NotNull();
+                RuleFor(x => x.MaLoai).NotEmpty().NotNull();
+ 
 
             }
         }
@@ -62,19 +63,20 @@ namespace Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_TaiLieuLienQuan";
+
+                string spName = "SP_EDIT_DuLieuAnUong";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request.infor.Fileid);
-                parameters.Add("@FileName", request.infor.FileName);
-                parameters.Add("@FileUrl", request.infor.FileUrl);
-                parameters.Add("@Type", request.infor.Type);
-                parameters.Add("@Id", request.infor.Id);
-                parameters.Add("@IsImage", request.infor.IsImage);
-                parameters.Add("@IsStatus", request.infor.IsStatus);
-                parameters.Add("@NgayTao", request.infor.NgayTao);
-                parameters.Add("@FileType", request.infor.FileType);
-                parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
+                parameters.Add("@ID", request.infor.ID);
+                parameters.Add("@TenMon", request.infor.TenMon);
+                parameters.Add("@MaLoai", request.infor.MaLoai);
                 parameters.Add("@MoTa", request.infor.MoTa);
+                parameters.Add("@KieuMon", request.infor.KieuMon);
+                parameters.Add("@ThucUong", request.infor.ThucUong);
+                parameters.Add("@CachLam", request.infor.CachLam);
+                parameters.Add("@ThanhPhan", request.infor.ThanhPhan);
+                parameters.Add("@KhuyenNghiKhiDung", request.infor.KhuyenNghiKhiDung);
+                parameters.Add("@AmThucID", request.infor.AmThucID);
+                parameters.Add("@NguoiDongBo", request.infor.NguoiDongBo);
 
 
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))

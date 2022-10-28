@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Application.HeThongSoHoaTinhHuongDanVienCapNhat
 
 {
-    public class HeThongSoHoaHuongDanVienPost
+    public class HeThongSoHoaHuongDanVienAdd
     {
 
 
@@ -30,25 +30,21 @@ namespace Application.HeThongSoHoaTinhHuongDanVienCapNhat
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Id).NotEmpty().WithMessage("họ tên không được rỗng");
-                RuleFor(x => x.HoVaTen).NotEmpty().WithMessage("họ tên không được rỗng");
-                RuleFor(x => x.GioiTinh).NotEmpty().WithMessage("giới tính, không được rỗng");
-                RuleFor(x => x.CMND).NotEmpty().WithMessage("CMNN không được rỗng");
-                RuleFor(x => x.NgayCapCMND).NotEmpty().WithMessage("Ngày cấp CMNN không được rỗng");
-                RuleFor(x => x.NoiCapCMND).NotEmpty().WithMessage("Nơi cấp CMNN không được rỗng");
-                RuleFor(x => x.SoDienThoai).NotEmpty().WithMessage("Số điện thoại không được rỗng");
-                RuleFor(x => x.Email).NotEmpty().WithMessage("Email không được rỗng");
-                RuleFor(x => x.DiaChi).NotEmpty().WithMessage("Địa chỉ không được rỗng");
-                RuleFor(x => x.HoKhau).NotEmpty().WithMessage("Hộ khẩu không được rỗng");
-                RuleFor(x => x.LoaiTheId).NotEmpty().WithMessage("identity Loại thẻ không được rỗng");
-                RuleFor(x => x.NgayCapThe).NotEmpty().WithMessage("Ngày cấp thẻ không được rỗng");
-                RuleFor(x => x.NgayHetHan).NotEmpty().WithMessage("Ngày hết hạn không được rỗng");
-                RuleFor(x => x.SoTheHDV).NotEmpty().WithMessage("Số thẻ HDV không được rỗng");
-                RuleFor(x => x.IsStatus).NotEmpty().WithMessage("Status không được rỗng");
-                RuleFor(x => x.CongTyLuHanhId).NotEmpty().WithMessage("Identity công ty lữ hành không được rỗng");
-                RuleFor(x => x.NoiCapThe).NotEmpty().WithMessage("Nơi cấp thẻ không được rỗng");
-                RuleFor(x => x.NgaySinh).NotEmpty().WithMessage("Ngày Sinh không được rỗng");
 
+          
+
+                RuleFor(x => x.HoVaTen).NotEmpty().NotNull();
+                RuleFor(x => x.GioiTinh).NotEmpty().NotNull();
+                RuleFor(x => x.CMND).NotEmpty().NotNull();
+                RuleFor(x => x.NgayCapCMND).NotEmpty().NotNull();
+                RuleFor(x => x.NoiCapCMND).NotEmpty().NotNull();
+                RuleFor(x => x.LoaiTheId).NotEmpty().NotNull();
+                RuleFor(x => x.NgayCapThe).NotEmpty().NotNull();
+                RuleFor(x => x.NgayHetHan).NotEmpty().NotNull();
+                RuleFor(x => x.IsDelete).NotEmpty().NotNull();
+                RuleFor(x => x.IsStatus).NotEmpty().NotNull();
+                RuleFor(x => x.CongTyLuHanhId).NotEmpty().NotNull();
+                RuleFor(x => x.NgaySinh).NotEmpty().NotNull();
             }
         }
 

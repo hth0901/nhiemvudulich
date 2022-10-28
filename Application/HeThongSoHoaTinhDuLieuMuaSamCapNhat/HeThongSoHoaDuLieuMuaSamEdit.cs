@@ -14,9 +14,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
+namespace Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat
 {
-    public class HeThongSoHoaDoanhNghiepDaiLiLuHanhPost
+    public class HeThongSoHoaDuLieuMuaSamEdit
     {
         public class Command : IRequest<Result<int>>
         {
@@ -27,26 +27,45 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
         {
             public CommandValidator()
             {
-
-                RuleFor(x => x.Ten).NotEmpty().WithMessage("họ tên không được rỗng");
-                RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().WithMessage("linh vuc kinh doanh, không được rỗng");
-                RuleFor(x => x.SoQuyetDinh).NotEmpty().WithMessage("So quyết định không được rỗng");
-                RuleFor(x => x.NgayQuyetDinh).NotEmpty().WithMessage("Ngày quyết định không được rỗng");
-                RuleFor(x => x.LoaiHinhId).NotEmpty().WithMessage("loại hình không được rỗng");
-                RuleFor(x => x.SoTang).NotEmpty().WithMessage("số tầng không được rỗng");
-                RuleFor(x => x.SoGiayPhep).NotEmpty().WithMessage("Số giấy phép không được rỗng");
-                RuleFor(x => x.SoNha).NotEmpty().WithMessage("Số nhà không được rỗng");
-                RuleFor(x => x.DuongPho).NotEmpty().WithMessage("đường phố không được rỗng");
-                RuleFor(x => x.PhuongXaId).NotEmpty().WithMessage("Phường xã không được rỗng");
-                RuleFor(x => x.QuanHuyenId).NotEmpty().WithMessage("Quận huyện không được rỗng");
-                RuleFor(x => x.TinhThanhId).NotEmpty().WithMessage("Tỉnh thành không được rỗng");
-                RuleFor(x => x.SoDienThoai).NotEmpty().WithMessage("Số điện thoại không được rỗng");
-                RuleFor(x => x.HoTenNguoiDaiDien).NotEmpty().WithMessage("Họ tên người đại diện không được rỗng");
-                RuleFor(x => x.ChucVuNguoiDaiDien).NotEmpty().WithMessage("Chức vụ người đại diện không được rỗng");
-                RuleFor(x => x.SoDienThoaiNguoiDaiDien).NotEmpty().WithMessage("Số điện thoại người đại diện không được rỗng");
-                RuleFor(x => x.ThoiDiemBatDauKinhDoanh).NotEmpty().WithMessage("Thời điểm bắt đầu kinh doanh không được rỗng");
-
-
+                RuleFor(x => x.Id).NotEmpty().NotNull();
+                RuleFor(x => x.Ten).NotEmpty().NotNull();
+                RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().NotNull();
+                RuleFor(x => x.HangSao).NotEmpty().NotNull();
+                RuleFor(x => x.LoaiHinhId).NotEmpty().NotNull();
+                RuleFor(x => x.TongVonDauTuBanDau).NotEmpty().NotNull();
+                RuleFor(x => x.TongVonDauTuBoSung).NotEmpty().NotNull();
+                RuleFor(x => x.DienTichMatBang).NotEmpty().NotNull();
+                RuleFor(x => x.DienTichMatBangXayDung).NotNull().NotEmpty();
+                RuleFor(x => x.SoTang).NotEmpty().NotNull();
+                RuleFor(x => x.TongSoPhong).NotEmpty().NotNull();
+                RuleFor(x => x.TongSoGiuong).NotEmpty().NotNull();
+                RuleFor(x => x.SoLanChuyen).NotEmpty().NotNull();
+                RuleFor(x => x.DuongPho).NotEmpty().NotNull();
+                RuleFor(x => x.PhuongXaId).NotEmpty().NotNull();
+                RuleFor(x => x.QuanHuyenId).NotEmpty().NotNull();
+                RuleFor(x => x.TinhThanhId).NotEmpty().NotNull();
+                RuleFor(x => x.GioiTinhNguoiDaiDien).NotEmpty().NotNull();
+                RuleFor(x => x.SoLuongLaoDong).NotEmpty().NotNull();
+                RuleFor(x => x.DoTuoiTBNam).NotEmpty().NotNull();
+                RuleFor(x => x.DoTuoiTBNu).NotEmpty().NotNull();
+                RuleFor(x => x.KhamSucKhoeDinhKy).NotEmpty().NotNull();
+                RuleFor(x => x.TrangPhucRieng).NotEmpty().NotNull();
+                RuleFor(x => x.PhongChayNo).NotEmpty().NotNull();
+                RuleFor(x => x.CNVSMoiTruong).NotEmpty().NotNull();
+                RuleFor(x => x.IsStatus).NotEmpty().NotNull();
+                RuleFor(x => x.IsDelete).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDNamNgoaiNuoc).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDNamTrongNuoc).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDNuNgoaiNuoc).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDNuTrongNuoc).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDThoiVu).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDThuongXuyen).NotEmpty().NotNull();
+                RuleFor(x => x.SoLDTrucTiep).NotEmpty().NotNull();
+                RuleFor(x => x.IsDatChuan).NotEmpty().NotNull();
+                RuleFor(x => x.CSLTId).NotEmpty().NotNull();
+                RuleFor(x => x.IsNhaHangTrongCSLT).NotEmpty().NotNull();
+                RuleFor(x => x.NhaCungCapId).NotEmpty().NotNull();
+                RuleFor(x => x.NgonNguId).NotEmpty().NotNull();
 
 
 
@@ -82,8 +101,9 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_ADD_HuongDanVienDuLich";
+                string spName = "SP_EDIT_DuLieuMuaSam";
                 DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ID", request.infor.Id);
                 parameters.Add("@Ten", request.infor.Ten);
                 parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
                 parameters.Add("@HangSao", request.infor.HangSao);
@@ -159,23 +179,16 @@ namespace Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat
                 parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
                 parameters.Add("@DongBoID", request.infor.DongBoID);
 
-
-
-
-
-
-
-
-            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                connection.Open();
-                var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-    var result = affectRow > 0;
-                if (!result)
-                    return Result<int>.Failure("adding not success");
-                return Result<int>.Success(affectRow);
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    connection.Open();
+                    var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    var result = affectRow > 0;
+                    if (!result)
+                        return Result<int>.Failure("editing not success");
+                    return Result<int>.Success(affectRow);
+                }
             }
         }
     }
-}
 }
