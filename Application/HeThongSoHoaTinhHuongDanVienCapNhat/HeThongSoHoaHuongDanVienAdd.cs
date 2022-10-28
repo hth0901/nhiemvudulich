@@ -1,6 +1,7 @@
 ﻿using Application.Core;
 using AutoMapper;
 using Dapper;
+using Domain.RequestEntity;
 using Domain.TechLife;
 using FluentValidation;
 using MediatR;
@@ -23,10 +24,10 @@ namespace Application.HeThongSoHoaTinhHuongDanVienCapNhat
 
         public class Command : IRequest<Result<int>>
         {
-            public Domain.HueCit.HuongDanVienDuLich infor { get; set; }
+            public HuongDanVienDuLichRequestAdd infor { get; set; }
 
         }
-        public class CommandValidator : AbstractValidator<Domain.HueCit.HuongDanVienDuLich>
+        public class CommandValidator : AbstractValidator<HuongDanVienDuLichRequestAdd>
         {
             public CommandValidator()
             {

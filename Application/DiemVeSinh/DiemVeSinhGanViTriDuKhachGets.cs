@@ -27,9 +27,9 @@ namespace Application.DiemVeSinh
         {
             public CommandValidator()
             {
-                RuleFor(x => x.x).NotEmpty().WithMessage("toạ độ x không được rỗng");
-                RuleFor(x => x.y).NotEmpty().WithMessage("toạ độ y không được rỗng");
-              
+                RuleFor(x => x.x).NotEmpty().NotNull();
+                RuleFor(x => x.y).NotEmpty().NotNull();
+
 
 
 

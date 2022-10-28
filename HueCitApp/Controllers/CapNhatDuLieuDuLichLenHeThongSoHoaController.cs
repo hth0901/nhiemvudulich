@@ -26,7 +26,7 @@ namespace HueCitApp.Controllers
 
         [HttpPost("huongdanvienadd")]
         [AllowAnonymous]
-        public async Task<IActionResult> HuongDanVienAdd( [FromBody] Domain.HueCit.HuongDanVienDuLich infor)
+        public async Task<IActionResult> HuongDanVienAdd( [FromBody] HuongDanVienDuLichRequestAdd infor)
         {
             var Result = await Mediator.Send(new HeThongSoHoaHuongDanVienAdd.Command { infor=infor});
 

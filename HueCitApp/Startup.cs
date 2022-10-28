@@ -1,3 +1,11 @@
+using Application.CoSoChamSocSucKhoeSacDep;
+using Application.CoSoKhamChuaBenh;
+using Application.CoSoLuuTru;
+using Application.DiaDiemAnUong;
+using Application.DiaDiemDuLich;
+using Application.DiaDiemMuaSamGiaiTri;
+using Application.DiemGiaoDich;
+using Application.DiemVeSinh;
 using Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat;
 using Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat;
 using Application.HeThongSoHoaTinhDuLieuAnUongCapNhat;
@@ -73,6 +81,25 @@ namespace HueCitApp
 
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriAdd>();
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriEdit>();
+
+                config.RegisterValidatorsFromAssemblyContaining<CoSoChamSocSucKhoeSacDepGanViTriDuKhachGets>();
+
+                config.RegisterValidatorsFromAssemblyContaining<CoSoKhamChuaBenhGanViTriDuKhachGets>();
+                config.RegisterValidatorsFromAssemblyContaining<CoSoLuuTruGanViTriDuKhachGets>();
+
+                config.RegisterValidatorsFromAssemblyContaining<DiemAnUongGanViTriDuKhachGets>();
+
+                config.RegisterValidatorsFromAssemblyContaining<DiaDiemDuLichGanViTriDuKhachGets>();
+                config.RegisterValidatorsFromAssemblyContaining<DiaDiemMuaSamGiaiTriGanViTriDuKhachGets>();
+                config.RegisterValidatorsFromAssemblyContaining<DiemGiaoDichGanViTriDuKhach>();
+                config.RegisterValidatorsFromAssemblyContaining<DiemVeSinhGanViTriDuKhachGets>();
+
+
+
+
+
+
+
 
             });
             services.AddApplicationServices(_config);

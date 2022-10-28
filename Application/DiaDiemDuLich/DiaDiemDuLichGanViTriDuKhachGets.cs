@@ -27,13 +27,13 @@ namespace Application.DiaDiemDuLich
         {
             public CommandValidator()
             {
-                RuleFor(x => x.x).NotEmpty().WithMessage("toạ độ x không được rỗng");
-                RuleFor(x => x.y).NotEmpty().WithMessage("toạ độ y không được rỗng");
+                RuleFor(x => x.x).NotEmpty().NotNull();
+                RuleFor(x => x.y).NotEmpty().NotNull();
                 //chi bắt được trường hợp không truyền thuộc tính 
-               
-             
-        
-           
+
+
+
+
             }
         }
         public class Handler : IRequestHandler<Query, Result<List<HoSoLuTruItemResponse>>>
