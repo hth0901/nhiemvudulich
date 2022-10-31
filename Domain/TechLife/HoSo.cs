@@ -91,4 +91,9 @@ namespace Domain.TechLife
 
 
     }
+
+    public class HoSoFilter
+    {
+        public int Id { get; set; }
+    }
 }

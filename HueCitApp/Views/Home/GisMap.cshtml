@@ -34,7 +34,7 @@
 							</select>
 						</fieldset>
 					</div>
-					<div class="col-lg-4 m-custom-col">
+					<div class="col-lg-4 m-custom-col" id="filter-lh-slt-wrapper">
 						<fieldset class="form-group">
 							<label class="d-block">Loại hình</label>
 							<select class="form-control select2 hidesearch" id="filter-lh-slt">
@@ -50,31 +50,82 @@
 						</div>
 						<section class="col-12 m-custom-col" id="adv-diemdulich">
 							<div class="row">
-								<div class="col-lg-4 m-custom-col">
+								<div class="col-12 m-custom-col">
+									<label>Địa chỉ</label>
+								</div>
+								<div class="col-lg-4 m-custom-col" id="filter-ch-wrapper">
 									<fieldset class="form-group">
-										<label>Địa chỉ</label>
 										<select class="form-control select2" id="filter-ddl-ch-slt">
-											<option value="1" selected>Thành phố Huế</option>
-											<option value="2">Tự nhiên</option>
-											<option value="3">Di tích lịch sử</option>
 										</select>
 									</fieldset>
 								</div>
-								<div class="col-lg-4 m-custom-col">
-									<fieldset class="form-group no-label-space">
-										<label></label>
-										<select class="form-control select2" id="filter-ddl-cx-slt">
-											<option value="1" selected>Thuận Hòa</option>
-											<option value="2">Tự nhiên</option>
-											<option value="3">Di tích lịch sử</option>
-										</select>
-									</fieldset>
-								</div>
-								<div class="col-lg-4 m-custom-col">
+								<div class="col-lg-4 m-custom-col" id="filter-cx-wrapper">
 									<fieldset class="form-group">
-										<label></label>
-										<input type="text" class="form-control no-label-space" id="filter-ddl-duong-input" placeholder="Nhập tên đường phố">
+										<select class="form-control select2" id="filter-ddl-cx-slt">
+										</select>
 									</fieldset>
+								</div>
+								<div class="col-lg-4 m-custom-col" id="filter-td-wrapper">
+									<fieldset class="form-group">
+										<input type="text" class="form-control" id="filter-ddl-duong-input" placeholder="Nhập tên đường phố">
+									</fieldset>
+								</div>
+							</div>
+							<div class="row d-none" id="filter-pl-wrapper">
+								<div class="col-12 m-custom-col">
+									<label>Phân loại</label>
+								</div>
+								<div class="col-12 m-custom-col btn-filter-group">
+									<div class="row" id="filter-pl-content">
+									</div>
+								</div>
+							</div>
+							<div class="row d-none" id="filter-cslt-wrapper">
+								<div class="col-12 m-custom-col">
+									<label>Loại phòng</label>
+								</div>
+								<div class="col-12 m-custom-col btn-filter-group">
+									<div class="row" id="filter-cslt-lp-content">
+									</div>
+								</div>
+								<div class="col-12 m-custom-col">
+									<label>Dịch vụ</label>
+								</div>
+								<div class="col-12 m-custom-col btn-filter-group">
+									<div class="row" id="filter-cslt-dv-content">
+									</div>
+								</div>
+								<div class="col-12 m-custom-col">
+									<label>Hạng sao</label>
+								</div>
+								<div class="col-12 m-custom-col btn-filter-group">
+									<div class="row" id="filter-cslt-hs-content">
+										<div class="col-12 col-md-6 col-lg-4 col-xl-3 btn-filter-item m-custom-col">
+											<button type="button" class="btn filter-selector" data-fid="1">
+												1 sao
+											</button>
+										</div>
+										<div class="col-12 col-md-6 col-lg-4 col-xl-3 btn-filter-item m-custom-col">
+											<button type="button" class="btn filter-selector" data-fid="2">
+												2 sao
+											</button>
+										</div>
+										<div class="col-12 col-md-6 col-lg-4 col-xl-3 btn-filter-item m-custom-col">
+											<button type="button" class="btn filter-selector" data-fid="3">
+												3 sao
+											</button>
+										</div>
+										<div class="col-12 col-md-6 col-lg-4 col-xl-3 btn-filter-item m-custom-col">
+											<button type="button" class="btn filter-selector" data-fid="4">
+												4 sao
+											</button>
+										</div>
+										<div class="col-12 col-md-6 col-lg-4 col-xl-3 btn-filter-item m-custom-col">
+											<button type="button" class="btn filter-selector" data-fid="5">
+												5 sao
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</section>
@@ -82,12 +133,15 @@
 					<section class="w-100 d-none" id="adv-filter-xq-content">
 						<div class="col-12 m-custom-col">
 							<fieldset class="form-group">
-								<label>Bán kính tìm kiếm</label>
-								<input type="number" class="form-control" value="100" id="bk-input">
+								<label>Bán kính tìm kiếm (m)</label>
+								<input type="number" class="form-control" value="100" min="10" max="5000" id="bk-input">
+								<p>
+									<small class="text-muted">Giá trị tối thiểu là 5 và tối đa là 5000</small>
+								</p>
 							</fieldset>
 						</div>
 					</section>
-					<div class="col-12 d-flex justify-content-end">
+					<div class="col-12 d-flex justify-content-end m-custom-col">
 						<button type="button" class="btn btn-primary m-primary-color btn-min-width mr-1 mb-1" id="filter-btn">Tìm kiếm</button>
 						<button type="button" class="btn btn-outline-light mb-1" id="filter-cancel-btn">Hủy</button>
 					</div>

@@ -75,6 +75,12 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav float-right">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="javascript:void(0)">
+                                <span class="user-name" id="txtCurrentTime">Thứ sáu, 20/10/2022, 08:00</span>
+                            </a>
+                        </li>
                         <li class="dropdown dropdown-user nav-item">
                             <a class="dropdown-toggle nav-link dropdown-user-link"
                                href="javascript:void(0)"
@@ -189,6 +195,33 @@
     <script src="~/lib/tree-view-checkbox/dist/tree.js"></script>
     <script src="https://js.arcgis.com/4.22/"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        const arrDays = ['Chủ Nhật','Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy']
+        const pad = (num, size) => {
+            num = num.toString()
+            while (num.length < size) num = '0' + num
+            return num
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            function updateClock() {
+                var now = new Date(), // current date
+                    time = pad(now.getHours(),2) + ':' + pad(now.getMinutes(),2), // again, you get the idea
+
+                    // a cleaner way than string concatenation
+                    date = [pad(now.getDate(),2),
+                    pad(now.getMonth() + 1,2),
+                        now.getFullYear()].join('/'),
+                    weedDate = arrDays[now.getDay()];
+
+                // set the content of the element with the ID time to the formatted string
+                document.getElementById('txtCurrentTime').innerHTML = `${weedDate}, ${date}, ${time}`
+
+                // call this function again in 1000ms
+                setTimeout(updateClock, 60000);
+            }
+            updateClock();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -27,14 +27,18 @@
 }
 
 #filter-slider {
-    width: 40%;
+    width: 60%;
     min-width: 300px;
 }
 
-.m-primary-color {
-    border-color: #452994 !important;
-    background-color: #5734ba !important;
-}
+    #filter-sidebar > div {
+        padding-right: 10px;
+    }
+
+    .m-primary-color {
+        border-color: #452994 !important;
+        background-color: #5734ba !important;
+    }
 
     .m-primary-color:hover {
         border-color: #452994 !important;
@@ -64,7 +68,8 @@
     padding-left: 7.5px;
 }
 
-#result-sidebar {
+#result-sidebar,
+#filter-sidebar {
     max-height: calc(100vh - 200px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -83,14 +88,41 @@
         margin-bottom: 4px;
     }
 
-    /*SCROLL*/
-    .map-sidebar .card-body > div {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(87, 52, 186, 0.8) rgba(10, 62, 209, 0.05);
+.treejs-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+}
+
+.btn-filter-group .btn-filter-item {
+    margin-bottom: 6px;
+}
+
+    .btn-filter-group .btn-filter-item button {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
+.filter-selector {
+    color: #030E37; 
+    background-color: #E3E9F3;
+}
+
+.filter-selector.selected {
+    color: #FFFFFF;
+    background-color: #4F3BC6;
+}
+
+/*SCROLL*/
+.map-sidebar .card-body > div {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(87, 52, 186, 0.8) rgba(10, 62, 209, 0.05);
+}
+
 .map-sidebar .card-body {
-    padding: 8px !important;
+    padding: 10px !important;
 }
 
 .map-sidebar .card-body > div::-webkit-scrollbar {
@@ -104,12 +136,6 @@
     .map-sidebar .card-body > div::-webkit-scrollbar-thumb {
         background: rgba(87, 52, 186, 0.8);
     }
-
-.treejs-icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 6px;
-}
 
 /*SCROLL*/
 
