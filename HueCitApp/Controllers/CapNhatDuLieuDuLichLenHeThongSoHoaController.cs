@@ -26,7 +26,7 @@ namespace HueCitApp.Controllers
 
         [HttpPost("huongdanvienadd")]
         [AllowAnonymous]
-        public async Task<IActionResult> HuongDanVienAdd( [FromBody] HuongDanVienDuLichRequestAdd infor)
+        public async Task<IActionResult> HuongDanVienAdd( [FromBody] HoSoRequestAdd infor)
         {
             var Result = await Mediator.Send(new HeThongSoHoaHuongDanVienAdd.Command { infor=infor});
 
@@ -39,7 +39,7 @@ namespace HueCitApp.Controllers
 
         [HttpPut("huongdanvienedit")]
         [AllowAnonymous]
-        public async Task<IActionResult> HuongDanVienEdit([FromBody] Domain.HueCit.HuongDanVienDuLich infor)
+        public async Task<IActionResult> HuongDanVienEdit([FromBody] HoSo infor)
         {
             var Result = await Mediator.Send(new HeThongSoHoaHuongDanVienEdit.Command { infor=infor});
 

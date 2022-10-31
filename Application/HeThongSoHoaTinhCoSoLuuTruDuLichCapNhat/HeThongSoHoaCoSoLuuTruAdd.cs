@@ -41,7 +41,7 @@ namespace Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat
                 RuleFor(x => x.SoTang).NotEmpty().NotNull();
                 RuleFor(x => x.TongSoPhong).NotEmpty().NotNull();
                 RuleFor(x => x.TongSoGiuong).NotEmpty().NotNull();
-                RuleFor(x => x.SoLanChuyen).NotEmpty().NotNull();
+                RuleFor(x => x.SoLanChuyenChu).NotEmpty().NotNull();
                 RuleFor(x => x.DuongPho).NotEmpty().NotNull();
                 RuleFor(x => x.PhuongXaId).NotEmpty().NotNull();
                 RuleFor(x => x.QuanHuyenId).NotEmpty().NotNull();
@@ -108,7 +108,7 @@ namespace Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat
                 //return Result<Unit>.Success(Unit.Value);
                 string spName = "SP_ADD_CoSoLuuTru";
                 DynamicParameters parameters = new DynamicParameters();
-             
+
                 parameters.Add("@Ten", request.infor.Ten);
                 parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
                 parameters.Add("@HangSao", request.infor.HangSao);
@@ -124,7 +124,6 @@ namespace Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat
                 parameters.Add("@TongSoPhong", request.infor.TongSoPhong);
                 parameters.Add("@TongSoGiuong", request.infor.TongSoGiuong);
                 parameters.Add("@SoGiayPhep", request.infor.SoGiayPhep);
-                parameters.Add("@SoLanChuyen", request.infor.SoLanChuyen);
                 parameters.Add("@SoLanChuyenChu", request.infor.SoLanChuyenChu);
                 parameters.Add("@SoNha", request.infor.SoNha);
                 parameters.Add("@DuongPho", request.infor.DuongPho);
@@ -147,8 +146,8 @@ namespace Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat
                 parameters.Add("@PhongChayNo", request.infor.PhongChayNo);
                 parameters.Add("@CNVSMoiTruong", request.infor.CNVSMoiTruong);
                 parameters.Add("@GhiChu", request.infor.GhiChu);
-                parameters.Add("@Email", request.infor.IsStatus);
-                parameters.Add("@IsStatus", request.infor.IsDelete);
+                parameters.Add("@IsStatus", request.infor.IsStatus);
+                parameters.Add("@IsDelete", request.infor.IsDelete);
                 parameters.Add("@ThoiDiemBatDauKinhDoanh", request.infor.ThoiDiemBatDauKinhDoanh);
                 parameters.Add("@GioDongCua", request.infor.GioDongCua);
                 parameters.Add("@GioMoCua", request.infor.GioMoCua);
@@ -156,7 +155,7 @@ namespace Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat
                 parameters.Add("@SoLDNamNgoaiNuoc", request.infor.SoLDNamNgoaiNuoc);
                 parameters.Add("@SoLDNamTrongNuoc", request.infor.SoLDNamTrongNuoc);
                 parameters.Add("@SoLDNuNgoaiNuoc", request.infor.SoLDNuNgoaiNuoc);
-                parameters.Add("@SoLDNuNgoaiNuoc", request.infor.SoLDNuNgoaiNuoc);
+                parameters.Add("@SoLDNuTrongNuoc", request.infor.SoLDNuTrongNuoc);
                 parameters.Add("@SoLDThoiVu", request.infor.SoLDThoiVu);
                 parameters.Add("@SoLDThuongXuyen", request.infor.SoLDThuongXuyen);
                 parameters.Add("@SoLDTrucTiep", request.infor.SoLDTrucTiep);
@@ -182,9 +181,9 @@ namespace Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat
                 parameters.Add("@PhucVu", request.infor.PhucVu);
                 parameters.Add("@MaDoanhNghiep", request.infor.MaDoanhNghiep);
                 parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
-                parameters.Add("@DongBoID", request.infor.DongBoID);
+                parameters.Add("@DongBoID", 0);
 
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("Huecitconnection")))
                 {
                     connection.Open();
                     var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
