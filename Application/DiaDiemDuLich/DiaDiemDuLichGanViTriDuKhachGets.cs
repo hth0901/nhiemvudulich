@@ -2,6 +2,8 @@
 using Dapper;
 using Domain.RequestEntity;
 using Domain.ResponseEntity;
+using Domain.TechLife;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -20,6 +22,19 @@ namespace Application.DiaDiemDuLich
         {
             public Distance_Request infor { get; set; }
 
+        }
+        public class CommandValidator : AbstractValidator<Distance_Request>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.x).NotEmpty().NotNull();
+                RuleFor(x => x.y).NotEmpty().NotNull();
+                //chi bắt được trường hợp không truyền thuộc tính 
+
+
+
+
+            }
         }
         public class Handler : IRequestHandler<Query, Result<List<HoSoLuTruItemResponse>>>
         {

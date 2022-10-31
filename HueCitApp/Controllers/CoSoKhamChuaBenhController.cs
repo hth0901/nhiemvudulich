@@ -1,16 +1,14 @@
 ﻿using Application.Core;
 using Application.CoSoChamSocSucKhoeSacDep;
+using Application.LoaiHinhChamSocSucKhoeSacDep;
+using Domain.RequestEntity;
 using Domain.ResponseEntity;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
 using Application.CoSoKhamChuaBenh;
-using Application.DiaDiemAnUong;
-using Domain.RequestEntity;
-using Application.LoaiHinhChamSocSucKhoeSacDep;
 using Application.LoaiHinhDanhMucCoSoKhamChuaBenh;
 
 namespace HueCitApp.Controllers
@@ -55,11 +53,11 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
-        [HttpGet("loahinh")]
+        [HttpGet("danhmuc/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-        public async Task<IActionResult> DanhSachLoaiHinhCoSoKhamChuaBenh(CancellationToken ct)
+        public async Task<IActionResult> DanhMucLoaiHinhCoSoSucKhoe(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
-            var listResult = await Mediator.Send(new DanhMucLoaiHinhCoSoKhamChuaBenh.Query(), ct);
+            var listResult = await Mediator.Send(new DanhMucLoaiHinhCoSoKhamChuaBenh.Query { pageindex = pageindex, pagesize = pagesize }, ct);
             //return HandlerResult(listResult);
             return HandlerResult(listResult);
 

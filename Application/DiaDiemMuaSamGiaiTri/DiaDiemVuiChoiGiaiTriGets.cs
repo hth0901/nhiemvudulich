@@ -1,8 +1,6 @@
 ﻿using Application.Core;
 using Dapper;
-using Domain;
 using Domain.ResponseEntity;
-using Domain.TechLife;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -15,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace Application.DiaDiemMuaSamGiaiTri
 {
-    public class DiaDiemMuaSamGiaiTriGets
+    public class DiaDiemVuiChoiGiaiTriGets
     {
+
         public class Query : IRequest<Result<List<HoSoLuTruItemResponse>>>
         {// su li tham so dau vao
             public int pagesize { get; set; }
@@ -38,7 +37,7 @@ namespace Application.DiaDiemMuaSamGiaiTri
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
-                string spName = "SP_DSDiaDiemMuaSamGiaiTriGets";
+                string spName = "SP_DiaDiemVuiChoiGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
@@ -46,10 +45,8 @@ namespace Application.DiaDiemMuaSamGiaiTri
                     return Result<List<HoSoLuTruItemResponse>>.Success(result.ToList());// compare of list  
 
                 }
-                 
+
             }
         }
-
-
     }
 }
