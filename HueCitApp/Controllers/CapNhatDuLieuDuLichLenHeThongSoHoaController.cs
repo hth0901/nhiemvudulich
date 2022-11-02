@@ -10,7 +10,7 @@ using Domain.ResponseEntity;
 using Application.HeThongSoHoaTinhDoanhNghiepDaiLiLuHanhCapNhat;
 using Domain.TechLife;
 using Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat;
-using Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat;
+
 using Domain.HueCit;
 using Domain.RequestEntity;
 
@@ -97,27 +97,6 @@ namespace HueCitApp.Controllers
 
 
         }
-        [HttpPost("tailieulienquanadd")]
-        [AllowAnonymous]
-        public async Task<IActionResult> TaiLieuLienQuanAdd([FromBody] FileUploads infor)
-        {
-            var Result = await Mediator.Send(new HeThongSoHoaTaiLieuLienQuanAdd.Command { infor=infor});
-
-            //return HandlerResult(listResult);
-            return HandlerResult(Result);
-
-
-
-        }
-        [HttpPut("tailieulienquanedit")]
-        [AllowAnonymous]
-        public async Task<IActionResult> TaiLieuLienQuanEdit([FromBody] FileUploads infor)
-        {
-            var Result = await Mediator.Send(new HeThongSoHoaTaiLieuLienquanEdit.Command { infor = infor });
-
-            //return HandlerResult(listResult);
-            return HandlerResult(Result);
-
-        }
+      
     }
 }

@@ -32,7 +32,7 @@ namespace Application.HeThongSoHoaTinhHuongDanVienCapNhat
 
                 RuleFor(x => x.Id).NotEmpty().NotNull();
                 RuleFor(x => x.Ten).NotEmpty().NotNull();
-                RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().NotNull();
+                //RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().NotNull();
                 RuleFor(x => x.HangSao).NotEmpty().NotNull();
                 RuleFor(x => x.LoaiHinhId).NotEmpty().NotNull();
                 RuleFor(x => x.TongVonDauTuBanDau).NotEmpty().NotNull();
@@ -100,11 +100,11 @@ namespace Application.HeThongSoHoaTinhHuongDanVienCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_HuongDanVienDuLich";
+                string spName = "SP_DuLieuSoHoa_Edit";
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@ID", request.infor.Id);
                 parameters.Add("@Ten", request.infor.Ten);
-                parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
+            //parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
                 parameters.Add("@HangSao", request.infor.HangSao);
                 parameters.Add("@SoQuyetDinh", request.infor.SoQuyetDinh);
                 parameters.Add("@NgayQuyetDinh", request.infor.NgayQuyetDinh);
@@ -182,11 +182,8 @@ namespace Application.HeThongSoHoaTinhHuongDanVienCapNhat
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("Huecitconnection")))
                 {
                     connection.Open();
-                    var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-                    var result = affectRow > 0;
-                    if (!result)
-                        return Result<int>.Failure("editing not success");
-                    return Result<int>.Success(affectRow);
+                    var result = await connection.QueryFirstAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    return Result<HoSo>.Success(result);
                 }
             }
         }
