@@ -14,10 +14,10 @@ using Application.LoaiPhuongtienGiaoThong;
 
 namespace HueCitApp.Controllers
 {
-    public class PhuongTienGiaoThong : BaseApiController
+    public class PhuongTienGiaoThongController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public PhuongTienGiaoThong(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+        public PhuongTienGiaoThongController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
         }
