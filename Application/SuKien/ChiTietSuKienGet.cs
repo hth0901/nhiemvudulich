@@ -39,7 +39,7 @@ namespace Application.SuKien
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryFirstAsync<DL_SuKien>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryFirstOrDefaultAsync<DL_SuKien>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<DL_SuKien>.Success(result);
 
                 }

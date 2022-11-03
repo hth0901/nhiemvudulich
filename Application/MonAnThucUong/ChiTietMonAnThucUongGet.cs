@@ -38,7 +38,7 @@ namespace Application.MonAnThucUong
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryFirstAsync<DL_MonAnThucUong>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryFirstOrDefaultAsync<DL_MonAnThucUong>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<DL_MonAnThucUong>.Success(result);
 
                 }

@@ -38,7 +38,7 @@ namespace Application.HuongDanVienDuLich
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryFirstAsync<Domain.HueCit.HuongDanVienDuLich>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryFirstOrDefaultAsync<Domain.HueCit.HuongDanVienDuLich>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<Domain.HueCit.HuongDanVienDuLich>.Success(result);
 
                 }
