@@ -137,8 +137,16 @@
         background: rgba(87, 52, 186, 0.8);
     }
 
-/*SCROLL*/
+#routerdesc {
+    position: absolute;
+    top: 245px;
+}
 
+    #routerdesc .esri-popup__pointer {
+        display: none !important;
+    }
+
+/*SCROLL*/
 /*SELECT2*/
 .select2-container--classic .select2-results__options .select2-results__option[aria-selected="true"],
 .select2-container--default .select2-results__options .select2-results__option[aria-selected="true"] {

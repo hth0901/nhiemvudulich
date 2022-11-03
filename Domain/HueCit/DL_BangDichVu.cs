@@ -70,7 +70,7 @@ namespace Domain.HueCit
         public string SoCVDatChuan { get; set; }
         public DateTime NgayHetHan { get; set; }
         public int CSLTId { get; set; }
-        public bool IsNhaHangTrongCSTL { get; set; }
+        public bool IsNhaHangTrongCSLT { get; set; }
         public int NhaCungCapId { get; set; }
         public string GioiThieu { get; set; }
         public string NgonNguId { get; set; }

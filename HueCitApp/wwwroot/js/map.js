@@ -47,6 +47,269 @@ const linhVucData = [
     },
 ];
 
+const dataDirection = [
+    {
+        en: "bear right onto ramp",
+        vi: "Sang phải vào trên đoạn đường nối",
+    },
+    {
+        en: "turn right onto ramp",
+        vi: "Rẽ phải vào đoạn đường nối",
+    },
+    {
+        en: "make sharp right onto ramp",
+        vi: "Sang trái ngay trên đoạn đường nối",
+    },
+    {
+        en: "make sharp left onto ramp",
+        vi: "Ra trái vào đoạn đường nối",
+    },
+    {
+        en: "turn left onto ramp",
+        vi: "Rẽ trái vào đoạn đường nối",
+    },
+    {
+        en: "bear left onto ramp",
+        vi: "Sang trái vào đoạn đường nối",
+    },
+    {
+        en: "take ramp on the left",
+        vi: "Đi dốc ở bên trái",
+    },
+    {
+        en: "take ramp on the right",
+        vi: "Đi dốc ở bên phải",
+    },
+    {
+        en: "stay on ferry for",
+        vi: "Ở lại phà cho",
+    },
+    {
+        en: "on the right",
+        vi: "Phía bên phải",
+    },
+    {
+        en: "on the left",
+        vi: "Phía bên trái",
+    },
+    {
+        en: "northeast",
+        vi: "Hướng Đông Bắc",
+    },
+    {
+        en: "southeast",
+        vi: "Hướng Đông Nam",
+    },
+    {
+        en: "southwest",
+        vi: "Hướng tây nam",
+    },
+    {
+        en: "northwest",
+        vi: "Hướng Tây Bắc",
+    },
+    {
+        en: "east",
+        vi: "Hướng đông",
+    },
+    {
+        en: "north",
+        vi: "Hướng Bắc",
+    },
+    {
+        en: "south",
+        vi: "Hướng Nam",
+    },
+    {
+        en: "west",
+        vi: "hướng Tây",
+    },
+    {
+        en: "at exit",
+        vi: "ở lối ra",
+    },
+    {
+        en: "go back",
+        vi: "quay lại",
+    },
+    {
+        en: "take ramp",
+        vi: "Theo đường dốc",
+    },
+    {
+        en: "straight",
+        vi: "Đi thẳng",
+    },
+    {
+        en: "and go on",
+        vi: "và tiến lên",
+    },
+    {
+        en: "bear right",
+        vi: "Sang bên phải",
+    },
+    {
+        en: "turn right",
+        vi: "rẽ phải",
+    },
+    {
+        en: "turn left",
+        vi: "rẽ trái",
+    },
+    {
+        en: "bear left",
+        vi: "Sang bên trái",
+    },
+    {
+        en: "near left",
+        vi: "gần phía bên trái",
+    },
+    {
+        en: "near right",
+        vi: "Gần phía bên phải",
+    },
+    {
+        en: "after",
+        vi: "sau",
+    },
+    {
+        en: "at",
+        vi: "tại",
+    },
+    {
+        en: "before",
+        vi: "trước",
+    },
+    {
+        en: "onto",
+        vi: "trên",
+    },
+    {
+        en: "over",
+        vi: "kết thúc",
+    },
+    {
+        en: "past",
+        vi: "vừa qua",
+    },
+    {
+        en: "through",
+        vi: "xuyên qua",
+    },
+    {
+        en: "under",
+        vi: "Dưới",
+    },
+    {
+        en: "by",
+        vi: "qua",
+    },
+    {
+        en: "near",
+        vi: "ở gần",
+    },
+    {
+        en: "start",
+        vi: "Bắt đầu",
+    },
+    {
+        en: "finish",
+        vi: "Kết thúc",
+    },
+    {
+        en: "arrive",
+        vi: "Đến",
+    },
+    {
+        en: "depart",
+        vi: "Khởi hành",
+    },
+    {
+        en: "take",
+        vi: "Giữ",
+    },
+    {
+        en: "go",
+        vi: "đi",
+    },
+    {
+        en: "distance",
+        vi: "Khoảng cách",
+    },
+    {
+        en: "keep",
+        vi: "Giữ",
+    },
+    {
+        en: "turn",
+        vi: "Rẽ",
+    },
+    {
+        en: "right",
+        vi: "bên phải",
+    },
+    {
+        en: "left",
+        vi: "bên trái",
+    },
+    {
+        en: "first",
+        vi: "Đầu tiên",
+    },
+    {
+        en: "second",
+        vi: "thứ hai",
+    },
+    {
+        en: "third",
+        vi: "thứ ba",
+    },
+    {
+        en: "fourth",
+        vi: "thứ tư",
+    },
+    {
+        en: "fifth",
+        vi: "thứ năm",
+    },
+    {
+        en: "sixth",
+        vi: "thứ sáu",
+    },
+    {
+        en: "seventh",
+        vi: "thứ bảy",
+    },
+    {
+        en: "eighth",
+        vi: "thứ tám",
+    },
+    {
+        en: "ninth",
+        vi: "thứ chín",
+    },
+    {
+        en: "tenth",
+        vi: "thứ mười",
+    },
+    {
+        en: "continue",
+        vi: "tiếp tục",
+    },
+    {
+        en: "head",
+        vi: "Đi thẳng",
+    },
+    {
+        en: "on",
+        vi: "trên",
+    },
+    {
+        en: "in",
+        vi: "Trong",
+    },
+]
+
 $(document).ready(function () {
     $(".select2").select2({
         width: '100%',
@@ -121,6 +384,7 @@ $(document).ready(function () {
         "esri/widgets/Measurement",
         "esri/widgets/Search",
         "esri/widgets/Locate",
+        "esri/widgets/Popup",
         "esri/Graphic",
         "esri/layers/GraphicsLayer",
         "esri/geometry/Point",
@@ -128,7 +392,7 @@ $(document).ready(function () {
         "esri/geometry/SpatialReference",
         "esri/geometry/projection",
         "esri/rest/support/Query"
-    ], function (esriConfig, intl, Map, MapView, FeatureLayer, MapImageLayer, TileLayer, Basemap, BasemapGallery, Expand, Measurement, Search, Locate, Graphic, GraphicsLayer, Point, Polyline, SpatialReference, projection, Query) {
+    ], function (esriConfig, intl, Map, MapView, FeatureLayer, MapImageLayer, TileLayer, Basemap, BasemapGallery, Expand, Measurement, Search, Locate, Popup, Graphic, GraphicsLayer, Point, Polyline, SpatialReference, projection, Query) {
         const mApiKey = 'AAPKf17a300c1b284fca90afee0ecdd6fbdfqxum1STGOMVETG7zr4IxM10ieTxpbtbZGXvDaq01a9c54BH-vHhQY7Zg3WknPs40';
         esriConfig.apiKey = mApiKey;
 
@@ -836,6 +1100,20 @@ $(document).ready(function () {
             },
         });
 
+        const routerPopup = new Popup({
+            view: view,
+            content: "",
+            actions: [],
+            title: 'Hướng dẫn chỉ đường',
+            container: routerdesc
+        });
+
+        routerPopup.viewModel.includeDefaultActions = false;
+
+        view.ui.add(routerPopup, {
+            position: "top-left"
+        });
+
         const myInterval = setInterval(function () {
             if (map.allLayers.items.some(el => el.type === 'feature')) {
                 clearInterval(myInterval);
@@ -1207,6 +1485,7 @@ $(document).ready(function () {
                     btnClearRoute.addEventListener("click", function (evt) {
                         if (graphicsLayer && polylineGraphic) {
                             graphicsLayer.remove(polylineGraphic);
+                            routerPopup.visible = false;
                         }
 
                         arrPos = []
@@ -1221,6 +1500,8 @@ $(document).ready(function () {
                     view.ui.add(locateBtn, {
                         position: "top-left"
                     });
+
+                    let routerContent = '';
 
                     view.popup.on("trigger-action", (evt) => {
                         if (evt.action.id === "routes") {
@@ -1255,7 +1536,8 @@ $(document).ready(function () {
                                     myHeaders.append("Content-Type", "application/json");
 
                                     var raw = JSON.stringify({
-                                        "coordinates": arrPos
+                                        "coordinates": arrPos,
+                                        "continue_straight": "true"
                                     });
 
                                     var requestOptions = {
@@ -1270,6 +1552,8 @@ $(document).ready(function () {
                                             return res.json()
                                         })
                                         .then(data => {
+                                            routerContent = '';
+
                                             const { features } = data;
                                             const [resultFeature] = features;
                                             const { geometry, properties } = resultFeature;
@@ -1277,6 +1561,27 @@ $(document).ready(function () {
                                             const [segmentResult] = segments
                                             const { steps } = segmentResult
                                             const { coordinates } = geometry;
+
+                                            segments.forEach((ele) => {
+                                                ele.steps.forEach((el) => {
+                                                    if (el && el.instruction != null) {
+                                                        //Chi duong hien tai
+                                                        let str = el.instruction.toLowerCase();
+
+                                                        for (let i = 0; i < dataDirection.length; i++) {
+                                                            let e = dataDirection[i];
+
+                                                            if (str.includes(e.en)) {
+                                                                let ar = str.replace(e.en, e.vi);
+
+                                                                str = ar;
+                                                            }
+                                                        }
+
+                                                        routerContent += `<p class="text-capitalize">${str}</p>`;
+                                                    }
+                                                })
+                                            })
 
                                             polylineGraphic = new Graphic({
                                                 geometry: new Polyline({
@@ -1292,6 +1597,9 @@ $(document).ready(function () {
                                             });
 
                                             graphicsLayer.add(polylineGraphic);
+
+                                            routerPopup.content = routerContent;
+                                            routerPopup.visible = true;
                                         })
                                         .catch(er => {
                                             console.log(er)
@@ -1351,7 +1659,8 @@ $(document).ready(function () {
                                             myHeaders.append("Content-Type", "application/json");
 
                                             var raw = JSON.stringify({
-                                                "coordinates": arrPos
+                                                "coordinates": arrPos,
+                                                "continue_straight": "true"
                                             });
 
                                             var requestOptions = {
@@ -1366,6 +1675,8 @@ $(document).ready(function () {
                                                     return res.json()
                                                 })
                                                 .then(data => {
+                                                    routerContent = '';
+
                                                     const { features } = data;
                                                     const [resultFeature] = features;
                                                     const { geometry, properties } = resultFeature;
@@ -1373,6 +1684,27 @@ $(document).ready(function () {
                                                     const [segmentResult] = segments
                                                     const { steps } = segmentResult
                                                     const { coordinates } = geometry;
+
+                                                    segments.forEach((ele) => {
+                                                        ele.steps.forEach((el) => {
+                                                            if (el && el.instruction != null) {
+                                                                //Chi duong hien tai
+                                                                let str = el.instruction.toLowerCase();
+
+                                                                for (let i = 0; i < dataDirection.length; i++) {
+                                                                    let e = dataDirection[i];
+
+                                                                    if (str.includes(e.en)) {
+                                                                        let ar = str.replace(e.en, e.vi);
+
+                                                                        str = ar;
+                                                                    }
+                                                                }
+
+                                                                routerContent += `<p class="text-capitalize">${str}</p>`;
+                                                            }
+                                                        })
+                                                    })
 
                                                     polylineGraphic = new Graphic({
                                                         geometry: new Polyline({
@@ -1388,6 +1720,9 @@ $(document).ready(function () {
                                                     });
 
                                                     graphicsLayer.add(polylineGraphic);
+
+                                                    routerPopup.content = routerContent;
+                                                    routerPopup.visible = true;
                                                 })
                                                 .catch(er => {
                                                     console.log(er)
