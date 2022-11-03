@@ -113,7 +113,7 @@ namespace Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat
                 DynamicParameters parameters = new DynamicParameters();
 
                 parameters.Add("@Ten", request.infor.Ten);
-                parameters.Add("@LinhVucKinhDoanhId", 3);
+                parameters.Add("@LinhVucKinhDoanhId",3);
                 parameters.Add("@HangSao", request.infor.HangSao);
                 parameters.Add("@SoQuyetDinh", request.infor.SoQuyetDinh);
                 parameters.Add("@NgayQuyetDinh", request.infor.NgayQuyetDinh);
@@ -135,7 +135,7 @@ namespace Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat
                 parameters.Add("@TinhThanhId", request.infor.TinhThanhId);
                 parameters.Add("@SoDienThoai", request.infor.SoDienThoai);
                 parameters.Add("@Fax", request.infor.Fax);
-                parameters.Add("@Email)", request.infor.Email);
+                parameters.Add("@Email", request.infor.Email);
                 parameters.Add("@Website", request.infor.Website);
                 parameters.Add("@HoTenNguoiDaiDien", request.infor.HoTenNguoiDaiDien);
                 parameters.Add("@ChucVuNguoiDaiDien", request.infor.ChucVuNguoiDaiDien);
@@ -184,7 +184,7 @@ namespace Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat
                 parameters.Add("@PhucVu", request.infor.PhucVu);
                 parameters.Add("@MaDoanhNghiep", request.infor.MaDoanhNghiep);
                 parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
-                parameters.Add("@DongBoID", 0);
+                parameters.Add("@DongBoID",0);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("Huecitconnection")))
                 {
                     connection.Open();

@@ -125,7 +125,7 @@ namespace Application.HeThongSoHoaTinhDuLieuVuiChoiGiaiTriCapNhat
                 parameters.Add("@TinhThanhId", request.infor.TinhThanhId);
                 parameters.Add("@SoDienThoai", request.infor.SoDienThoai);
                 parameters.Add("@Fax", request.infor.Fax);
-                parameters.Add("@Email)", request.infor.Email);
+                parameters.Add("@Email", request.infor.Email);
                 parameters.Add("@Website", request.infor.Website);
                 parameters.Add("@HoTenNguoiDaiDien", request.infor.HoTenNguoiDaiDien);
                 parameters.Add("@ChucVuNguoiDaiDien", request.infor.ChucVuNguoiDaiDien);
