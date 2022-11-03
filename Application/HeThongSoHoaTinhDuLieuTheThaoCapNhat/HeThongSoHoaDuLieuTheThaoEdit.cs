@@ -4,6 +4,7 @@ using Dapper;
 using Domain.TechLife;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Persistence;
 using System;
@@ -29,7 +30,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
             {
                 RuleFor(x => x.Id).NotEmpty().NotNull();
                 RuleFor(x => x.Ten).NotEmpty().NotNull();
-                RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().NotNull();
+            //    RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().NotNull();
                 RuleFor(x => x.HangSao).NotEmpty().NotNull();
                 RuleFor(x => x.LoaiHinhId).NotEmpty().NotNull();
                 RuleFor(x => x.TongVonDauTuBanDau).NotEmpty().NotNull();
@@ -39,7 +40,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 RuleFor(x => x.SoTang).NotEmpty().NotNull();
                 RuleFor(x => x.TongSoPhong).NotEmpty().NotNull();
                 RuleFor(x => x.TongSoGiuong).NotEmpty().NotNull();
-                RuleFor(x => x.SoLanChuyen).NotEmpty().NotNull();
+                RuleFor(x => x.SoLanChuyenChu).NotEmpty().NotNull();
                 RuleFor(x => x.DuongPho).NotEmpty().NotNull();
                 RuleFor(x => x.PhuongXaId).NotEmpty().NotNull();
                 RuleFor(x => x.QuanHuyenId).NotEmpty().NotNull();
@@ -66,7 +67,6 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 RuleFor(x => x.IsNhaHangTrongCSLT).NotEmpty().NotNull();
                 RuleFor(x => x.NhaCungCapId).NotEmpty().NotNull();
                 RuleFor(x => x.NgonNguId).NotEmpty().NotNull();
-
 
             }
         }
@@ -97,11 +97,11 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 //    return Result<Unit>.Failure("Failed to update");
 
                 //return Result<Unit>.Success(Unit.Value);
-                string spName = "SP_EDIT_DuLieuTheThao";
+                string spName = "SP_DuLieuSoHoa_Edit";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", request.infor.Id);
+                parameters.Add("@ID", request.infor.Id);
                 parameters.Add("@Ten", request.infor.Ten);
-                parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
+             // parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
                 parameters.Add("@HangSao", request.infor.HangSao);
                 parameters.Add("@SoQuyetDinh", request.infor.SoQuyetDinh);
                 parameters.Add("@NgayQuyetDinh", request.infor.NgayQuyetDinh);
@@ -115,7 +115,6 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 parameters.Add("@TongSoPhong", request.infor.TongSoPhong);
                 parameters.Add("@TongSoGiuong", request.infor.TongSoGiuong);
                 parameters.Add("@SoGiayPhep", request.infor.SoGiayPhep);
-                parameters.Add("@SoLanChuyen", request.infor.SoLanChuyen);
                 parameters.Add("@SoLanChuyenChu", request.infor.SoLanChuyenChu);
                 parameters.Add("@SoNha", request.infor.SoNha);
                 parameters.Add("@DuongPho", request.infor.DuongPho);
@@ -138,8 +137,8 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 parameters.Add("@PhongChayNo", request.infor.PhongChayNo);
                 parameters.Add("@CNVSMoiTruong", request.infor.CNVSMoiTruong);
                 parameters.Add("@GhiChu", request.infor.GhiChu);
-                parameters.Add("@Email", request.infor.IsStatus);
-                parameters.Add("@IsStatus", request.infor.IsDelete);
+                parameters.Add("@IsStatus", request.infor.IsStatus);
+                parameters.Add("@IsDelete", request.infor.IsDelete);
                 parameters.Add("@ThoiDiemBatDauKinhDoanh", request.infor.ThoiDiemBatDauKinhDoanh);
                 parameters.Add("@GioDongCua", request.infor.GioDongCua);
                 parameters.Add("@GioMoCua", request.infor.GioMoCua);
@@ -147,7 +146,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 parameters.Add("@SoLDNamNgoaiNuoc", request.infor.SoLDNamNgoaiNuoc);
                 parameters.Add("@SoLDNamTrongNuoc", request.infor.SoLDNamTrongNuoc);
                 parameters.Add("@SoLDNuNgoaiNuoc", request.infor.SoLDNuNgoaiNuoc);
-                parameters.Add("@SoLDNuNgoaiNuoc", request.infor.SoLDNuNgoaiNuoc);
+                parameters.Add("@SoLDNuTrongNuoc", request.infor.SoLDNuTrongNuoc);
                 parameters.Add("@SoLDThoiVu", request.infor.SoLDThoiVu);
                 parameters.Add("@SoLDThuongXuyen", request.infor.SoLDThuongXuyen);
                 parameters.Add("@SoLDTrucTiep", request.infor.SoLDTrucTiep);
@@ -173,7 +172,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 parameters.Add("@PhucVu", request.infor.PhucVu);
                 parameters.Add("@MaDoanhNghiep", request.infor.MaDoanhNghiep);
                 parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
-                parameters.Add("@DongBoID", request.infor.DongBoID);
+                parameters.Add("@DongBoID", 1);
 
 
 
@@ -181,15 +180,11 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
 
 
 
-
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("Huecitconnection")))
                 {
                     connection.Open();
-                    var affectRow = await connection.ExecuteAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-                    var result = affectRow > 0;
-                    if (!result)
-                        return Result<int>.Failure("editing not success");
-                    return Result<int>.Success(affectRow);
+                    var result = await connection.QueryFirstAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    return Result<HoSo>.Success(result);
                 }
             }
         }

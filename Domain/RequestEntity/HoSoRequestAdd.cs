@@ -26,7 +26,7 @@ namespace Domain.RequestEntity
         public int? TongSoPhong { get; set; }
         public int? TongSoGiuong { get; set; }
         public string SoGiayPhep { get; set; }
-        public int? SoLanChuyen { get; set; }
+      
         public int? SoLanChuyenChu { get; set; }
         public string SoNha { get; set; }
         public string DuongPho { get; set; }

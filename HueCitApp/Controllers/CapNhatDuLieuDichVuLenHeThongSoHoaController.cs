@@ -25,7 +25,7 @@ namespace HueCitApp.Controllers
 
         [HttpPost("dulieuanuongadd")]
         [AllowAnonymous]
-        public async Task<IActionResult> DuLieuAnUongAdd( [FromBody] DL_MonAnThucUongRequestAdd infor)
+        public async Task<IActionResult> DuLieuAnUongAdd( [FromBody] HoSoRequestAdd infor)
         {
             var Result = await Mediator.Send(new HeThongSoHoaDuLieuAnUongAdd.Command{ infor=infor});
 
@@ -38,7 +38,7 @@ namespace HueCitApp.Controllers
 
         [HttpPut("dulieuanuongedit")]
         [AllowAnonymous]
-        public async Task<IActionResult> DuLieuAnUongEdit([FromBody] DL_MonAnThucUong infor)
+        public async Task<IActionResult> DuLieuAnUongEdit([FromBody] HoSo infor)
         {
             var Result = await Mediator.Send(new HeThongSoHoaDuLieuAnUongEdit.Command{infor = infor});
 
@@ -46,7 +46,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result);
 
 
-
+            //upd1, add0
         }
         [HttpPost("dulieumuasamadd")]
         [AllowAnonymous]

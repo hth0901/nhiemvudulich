@@ -82,10 +82,12 @@ namespace HueCitApp
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriAdd>();
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriEdit>();
 
+
+
                 config.RegisterValidatorsFromAssemblyContaining<CoSoChamSocSucKhoeSacDepGanViTriDuKhachGets>();
 
                 config.RegisterValidatorsFromAssemblyContaining<CoSoKhamChuaBenhGanViTriDuKhachGets>();
-                config.RegisterValidatorsFromAssemblyContaining<CoSoLuuTruGanViTriDuKhachGets>();
+             
 
                 config.RegisterValidatorsFromAssemblyContaining<DiemAnUongGanViTriDuKhachGets>();
 
