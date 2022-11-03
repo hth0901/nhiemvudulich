@@ -13,7 +13,7 @@ using Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat;
 using Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat;
 using Application.HeThongSoHoaTinhDuLieuVuiChoiGiaiTriCapNhat;
 using Application.HeThongSoHoaTinhHuongDanVienCapNhat;
-using Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat;
+
 using FluentValidation.AspNetCore;
 using HueCitApp.Extensions;
 using HueCitApp.MiddleWare;
@@ -76,8 +76,7 @@ namespace HueCitApp
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienAdd>();
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienEdit>();
 
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaTaiLieuLienQuanAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaTaiLieuLienquanEdit>();
+
 
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriAdd>();
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriEdit>();

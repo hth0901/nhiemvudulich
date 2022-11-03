@@ -17,13 +17,13 @@ namespace Application.SuKien
 {
     public class SuKienThangGets
     {
-        public class Query : IRequest<Result<List<SuKienItemResponse>>>
+        public class Query : IRequest<Result<List<SuKienTheoThangItemResponse>>>
         {// su li tham so dau vao
          public SuKienChuDeThang search { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<SuKienItemResponse>>>
+        public class Handler : IRequestHandler<Query, Result<List<SuKienTheoThangItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -31,7 +31,7 @@ namespace Application.SuKien
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<SuKienItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<SuKienTheoThangItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {   DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@Month", request.search.Month);
                 dynamicParameters.Add("@Year", request.search.Year);
@@ -41,8 +41,8 @@ namespace Application.SuKien
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<SuKienItemResponse>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<SuKienItemResponse>>.Success(result.ToList());
+                    var result = await connection.QueryAsync<SuKienTheoThangItemResponse>(new CommandDefinition(spName,dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<SuKienTheoThangItemResponse>>.Success(result.ToList());
 
                 }
 

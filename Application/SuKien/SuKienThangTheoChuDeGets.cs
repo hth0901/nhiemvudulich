@@ -38,7 +38,8 @@ namespace Application.SuKien
                 parameters.Add("@IdChuDe", request.search.IDChuDeThang);
                 parameters.Add("@Month", request.search.Month);
                 parameters.Add("@Year", request.search.Year);
-                parameters.Add("@PPAGEINDEX", request.search.pageindex);
+                parameters.Add("@PPAGEINDEX", request.search.pageindex
+                    );
                 parameters.Add("@PPAGESIZE", request.search.pagesize);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {   
