@@ -50,6 +50,7 @@ namespace Domain.HueCit
         public bool IsDelete { get; set; }
         public DateTime ThoiDiemBatDauKinhDoanh { get; set; }
         public DateTime GioMoCua { get; set; }
+        public DateTime GioDongCua { get; set; }
         public int SoLDGianTiep { get; set; }
         public int SoLDNamNgoaiNuoc { get; set; }
         public int SoLDNuNgoaiNuoc { get; set; }
@@ -70,7 +71,7 @@ namespace Domain.HueCit
         public string SoCVDatChuan { get; set; }
         public DateTime NgayHetHan { get; set; }
         public int CSLTId { get; set; }
-        public bool IsNhaHangTrongCSTL { get; set; }
+        public bool IsNhaHangTrongCSLT { get; set; }
         public int NhaCungCapId { get; set; }
         public string GioiThieu { get; set; }
         public string NgonNguId { get; set; }
