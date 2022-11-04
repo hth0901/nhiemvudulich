@@ -115,6 +115,10 @@
     background-color: #4F3BC6;
 }
 
+.router-hd::first-letter {
+    text-transform: capitalize;
+}
+
 /*SCROLL*/
 .map-sidebar .card-body > div {
     scrollbar-width: thin;

@@ -13,3 +13,11 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 .mbackground {
   background-color: #5734ba;
 }
+
+.nav-item-tab a {
+	color: #009c9f !important
+}
+
+.nav-item-tab a.active {
+	color: #000 !important
+}

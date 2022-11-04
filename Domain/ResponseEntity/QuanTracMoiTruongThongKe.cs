@@ -17,6 +17,6 @@ namespace Domain.ResponseEntity
         public float CO2 { get; set; }
         public float PM10 { get; set; }
         public float TEMP { get; set; }
-        public int ToalRows { get; set; }
+        public int TotalRows { get; set; }
     }
 }
