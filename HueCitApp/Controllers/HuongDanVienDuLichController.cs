@@ -37,6 +37,15 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<HuongDanVienDuLichItemResponse>>.Success(result));
 
         }
+        [HttpGet("chatbox")]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> ChatBox(CancellationToken ct)
+        {
+            var listResult = await Mediator.Send(new ChatBoxGet.Query(),ct);
+            return HandlerResult(listResult);
+
+        }
         [HttpGet("{ID}")]
         [AllowAnonymous]
 

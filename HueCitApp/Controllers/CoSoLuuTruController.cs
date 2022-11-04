@@ -21,7 +21,7 @@ namespace HueCitApp.Controllers
             _webHostEnvironment = hostingEnvironment;
         }
         [HttpGet("danhsachcosoluutru/{pagesize?}/{pageindex?}")] 
-        [AllowAnonymous]
+       [AllowAnonymous]
         public async Task<IActionResult> DanhSachCoSoLuuTru(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new CoSoLuuTruGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
