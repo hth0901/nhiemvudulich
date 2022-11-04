@@ -38,7 +38,7 @@ namespace Application.DoanhNghiep
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryFirstAsync<HoSo>(new CommandDefinition(spName, dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryFirstOrDefaultAsync<HoSo>(new CommandDefinition(spName, dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<HoSo>.Success(result);
 
                 }

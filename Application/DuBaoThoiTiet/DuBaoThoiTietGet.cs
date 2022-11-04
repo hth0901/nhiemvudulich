@@ -39,7 +39,7 @@ namespace Application.DuBaoThoiTiet
                 {
                     connection.Open();
                     //var result = await connection.QueryAsync<Place>(spName);
-                    var result = await connection.QueryFirstAsync<DL_ThoiTiet>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    var result = await connection.QueryFirstOrDefaultAsync<DL_ThoiTiet>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
                     return Result<DL_ThoiTiet>.Success(result);
                 }
             }

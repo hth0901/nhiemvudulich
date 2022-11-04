@@ -20,7 +20,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
 {
     public class HeThongSoHoaDuLieuTheThaoAdd
     {
-        public class Command : IRequest<Result<int>>
+        public class Command : IRequest<Result<HoSo>>
         {
             public HoSoRequestAdd infor { get; set; }
 
@@ -81,7 +81,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
         }
 
 
-        public class Handler : IRequestHandler<Command, Result<int>>
+        public class Handler : IRequestHandler<Command, Result<HoSo>>
         {
             private readonly DataContext _context;
             private readonly IConfiguration _configuration;
@@ -93,7 +93,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 _configuration = configuration;
                 _mapper = mapper;
             }
-            public async Task<Result<int>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<HoSo>> Handle(Command request, CancellationToken cancellationToken)
             {
                 //_context.Activities.Add(request.Activity);
                 //var ac = await _context.Activities.FindAsync(request.Activity.Id);
@@ -131,7 +131,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 parameters.Add("@TinhThanhId", request.infor.TinhThanhId);
                 parameters.Add("@SoDienThoai", request.infor.SoDienThoai);
                 parameters.Add("@Fax", request.infor.Fax);
-                parameters.Add("@Email)", request.infor.Email);
+                parameters.Add("@Email", request.infor.Email);
                 parameters.Add("@Website", request.infor.Website);
                 parameters.Add("@HoTenNguoiDaiDien", request.infor.HoTenNguoiDaiDien);
                 parameters.Add("@ChucVuNguoiDaiDien", request.infor.ChucVuNguoiDaiDien);
@@ -190,7 +190,7 @@ namespace Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("Huecitconnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryFirstAsync(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    var result = await connection.QueryFirstAsync<HoSo>(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
                     return Result<HoSo>.Success(result);
                 }
             }

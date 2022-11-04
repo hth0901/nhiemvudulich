@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.ResponseEntity
 {
-    public class SuKienItemResponse
+    public class SuKienTheoThangItemResponse
     {
-        public int ID {  get; set; }
-        public string TieuDe { get; set; }   
-        public string ChuDe { get; set; }
-        public int MaChude { get; set; }
+        public int ID { get; set; }
+        public string TieuDe { get; set; }
         public int TotalRows { get; set; }
     }
 }

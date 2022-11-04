@@ -14,6 +14,6 @@ namespace Domain.RequestEntity
         public int Year { get; set; }=DateTime.Now.Year;
         public int pagesize { get; set; } = 10;
         public int pageindex { get; set; } = 1;
-        public int? IDChuDeThang { get; set; }
+        public int IDChuDeThang { get; set; }
     }
 }

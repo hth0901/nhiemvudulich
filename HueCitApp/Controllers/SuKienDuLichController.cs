@@ -26,7 +26,7 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> DanhSachSuKienTheoThang(CancellationToken ct, [FromBody] SuKienChuDeThang search)
         {
             var listResult = await Mediator.Send(new SuKienThangGets.Query {search= search }, ct);
-            var result = new DanhSach<SuKienItemResponse>();
+            var result = new DanhSach<SuKienTheoThangItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
             {
@@ -34,7 +34,7 @@ namespace HueCitApp.Controllers
                 result.TotalRows = result.Data[0].TotalRows;
             }
             //return HandlerResult(listResult);
-            return HandlerResult(Result<DanhSach<SuKienItemResponse>>.Success(result));
+            return HandlerResult(Result<DanhSach<SuKienTheoThangItemResponse>>.Success(result));
 
           
 
