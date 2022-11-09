@@ -11,6 +11,7 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
+            
             //CreateMap<Activity, Activity>();
             //CreateMap<Domain.ReceiptInfo, Domain.ReceiptInfo>();
             //CreateMap<Domain.ReceiptTemplateConfig, Domain.ReceiptTemplateConfig>();
