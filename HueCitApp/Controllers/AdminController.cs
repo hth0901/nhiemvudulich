@@ -9,34 +9,25 @@ using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public AdminController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult QuanLyTaiKhoan()
         {
             return View();
         }
 
-        public IActionResult Bando()
-        {
-            return View("GisMap");
-        }
-
-        public IActionResult Privacy()
+        public IActionResult QuanLyNhomVaiTro()
         {
             return View();
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
