@@ -1,0 +1,419 @@
+﻿@{
+	ViewData["Title"] = "Quản lý vai trò";
+}
+
+@section Css {
+	<link rel="stylesheet" href="~/css/style.css" />
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Quản lý vai trò</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard m-custom-group">
+                    <div class="row">
+                        <div class="col-9 col-md-6 m-custom-col search-group">
+                            <fieldset class="form-group">
+                                <label for="basicInput">Từ khóa</label>
+                                <input type="text" class="form-control" id="tu-khoa-search" placeholder="Nhập từ khóa tìm kiếm">
+                            </fieldset>
+                        </div>
+                        <div class="col-3 col-md-3 m-custom-col search-group button-search">
+                            <button type="submit" class="btn btn-primary m-primary-color" id="tim-kiem">Tìm kiếm</button>
+                        </div>
+                        <div class="col-12 col-md-3 m-custom-col search-group button-search d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#modalAdd">Thêm mới</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-bordered m-table" id="dataGrid">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên vai trò</th>
+                                <th>Mô tả</th>
+                                <th>Trạng thái</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add-->
+<div
+    class="modal fade text-left"
+    id="modalAdd"
+    role="dialog"
+    aria-labelledby="modalAddLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalAddLabel">
+                    Thêm mới vai trò
+                </h4>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="formAdd">
+                    <div class="form-group">
+                        <label for="tenNhomAdd" class="editor-label">Tên vai trò<span class="red-text"> *</span></label>
+                        <input type="text" class="form-control" id="tenNhomAdd" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="moTaAdd" class="editor-label">Mô tả</label>
+                        <textarea class="form-control" id="moTaAdd" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="trangThaiAdd" class="editor-label">Trạng thái sử dụng</label>
+                        <select class="form-control" id="trangThaiAdd">
+                            <option value="1" selected>Sử dụng</option>
+                            <option value="0">Không sử dụng</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit-->
+<div
+    class="modal fade text-left"
+    id="modalEdit"
+    role="dialog"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalEditLabel">
+                    Cập nhật vai trò
+                </h4>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="formEdit">
+                    <input type="hidden" class="form-control" id="idEdit">
+                    <div class="form-group">
+                        <label for="tenNhomEdit" class="editor-label">Tên vai trò<span class="red-text"> *</span></label>
+                        <input type="text" class="form-control" id="tenNhomEdit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="moTaEdit" class="editor-label">Mô tả</label>
+                        <textarea class="form-control" id="moTaEdit" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="trangThaiEdit" class="editor-label">Trạng thái sử dụng</label>
+                        <select class="form-control" id="trangThaiEdit">
+                            <option value="1" selected>Sử dụng</option>
+                            <option value="0">Không sử dụng</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete-->
+<div
+    class="modal fade text-left"
+    id="modalDelete"
+    role="dialog"
+    aria-labelledby="modalDeleteLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalDeleteLabel">
+                    Xóa vai trò
+                </h4>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="formDelete">
+                    <input type="hidden" class="form-control" id="idDelete">
+                    <div class="form-group">
+                        Bạn có chắc chắn muốn xóa dữ liệu này?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary m-primary-color">Đồng ý</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $( document ).ready(function() {
+            $('#trangThaiAdd').select2({
+                width: "100%",
+                language: "vi",
+                minimumResultsForSearch: -1
+            });
+
+            $('#trangThaiEdit').select2({
+                width: "100%",
+                language: "vi",
+                minimumResultsForSearch: -1
+            });
+
+            function buildData() {
+                let tuKhoa = $('#tu-khoa-search').val();
+
+                const request = {
+                    "tuKhoa": tuKhoa,
+                };
+
+                return JSON.stringify(request);
+            }
+
+            $('#tim-kiem').on('click', function () {
+                $('#dataGrid').DataTable().ajax.reload().draw();
+            });
+
+            $('#dataGrid').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    "paginate": {
+                        next: '<i class="ft-chevron-right paging-chevron">',
+                        previous: '<i class="ft-chevron-left paging-chevron">'
+                    }
+                },
+                "ajax": {
+                    url: "/api/User/vaitro",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: buildData,
+                    dataSrc: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            data[i].stt = i + 1;
+                        }
+                        return data;
+                    },
+                },
+                "columnDefs": [
+                    {
+                        targets: 3,
+                        render: function (data, type, row, meta) {
+                            let res = 'Sử dụng';
+                            if(data == 0) {
+                                res = 'Không sử dụng'
+                            }
+                            return res;
+                        }
+                    },
+                    {
+                        targets: 4,
+                        render: function (data, type, row, meta) {
+                            return `<i class="ft-edit edit-command-btn blue-text command-icon" id=n-"${meta.row}"></i>
+                                    <i class="ft-trash-2 delete-command-btn red-text command-icon" id=n-"${meta.row}"></i>`;
+                        }
+                    }
+                ],
+                "select": {
+                    style: 'multi'
+                },
+                "columns": [
+                    { "data": "stt", "width": "40px", "class": "stt-text center-align" },
+                    { "data": "ten", "width": "250px", "class": "left-align" },
+                    { "data": "moTa", "class": "left-align" },
+                    { "data": "trangThai", "width": "110px", "class": "center-align" },
+                    { "data": "id", "width": "110px", "class": "center-align" },
+                ]
+            });
+
+            $('#dataGrid tbody').on('click', '.delete-command-btn', function () {
+                var id = $(this).attr("ID").match(/\d+/)[0];
+                var data = $('#dataGrid').DataTable().row(id).data();
+
+                $('#idDelete').val(data.id);
+
+                $('#modalDelete').modal('show');
+            });
+
+            $('#dataGrid tbody').on('click', '.edit-command-btn', function () {
+                var id = $(this).attr("ID").match(/\d+/)[0];
+                var data = $('#dataGrid').DataTable().row(id).data();
+
+                $('#idEdit').val(data.id);
+                $('#tenNhomEdit').val(data.ten);
+                $('#moTaEdit').val(data.moTa);
+                $('#trangThaiEdit').val(data.trangThai).trigger('change');
+
+                $('#modalEdit').modal('show');
+            });
+
+            $("#formAdd").submit(function(e) {
+                e.preventDefault();
+                dataAdd();
+            });
+
+            function dataAdd() {
+                let tenNhom = $('#tenNhomAdd').val();
+                let moTa = $('#moTaAdd').val();
+                let trangThai = $('#trangThaiAdd').val();
+
+                if(!moTa) {
+                    moTa = null;
+                }
+
+                if (!checkEmptyBlank(tenNhom)) {
+                    const data = {
+                        "ten": tenNhom,
+                        "moTa": moTa,
+                        "trangThai": trangThai 
+                    }
+
+                    $.ajax({
+                        type: 'post',
+                        async: false,
+                        url: '/api/User/vaitroadd',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            alert('Thêm mới dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+                else {
+                    alert('Thông tin bắt buộc không được để trống!')
+                }
+            }
+
+            $("#formEdit").submit(function(e) {
+                e.preventDefault();
+                dataEdit();
+            });
+
+            function dataEdit() {
+                let id = $('#idEdit').val();
+                let tenNhom = $('#tenNhomEdit').val();
+                let moTa = $('#moTaEdit').val();
+                let trangThai = $('#trangThaiEdit').val();
+
+                if(!moTa) {
+                    moTa = null;
+                }
+
+                if (id && !checkEmptyBlank(tenNhom)) {
+                    const data = {
+                        "id": id,
+                        "ten": tenNhom,
+                        "moTa": moTa,
+                        "trangThai": trangThai 
+                    }
+
+                    $.ajax({
+                        type: 'put',
+                        async: false,
+                        url: '/api/User/vaitroedit',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            alert('Cập nhật dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+                else {
+                    alert('Thông tin bắt buộc không được để trống!')
+                }
+            }
+
+            $("#formDelete").submit(function(e) {
+                e.preventDefault();
+                dataDelete();
+            });
+
+            function dataDelete() {
+                const id = $('#idDelete').val();
+
+                if (id) {
+                    $.ajax({
+                        type: 'delete',
+                        async: false,
+                        url: '/api/User/vaitrodelete/' + id,
+                        success: function (data) {
+                            alert('XoÁ dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+            }
+        });
+
+        function checkEmptyBlank(str) {
+            if (str.trim().length === 0 || str == null) {
+                return true
+            }
+            return false
+        }
+        
+    </script>
+}

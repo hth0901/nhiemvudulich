@@ -165,6 +165,78 @@
     <div class="col-xl-12 col-lg-12">
         <div class="card">
             <div class="card-header">
+                <h4 class="card-title">Tài nguyên du lịch</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="tainguyen_dulich" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Sự kiện văn hóa - lễ hội</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="sukien_vanhoa_lehoi" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Dịch vụ du lịch</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="dich_vu_du_lich" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Số lượng điểm giao dịch</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="soluong_diem_giaodich" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
                 <h4 class="card-title">Số lượng hướng dẫn viên thành thạo các ngôn ngữ</h4>
                 <a class="heading-elements-toggle">
                     <i class="fa fa-ellipsis-v font-medium-3"></i>
@@ -418,6 +490,118 @@
                 },
             }).dxPieChart("instance");
 
+            const chartTaiNguyenDuLich = $('#tainguyen_dulich').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                //palette: 'Violet',
+                palette: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'Ten',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'Ten',
+                },
+            }).dxChart("instance");
+
+            const chartSuKienVanHoaLeHoi = $('#sukien_vanhoa_lehoi').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                //palette: 'Violet',
+                palette: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'Ten',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'Ten',
+                },
+            }).dxChart("instance");
+
+            const chartDichVuDuLich = $('#dich_vu_du_lich').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                //palette: 'Violet',
+                palette: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'Name',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'Name',
+                },
+            }).dxChart("instance");
+
+            const chartSoLuongDiemGiaoDich = $('#soluong_diem_giaodich').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                //palette: 'Violet',
+                palette: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'Ten',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'Ten',
+                },
+            }).dxChart("instance");
+
             fetch(`/api/ThongKe/phananhientruongtong/${currentYear}`)
                 .then(res => res.json())
                 .then(data => {
@@ -453,6 +637,7 @@
                     return res.json();
                 })
                 .then(data => {
+                    console.log(data);
                     khachsan_theoloaiphong.option("dataSource", data);
                 })
                 .catch(err => {
@@ -486,6 +671,70 @@
                 .then(data => {
                     console.log(data)
                     huongDanVienTheoSoLuongNgonNgu.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/ThongKe/tainguyendulich`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data)
+                    chartTaiNguyenDuLich.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/ThongKe/dichvudulich`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data)
+                    chartDichVuDuLich.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/ThongKe/lehoi`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data)
+                    chartSuKienVanHoaLeHoi.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/ThongKe/soluongdiemgiaodich`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data)
+                    chartSoLuongDiemGiaoDich.option("dataSource", data);
                 })
                 .catch(err => {
                     console.error(err);

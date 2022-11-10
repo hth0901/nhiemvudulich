@@ -115,6 +115,10 @@
     background-color: #4F3BC6;
 }
 
+.router-hd::first-letter {
+    text-transform: capitalize;
+}
+
 /*SCROLL*/
 .map-sidebar .card-body > div {
     scrollbar-width: thin;
@@ -162,3 +166,47 @@
     }
 
 /*SELECT2*/
+
+/*ADMIN*/
+
+.center-align {
+    text-align: center;
+}
+
+.command-icon {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.page-item.active .page-link {
+    background-color: #5734ba;
+    border-color: #5734ba;
+}
+
+.blue-text {
+    color: #0263FF;
+}
+
+.red-text {
+    color: #F2455C
+}
+
+.search-group {
+    margin-bottom: 8px;
+}
+
+.search-group > .form-group {
+    margin-bottom: 0;
+}
+
+.search-group.button-search {
+    display: flex;
+    align-items: end;
+}
+
+.m-table .selected {
+    background-color: #fff !important;
+    color: #404E67 !important;
+}
+
+/*ADMIN*/

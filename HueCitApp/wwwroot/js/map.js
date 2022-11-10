@@ -50,75 +50,75 @@ const linhVucData = [
 const dataDirection = [
     {
         en: "bear right onto ramp",
-        vi: "Sang phải vào trên đoạn đường nối",
+        vi: "sang phải vào trên đoạn đường nối",
     },
     {
         en: "turn right onto ramp",
-        vi: "Rẽ phải vào đoạn đường nối",
+        vi: "rẽ phải vào đoạn đường nối",
     },
     {
         en: "make sharp right onto ramp",
-        vi: "Sang trái ngay trên đoạn đường nối",
+        vi: "sang trái ngay trên đoạn đường nối",
     },
     {
         en: "make sharp left onto ramp",
-        vi: "Ra trái vào đoạn đường nối",
+        vi: "ra trái vào đoạn đường nối",
     },
     {
         en: "turn left onto ramp",
-        vi: "Rẽ trái vào đoạn đường nối",
+        vi: "rẽ trái vào đoạn đường nối",
     },
     {
         en: "bear left onto ramp",
-        vi: "Sang trái vào đoạn đường nối",
+        vi: "sang trái vào đoạn đường nối",
     },
     {
         en: "take ramp on the left",
-        vi: "Đi dốc ở bên trái",
+        vi: "đi dốc ở bên trái",
     },
     {
         en: "take ramp on the right",
-        vi: "Đi dốc ở bên phải",
+        vi: "đi dốc ở bên phải",
     },
     {
         en: "stay on ferry for",
-        vi: "Ở lại phà cho",
+        vi: "ở lại phà cho",
     },
     {
         en: "on the right",
-        vi: "Phía bên phải",
+        vi: "phía bên phải",
     },
     {
         en: "on the left",
-        vi: "Phía bên trái",
+        vi: "phía bên trái",
     },
     {
         en: "northeast",
-        vi: "Hướng Đông Bắc",
+        vi: "hướng Đông Bắc",
     },
     {
         en: "southeast",
-        vi: "Hướng Đông Nam",
+        vi: "hướng Đông Nam",
     },
     {
         en: "southwest",
-        vi: "Hướng tây nam",
+        vi: "hướng Tây Nam",
     },
     {
         en: "northwest",
-        vi: "Hướng Tây Bắc",
+        vi: "hướng Tây Bắc",
     },
     {
         en: "east",
-        vi: "Hướng đông",
+        vi: "hướng đông",
     },
     {
         en: "north",
-        vi: "Hướng Bắc",
+        vi: "hướng Bắc",
     },
     {
         en: "south",
-        vi: "Hướng Nam",
+        vi: "hướng Nam",
     },
     {
         en: "west",
@@ -134,11 +134,11 @@ const dataDirection = [
     },
     {
         en: "take ramp",
-        vi: "Theo đường dốc",
+        vi: "theo đường dốc",
     },
     {
         en: "straight",
-        vi: "Đi thẳng",
+        vi: "đi thẳng",
     },
     {
         en: "and go on",
@@ -146,7 +146,11 @@ const dataDirection = [
     },
     {
         en: "bear right",
-        vi: "Sang bên phải",
+        vi: "sang bên phải",
+    },
+    {
+        en: "bear left",
+        vi: "sang bên trái",
     },
     {
         en: "turn right",
@@ -157,16 +161,12 @@ const dataDirection = [
         vi: "rẽ trái",
     },
     {
-        en: "bear left",
-        vi: "Sang bên trái",
-    },
-    {
         en: "near left",
         vi: "gần phía bên trái",
     },
     {
         en: "near right",
-        vi: "Gần phía bên phải",
+        vi: "gần phía bên phải",
     },
     {
         en: "after",
@@ -210,23 +210,23 @@ const dataDirection = [
     },
     {
         en: "start",
-        vi: "Bắt đầu",
+        vi: "bắt đầu",
     },
     {
         en: "finish",
-        vi: "Kết thúc",
+        vi: "kết thúc",
     },
     {
         en: "arrive",
-        vi: "Đến",
+        vi: "đến",
     },
     {
         en: "depart",
-        vi: "Khởi hành",
+        vi: "khởi hành",
     },
     {
         en: "take",
-        vi: "Giữ",
+        vi: "giữ",
     },
     {
         en: "go",
@@ -234,15 +234,15 @@ const dataDirection = [
     },
     {
         en: "distance",
-        vi: "Khoảng cách",
+        vi: "khoảng cách",
     },
     {
         en: "keep",
-        vi: "Giữ",
+        vi: "giữ",
     },
     {
         en: "turn",
-        vi: "Rẽ",
+        vi: "rẽ",
     },
     {
         en: "right",
@@ -254,7 +254,7 @@ const dataDirection = [
     },
     {
         en: "first",
-        vi: "Đầu tiên",
+        vi: "đầu tiên",
     },
     {
         en: "second",
@@ -298,7 +298,7 @@ const dataDirection = [
     },
     {
         en: "head",
-        vi: "Đi thẳng",
+        vi: "đi thẳng",
     },
     {
         en: "on",
@@ -306,7 +306,7 @@ const dataDirection = [
     },
     {
         en: "in",
-        vi: "Trong",
+        vi: "trong",
     },
 ]
 
@@ -362,13 +362,13 @@ $(document).ready(function () {
 
     $("#filter-ddl-ch-slt").val($("#filter-ddl-ch-slt option:first").val()).trigger('change');
 
-    $("#bk-input").keyup(function () {
-        if (!$(this).val() || (parseInt($(this).val()) < 5)) {
-            $(this).val(5)
-        } else if (!$(this).val() || (parseInt($(this).val()) > 5000)) {
-            $(this).val(5000)
-        }
-    });
+    //$("#bk-input").keyup(function () {
+    //    if (!$(this).val() || (parseInt($(this).val()) < 5)) {
+    //        $(this).val(5)
+    //    } else if (!$(this).val() || (parseInt($(this).val()) > 5000)) {
+    //        $(this).val(5000)
+    //    }
+    //});
 
     require([
         "esri/config",
@@ -1503,236 +1503,292 @@ $(document).ready(function () {
 
                     let routerContent = '';
 
+                    const escapeRegExpMatch = function (s) {
+                        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                    };
+
+                    const isExactMatch = (str, match) => {
+                        return new RegExp(`\\b${escapeRegExpMatch(match)}\\b`,'i').test(str)
+                    }
+
+                    let routerFlag = false;
+
                     view.popup.on("trigger-action", (evt) => {
                         if (evt.action.id === "routes") {
                             const mPopup = view.popup;
                             let mLat = null;
                             let mLong = null;
 
-                            //Click tren map
-                            if (mPopup.selectedFeature.geometry.latitude && mPopup.selectedFeature.geometry.longitude) {
-                                mLat = mPopup.selectedFeature.geometry.latitude;
-                                mLong = mPopup.selectedFeature.geometry.longitude;
+                            if (routerFlag == false) {
+                                //Click tren map
+                                if (mPopup.selectedFeature.geometry.latitude && mPopup.selectedFeature.geometry.longitude) {
+                                    routerFlag = true;
 
-                                if (polylineGraphic) {
-                                    graphicsLayer.remove(polylineGraphic);
-                                }
+                                    mLat = mPopup.selectedFeature.geometry.latitude;
+                                    mLong = mPopup.selectedFeature.geometry.longitude;
 
-                                const des = [mLong, mLat];
-
-                                locateBtn.locate().then(function (pos) {
-                                    const { latitude: curLat, longitude: curLong } = pos.coords
-
-                                    const curr = [curLong, curLat];
-
-                                    if (arrPos.length == 0) {
-                                        arrPos.push(curr)
-                                    }
-
-                                    arrPos.push(des);
-
-                                    var myHeaders = new Headers();
-                                    myHeaders.append("Authorization", "5b3ce3597851110001cf624851a99071ab2944ee85a0f5e9f5e40c36");
-                                    myHeaders.append("Content-Type", "application/json");
-
-                                    var raw = JSON.stringify({
-                                        "coordinates": arrPos,
-                                        "continue_straight": "true"
-                                    });
-
-                                    var requestOptions = {
-                                        method: 'POST',
-                                        headers: myHeaders,
-                                        body: raw,
-                                        redirect: 'follow'
-                                    };
-
-                                    fetch("https://api.openrouteservice.org/v2/directions/driving-car/geojson", requestOptions)
-                                        .then(res => {
-                                            return res.json()
-                                        })
-                                        .then(data => {
-                                            routerContent = '';
-
-                                            const { features } = data;
-                                            const [resultFeature] = features;
-                                            const { geometry, properties } = resultFeature;
-                                            const { segments } = properties;
-                                            const [segmentResult] = segments
-                                            const { steps } = segmentResult
-                                            const { coordinates } = geometry;
-
-                                            segments.forEach((ele) => {
-                                                ele.steps.forEach((el) => {
-                                                    if (el && el.instruction != null) {
-                                                        //Chi duong hien tai
-                                                        let str = el.instruction.toLowerCase();
-
-                                                        for (let i = 0; i < dataDirection.length; i++) {
-                                                            let e = dataDirection[i];
-
-                                                            if (str.includes(e.en)) {
-                                                                let ar = str.replace(e.en, e.vi);
-
-                                                                str = ar;
-                                                            }
-                                                        }
-
-                                                        routerContent += `<p class="text-capitalize">${str}</p>`;
-                                                    }
-                                                })
-                                            })
-
-                                            polylineGraphic = new Graphic({
-                                                geometry: new Polyline({
-                                                    hasZ: false,
-                                                    hasM: true,
-                                                    paths: [...coordinates],
-                                                }),
-                                                symbol: {
-                                                    type: "simple-line",
-                                                    color: [226, 119, 40],
-                                                    width: 3
-                                                }
-                                            });
-
-                                            graphicsLayer.add(polylineGraphic);
-
-                                            routerPopup.content = routerContent;
-                                            routerPopup.visible = true;
-                                        })
-                                        .catch(er => {
-                                            console.log(er)
-                                        })
-                                });
-                            }
-                            //Click list
-                            else {
-                                const point = new Point(
-                                    mPopup.selectedFeature.geometry.x,
-                                    mPopup.selectedFeature.geometry.y,
-                                    new SpatialReference({
-                                        wkt: MAP_SR,
-                                    })
-                                );
-
-                                let outSpatialReference = new SpatialReference({ wkid: 3405 });
-
-                                projection.load().then(function () {
-                                    const res = projection.project(point, outSpatialReference);
-
-                                    const point1 = new Point(
-                                        res.x,
-                                        res.y,
-                                        new SpatialReference({
-                                            wkid: 3405
-                                        })
-                                    );
-
-                                    let outSpatialReference1 = new SpatialReference({ wkid: 4326 });
-
-                                    const res1 = projection.project(point1, outSpatialReference1);
-
-                                    if (res1 != null && res1.longitude != null && res1.latitude != null) {
-                                        mLat = res1.latitude;
-                                        mLong = res1.longitude;
-
-                                        const des = [mLong, mLat];
-
+                                    const item = arrPos.find(x => (x[0] == mLong && x[1] == mLat));
+                                    if (!item) {
                                         if (polylineGraphic) {
                                             graphicsLayer.remove(polylineGraphic);
                                         }
 
-                                        locateBtn.locate().then(function (pos) {
-                                            const { latitude: curLat, longitude: curLong } = pos.coords
+                                        const des = [mLong, mLat];
 
-                                            const curr = [curLong, curLat];
+                                        locateBtn.locate()
+                                            .then(function (pos) {
+                                                const { latitude: curLat, longitude: curLong } = pos.coords
 
-                                            if (arrPos.length == 0) {
-                                                arrPos.push(curr)
-                                            }
+                                                const curr = [curLong, curLat];
 
-                                            arrPos.push(des);
+                                                if (arrPos.length == 0) {
+                                                    arrPos.push(curr)
+                                                }
 
-                                            var myHeaders = new Headers();
-                                            myHeaders.append("Authorization", "5b3ce3597851110001cf624851a99071ab2944ee85a0f5e9f5e40c36");
-                                            myHeaders.append("Content-Type", "application/json");
+                                                arrPos.push(des);
 
-                                            var raw = JSON.stringify({
-                                                "coordinates": arrPos,
-                                                "continue_straight": "true"
-                                            });
+                                                var myHeaders = new Headers();
+                                                myHeaders.append("Authorization", "5b3ce3597851110001cf624851a99071ab2944ee85a0f5e9f5e40c36");
+                                                myHeaders.append("Content-Type", "application/json");
 
-                                            var requestOptions = {
-                                                method: 'POST',
-                                                headers: myHeaders,
-                                                body: raw,
-                                                redirect: 'follow'
-                                            };
+                                                var raw = JSON.stringify({
+                                                    "coordinates": arrPos,
+                                                    "continue_straight": "true"
+                                                });
 
-                                            fetch("https://api.openrouteservice.org/v2/directions/driving-car/geojson", requestOptions)
-                                                .then(res => {
-                                                    return res.json()
-                                                })
-                                                .then(data => {
-                                                    routerContent = '';
+                                                var requestOptions = {
+                                                    method: 'POST',
+                                                    headers: myHeaders,
+                                                    body: raw,
+                                                    redirect: 'follow'
+                                                };
 
-                                                    const { features } = data;
-                                                    const [resultFeature] = features;
-                                                    const { geometry, properties } = resultFeature;
-                                                    const { segments } = properties;
-                                                    const [segmentResult] = segments
-                                                    const { steps } = segmentResult
-                                                    const { coordinates } = geometry;
-
-                                                    segments.forEach((ele) => {
-                                                        ele.steps.forEach((el) => {
-                                                            if (el && el.instruction != null) {
-                                                                //Chi duong hien tai
-                                                                let str = el.instruction.toLowerCase();
-
-                                                                for (let i = 0; i < dataDirection.length; i++) {
-                                                                    let e = dataDirection[i];
-
-                                                                    if (str.includes(e.en)) {
-                                                                        let ar = str.replace(e.en, e.vi);
-
-                                                                        str = ar;
-                                                                    }
-                                                                }
-
-                                                                routerContent += `<p class="text-capitalize">${str}</p>`;
-                                                            }
-                                                        })
+                                                fetch("https://api.openrouteservice.org/v2/directions/driving-car/geojson", requestOptions)
+                                                    .then(res => {
+                                                        return res.json()
                                                     })
+                                                    .then(data => {
+                                                        routerContent = '';
 
-                                                    polylineGraphic = new Graphic({
-                                                        geometry: new Polyline({
-                                                            hasZ: false,
-                                                            hasM: true,
-                                                            paths: [...coordinates],
-                                                        }),
-                                                        symbol: {
-                                                            type: "simple-line",
-                                                            color: [226, 119, 40],
-                                                            width: 3
-                                                        }
-                                                    });
+                                                        const { features } = data;
+                                                        const [resultFeature] = features;
+                                                        const { geometry, properties } = resultFeature;
+                                                        const { segments } = properties;
+                                                        const [segmentResult] = segments
+                                                        const { steps } = segmentResult
+                                                        const { coordinates } = geometry;
 
-                                                    graphicsLayer.add(polylineGraphic);
+                                                        segments.forEach((ele) => {
+                                                            ele.steps.forEach((el) => {
+                                                                if (el && el.instruction != null) {
+                                                                    //Chi duong hien tai
+                                                                    let str = el.instruction;
 
-                                                    routerPopup.content = routerContent;
-                                                    routerPopup.visible = true;
-                                                })
-                                                .catch(er => {
-                                                    console.log(er)
-                                                })
-                                        });
+                                                                    for (let i = 0; i < dataDirection.length; i++) {
+                                                                        let e = dataDirection[i];
+
+                                                                        const check = isExactMatch(str, e.en);
+
+                                                                        if (check) {
+                                                                            const regex = new RegExp(`\\b${escapeRegExpMatch(e.en)}\\b`, 'i');
+
+                                                                            let ar = str.replace(regex, e.vi);
+
+                                                                            str = ar;
+                                                                        }
+                                                                    }
+
+                                                                    routerContent += `<p class="router-hd">${str}</p>`;
+                                                                }
+                                                            })
+                                                        })
+
+                                                        polylineGraphic = new Graphic({
+                                                            geometry: new Polyline({
+                                                                hasZ: false,
+                                                                hasM: true,
+                                                                paths: [...coordinates],
+                                                            }),
+                                                            symbol: {
+                                                                type: "simple-line",
+                                                                color: [226, 119, 40],
+                                                                width: 3
+                                                            }
+                                                        });
+
+                                                        graphicsLayer.add(polylineGraphic);
+
+                                                        routerPopup.content = routerContent;
+                                                        routerPopup.visible = true;
+
+                                                        routerFlag = false;
+                                                    })
+                                                    .catch(er => {
+                                                        console.log(er)
+                                                        routerFlag = false;
+                                                    })
+                                            })
+                                            .catch((error) => {
+                                                routerFlag = false;
+                                                alert('Cần cấp quyền cần thiết để sử dụng chức năng này!');
+                                            })
+                                    } else {
+                                        routerFlag = false;
                                     }
-                                    else {
-                                        alert('Đã xảy ra lỗi!');
-                                    }
-                                });
+                                }
+                                //Click list
+                                else {
+                                    routerFlag = true;
+
+                                    const point = new Point(
+                                        mPopup.selectedFeature.geometry.x,
+                                        mPopup.selectedFeature.geometry.y,
+                                        new SpatialReference({
+                                            wkt: MAP_SR,
+                                        })
+                                    );
+
+                                    let outSpatialReference = new SpatialReference({ wkid: 3405 });
+
+                                    projection.load()
+                                        .then(function () {
+                                            const res = projection.project(point, outSpatialReference);
+
+                                            const point1 = new Point(
+                                                res.x,
+                                                res.y,
+                                                new SpatialReference({
+                                                    wkid: 3405
+                                                })
+                                            );
+
+                                            let outSpatialReference1 = new SpatialReference({ wkid: 4326 });
+
+                                            const res1 = projection.project(point1, outSpatialReference1);
+
+                                            if (res1 != null && res1.longitude != null && res1.latitude != null) {
+                                                mLat = res1.latitude;
+                                                mLong = res1.longitude;
+
+                                                const item = arrPos.find(x => (x[0] == mLong && x[1] == mLat));
+                                                if (!item) {
+                                                    const des = [mLong, mLat];
+
+                                                    if (polylineGraphic) {
+                                                        graphicsLayer.remove(polylineGraphic);
+                                                    }
+
+                                                    locateBtn.locate()
+                                                        .then(function (pos) {
+                                                            const { latitude: curLat, longitude: curLong } = pos.coords
+
+                                                            const curr = [curLong, curLat];
+
+                                                            if (arrPos.length == 0) {
+                                                                arrPos.push(curr)
+                                                            }
+
+                                                            arrPos.push(des);
+
+                                                            var myHeaders = new Headers();
+                                                            myHeaders.append("Authorization", "5b3ce3597851110001cf624851a99071ab2944ee85a0f5e9f5e40c36");
+                                                            myHeaders.append("Content-Type", "application/json");
+
+                                                            var raw = JSON.stringify({
+                                                                "coordinates": arrPos,
+                                                                "continue_straight": "true"
+                                                            });
+
+                                                            var requestOptions = {
+                                                                method: 'POST',
+                                                                headers: myHeaders,
+                                                                body: raw,
+                                                                redirect: 'follow'
+                                                            };
+
+                                                            fetch("https://api.openrouteservice.org/v2/directions/driving-car/geojson", requestOptions)
+                                                                .then(res => {
+                                                                    return res.json()
+                                                                })
+                                                                .then(data => {
+                                                                    routerContent = '';
+
+                                                                    const { features } = data;
+                                                                    const [resultFeature] = features;
+                                                                    const { geometry, properties } = resultFeature;
+                                                                    const { segments } = properties;
+                                                                    const [segmentResult] = segments
+                                                                    const { steps } = segmentResult
+                                                                    const { coordinates } = geometry;
+
+                                                                    segments.forEach((ele) => {
+                                                                        ele.steps.forEach((el) => {
+                                                                            if (el && el.instruction != null) {
+                                                                                //Chi duong hien tai
+                                                                                let str = el.instruction;
+
+                                                                                for (let i = 0; i < dataDirection.length; i++) {
+                                                                                    let e = dataDirection[i];
+
+                                                                                    const check = isExactMatch(str, e.en);
+
+                                                                                    if (check) {
+                                                                                        const regex = new RegExp(`\\b${escapeRegExpMatch(e.en)}\\b`, 'i')
+
+                                                                                        let ar = str.replace(regex, e.vi);
+
+                                                                                        str = ar;
+                                                                                    }
+                                                                                }
+
+                                                                                routerContent += `<p class="router-hd">${str}</p>`;
+                                                                            }
+                                                                        })
+                                                                    })
+
+                                                                    polylineGraphic = new Graphic({
+                                                                        geometry: new Polyline({
+                                                                            hasZ: false,
+                                                                            hasM: true,
+                                                                            paths: [...coordinates],
+                                                                        }),
+                                                                        symbol: {
+                                                                            type: "simple-line",
+                                                                            color: [226, 119, 40],
+                                                                            width: 3
+                                                                        }
+                                                                    });
+
+                                                                    graphicsLayer.add(polylineGraphic);
+
+                                                                    routerPopup.content = routerContent;
+                                                                    routerPopup.visible = true;
+
+                                                                    routerFlag = false;
+                                                                })
+                                                                .catch(er => {
+                                                                    console.log(er)
+                                                                    routerFlag = false;
+                                                                })
+                                                        })
+                                                        .catch((error) => {
+                                                            routerFlag = false;
+                                                            alert('Cần cấp quyền cần thiết để sử dụng chức năng này!');
+                                                        })
+                                                } else {
+                                                    routerFlag = false;
+                                                }
+                                            }
+                                            else {
+                                                routerFlag = false;
+                                                alert('Đã xảy ra lỗi!');
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            routerFlag = false;
+                                            alert('Đã xảy ra lỗi!');
+                                        })
+                                }
                             }
                         }
                     });
@@ -1810,35 +1866,68 @@ $(document).ready(function () {
                                                             pos.coords.latitude
                                                         );
 
-                                                        let radius = $('#bk-input').val();
-                                                        if (radius < 5) {
-                                                            radius = 5;
-                                                        } else if (radius > 5000) {
-                                                            radius = 5000;
-                                                        }
+                                                        let outSpatialReference = new SpatialReference({ wkid: 3405 });
 
-                                                        let query = '1=1';
-                                                        if (tid) {
-                                                            const field = layer.sourceJSON.typeIdField;
-                                                            if (field != null && field != "") {
-                                                                query = `${field} = '${tid}'`
-                                                            }
-                                                        }
+                                                        projection.load()
+                                                            .then(async function () {
+                                                                const res = projection.project(point, outSpatialReference);
 
-                                                        let arr = [];
-                                                        arr.push(...(await getDataXqWithQuery(layer, query, point, radius)));
+                                                                const point1 = new Point(
+                                                                    res.x,
+                                                                    res.y,
+                                                                    new SpatialReference({
+                                                                        wkid: 3405
+                                                                    })
+                                                                );
 
-                                                        $('#filter-slider').toggleClass('toggle-display');
-                                                        $('#result-slider').toggleClass('toggle-display');
+                                                                let outSpatialReference1 = new SpatialReference({ wkt: MAP_SR });
 
-                                                        $('#filter-btn').removeClass('disabled')
+                                                                const res1 = projection.project(point1, outSpatialReference1);
 
-                                                        if (arr.length > 0) {
-                                                            resultArr = arr;
-                                                            renderResult(resultArr)
-                                                        } else {
-                                                            renderResult(null)
-                                                        }
+                                                                const point2 = new Point(
+                                                                    res1.x,
+                                                                    res1.y,
+                                                                    new SpatialReference({
+                                                                        wkt: MAP_SR
+                                                                    })
+                                                                );
+
+                                                                let radius = $('#bk-input').val();
+                                                                if (radius < 5) {
+                                                                    radius = 5;
+                                                                } else if (radius > 5000) {
+                                                                    radius = 5000;
+                                                                }
+
+                                                                let query = null;
+                                                                if (tid) {
+                                                                    const field = layer.sourceJSON.typeIdField;
+                                                                    if (field != null && field != "") {
+                                                                        query = `${field} = '${tid}'`
+                                                                    }
+                                                                }
+
+                                                                const rad = Number(radius) + 100;
+
+                                                                let arr = [];
+                                                                arr.push(...(await getDataXqWithQuery(layer, query, point2, Number(radius))));
+
+                                                                $('#filter-slider').toggleClass('toggle-display');
+                                                                $('#result-slider').toggleClass('toggle-display');
+
+                                                                $('#filter-btn').removeClass('disabled')
+
+                                                                if (arr.length > 0) {
+                                                                    resultArr = arr;
+                                                                    renderResult(resultArr)
+                                                                } else {
+                                                                    renderResult(null)
+                                                                }
+                                                            })
+                                                            .catch((error) => {
+                                                                routerFlag = false;
+                                                                alert('Đã xảy ra lỗi!');
+                                                            })
                                                     }
                                                 });
                                         }

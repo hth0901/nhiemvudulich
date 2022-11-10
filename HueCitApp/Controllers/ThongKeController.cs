@@ -145,5 +145,85 @@ namespace HueCitApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("tainguyendulich")]
+        public async Task<IActionResult> TaiNguyenDuLich()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_THONGKE_TAINGUYEN_DULICH", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("dichvudulich")]
+        public async Task<IActionResult> DichVuDuLich()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_THONGKE_DICHVU_DULICH", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("lehoi")]
+        public async Task<IActionResult> LeHoi()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_THONGKE_LEHOI", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("soluongdiemgiaodich")]
+        public async Task<IActionResult> SoLuongDiemGiaoDich()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_THONGKE_DIEMGIAODICH_SOLUONG", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
