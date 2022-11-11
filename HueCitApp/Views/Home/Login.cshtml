@@ -27,10 +27,11 @@
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <form class="form-horizontal form-simple">
+                                    <form class="form-horizontal form-simple" method="post" asp-controller="home" asp-action="login">
                                         <fieldset class="form-group position-relative has-icon-left mb-1">
                                             <input
                                                 type="text"
+                                                   name="username"
                                                 class="form-control form-control-lg"
                                                 id="user-name"
                                                 placeholder="Tài khoản"
@@ -43,6 +44,7 @@
                                         <fieldset class="form-group position-relative has-icon-left">
                                             <input
                                                 type="password"
+                                                   name="password"
                                                 class="form-control form-control-lg"
                                                 id="user-password"
                                                 placeholder="Mật khẩu"

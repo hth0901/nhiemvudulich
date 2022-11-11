@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HueCitApp", "HueCitApp\HueCitApp.csproj", "{B8C4DF93-0C3D-4D02-A804-5C73CF83C9A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthExample", "AuthExample\AuthExample.csproj", "{1AF22B2D-9CA4-4B07-BC66-C9457C6BAC1C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenExample", "AuthenExample\AuthenExample.csproj", "{DEC995FB-983F-47CE-A43A-81475266A45D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{B8C4DF93-0C3D-4D02-A804-5C73CF83C9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8C4DF93-0C3D-4D02-A804-5C73CF83C9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8C4DF93-0C3D-4D02-A804-5C73CF83C9A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF22B2D-9CA4-4B07-BC66-C9457C6BAC1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF22B2D-9CA4-4B07-BC66-C9457C6BAC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF22B2D-9CA4-4B07-BC66-C9457C6BAC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF22B2D-9CA4-4B07-BC66-C9457C6BAC1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEC995FB-983F-47CE-A43A-81475266A45D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEC995FB-983F-47CE-A43A-81475266A45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEC995FB-983F-47CE-A43A-81475266A45D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEC995FB-983F-47CE-A43A-81475266A45D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
