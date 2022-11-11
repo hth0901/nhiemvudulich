@@ -4,6 +4,8 @@ let polylineGraphic = null;
 let graphicsLayer = null;
 let currentLayerSearch = null;
 
+const ROOTHOST = "https://tuongtac.thuathienhue.gov.vn/phan-anh/";
+
 const linhVucData = [
     {
         id: "00",
@@ -423,6 +425,27 @@ $(document).ready(function () {
             visible: false
         });
 
+        const ACTIONFEATURE = [
+            {
+                title: "Chỉ đường",
+                id: "routes",
+                className: "esri-icon-directions",
+                type: "button",
+            },
+            {
+                title: "Hình ảnh",
+                id: "images",
+                className: "esri-icon-media",
+                type: "button",
+            },
+            {
+                title: "Phản ánh",
+                id: "phananh",
+                className: "esri-icon-documentation",
+                type: "button",
+            },
+        ];
+
         //LuuTru
         const layer_0 = new FeatureLayer({
             url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDuLich_HueCIT/DuLich_DichVu/FeatureServer/0",
@@ -456,14 +479,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -503,14 +519,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -550,14 +559,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -597,14 +599,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -644,14 +639,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -691,14 +679,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -738,14 +719,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -785,14 +759,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -832,14 +799,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -879,14 +839,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -926,14 +879,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -973,14 +919,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -1020,14 +959,7 @@ $(document).ready(function () {
                         ]
                     }
                 ],
-                actions: [
-                    {
-                        title: "Chỉ đường",
-                        id: "routes",
-                        className: "esri-icon-directions",
-                        type: "button",
-                    },
-                ],
+                actions: ACTIONFEATURE,
             },
             spatialReference: new SpatialReference({
                 wkt: MAP_SR
@@ -1459,6 +1391,10 @@ $(document).ready(function () {
                         if (!($('#result-slider').hasClass('toggle-display'))) {
                             $('#result-slider').addClass('toggle-display')
                         }
+
+                        if (!($('#pa-slider').hasClass('toggle-display'))) {
+                            $('#pa-slider').addClass('toggle-display')
+                        }
                     });
                     view.ui.add(element, "top-right");
 
@@ -1474,6 +1410,10 @@ $(document).ready(function () {
 
                         if (!($('#result-slider').hasClass('toggle-display'))) {
                             $('#result-slider').addClass('toggle-display')
+                        }
+
+                        if (!($('#pa-slider').hasClass('toggle-display'))) {
+                            $('#pa-slider').addClass('toggle-display')
                         }
                     });
                     view.ui.add(eleFilter, "top-right");
@@ -1512,8 +1452,9 @@ $(document).ready(function () {
                     }
 
                     let routerFlag = false;
+                    let phanAnhFlag = false;
 
-                    view.popup.on("trigger-action", (evt) => {
+                    view.popup.on("trigger-action", async (evt) => {
                         if (evt.action.id === "routes") {
                             const mPopup = view.popup;
                             let mLat = null;
@@ -1791,6 +1732,121 @@ $(document).ready(function () {
                                 }
                             }
                         }
+                        else if (evt.action.id === "images") {
+                            console.log("img")
+                        }
+                        else if (evt.action.id === "phananh") {
+                            const mPopup = view.popup;
+
+                            if (phanAnhFlag == false) {
+                                //Click tren map
+                                if (mPopup.selectedFeature.geometry.latitude && mPopup.selectedFeature.geometry.longitude) {
+                                    phanAnhFlag = true;
+
+                                    const point = new Point(
+                                        mPopup.selectedFeature.geometry.longitude,
+                                        mPopup.selectedFeature.geometry.latitude,
+                                        new SpatialReference({
+                                            wkid: 4326,
+                                        })
+                                    );
+
+                                    let outSpatialReference = new SpatialReference({ wkid: 3405 });
+
+                                    projection.load()
+                                        .then(async function () {
+                                            const res = projection.project(point, outSpatialReference);
+
+                                            const point1 = new Point(
+                                                res.x,
+                                                res.y,
+                                                new SpatialReference({
+                                                    wkid: 3405
+                                                })
+                                            );
+
+                                            let outSpatialReference1 = new SpatialReference({ wkt: MAP_SR });
+
+                                            const res1 = projection.project(point1, outSpatialReference1);
+
+                                            const point2 = new Point(
+                                                res1.x,
+                                                res1.y,
+                                                new SpatialReference({
+                                                    wkt: MAP_SR
+                                                })
+                                            );
+
+                                            let arr = [];
+                                            arr.push(...(await getDataXqWithQuery(layer_13, null, point2, Number(60))));
+
+                                            const found = map.layers.items.find(x => x.id == "13");
+                                            if (found && found.visible == false) {
+                                                setTreeCheck("13")
+                                            }
+                                            
+                                            phanAnhFlag = false;
+
+                                            if (!($('.map-sidebar').hasClass('toggle-display'))) {
+                                                $('.map-sidebar').addClass('toggle-display')
+                                            }
+
+                                            if (($('#result-slider').hasClass('toggle-display'))) {
+                                                $('#result-slider').removeClass('toggle-display')
+                                            }
+
+                                            if (arr.length > 0) {
+                                                resultArr = arr;
+                                                renderResultPhanAnh(resultArr)
+                                            } else {
+                                                renderResultPhanAnh(null)
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            phanAnhFlag = false;
+                                            alert('Đã xảy ra lỗi!');
+                                        })
+                                }
+                                //Click list
+                                else {
+                                    routerFlag = true;
+
+                                    const point = new Point(
+                                        mPopup.selectedFeature.geometry.x,
+                                        mPopup.selectedFeature.geometry.y,
+                                        new SpatialReference({
+                                            wkt: MAP_SR,
+                                        })
+                                    );
+
+                                    let arr = [];
+                                    arr.push(...(await getDataXqWithQuery(layer_13, null, point, Number(60))));
+
+
+                                    const found = map.layers.items.find(x => x.id == "13");
+                                    if (found && found.visible == false) {
+                                        setTreeCheck("13")
+                                    }
+
+                                    phanAnhFlag = false;
+
+                                    if (!($('.map-sidebar').hasClass('toggle-display'))) {
+                                        $('.map-sidebar').addClass('toggle-display')
+                                    }
+
+                                    if (($('#result-slider').hasClass('toggle-display'))) {
+                                        $('#result-slider').removeClass('toggle-display')
+                                    }
+
+                                    if (arr.length > 0) {
+                                        resultArr = arr;
+                                        renderResultPhanAnh(resultArr)
+                                    } else {
+                                        renderResultPhanAnh(null)
+                                    }
+                                }
+                            }
+                        }
                     });
 
                     //Tim kiem nang cao
@@ -1906,8 +1962,6 @@ $(document).ready(function () {
                                                                         query = `${field} = '${tid}'`
                                                                     }
                                                                 }
-
-                                                                const rad = Number(radius) + 100;
 
                                                                 let arr = [];
                                                                 arr.push(...(await getDataXqWithQuery(layer, query, point2, Number(radius))));
@@ -2096,6 +2150,18 @@ $(document).ready(function () {
                                 }
                             });
                         }
+                    });
+
+                    $(document).on('click', '.pa-list-item', function () {
+                        const id = $(this).data('oid');
+                        let found = resultArr.find(x => x.attributes.objectid_1 == id);
+                        if (found) {
+                            const tieuDe = found.attributes.tieude;
+                            const id = found.attributes.phananhid;
+
+                            const build = ROOTHOST + toLowerCaseNonAccentVietnamese(tieuDe) + `-a${id}.html`;
+                            window.open(build, "_blank");
+                        }
                     })
                 });
 
@@ -2207,6 +2273,31 @@ $(document).ready(function () {
                             let id = el.attributes.objectid_1 ? el.attributes.objectid_1 : el.attributes.objectid;
                             html += `
                             <div class="col-12 result-list-item" data-oid="${id}">
+						        <h4>${ten}</h4>
+						        <p>${diachi}</p>
+					        </div>
+                        `
+                        });
+                    } else {
+                        html += `
+                                <div class="col-12">
+                                    <p>Không tìm thấy dữ liệu tương ứng</p>
+                                </div>
+                                `
+                    }
+                    $('#result-content').append(html);
+                };
+
+                function renderResultPhanAnh(data) {
+                    $('#result-content').empty();
+                    let html = '';
+                    if (data != null) {
+                        data.forEach((el) => {
+                            let ten = el.attributes.ten ? el.attributes.ten : el.attributes.tendiadiem ? el.attributes.tendiadiem : el.attributes.tenlehoi ? el.attributes.tenlehoi : el.attributes.tieude ? el.attributes.tieude : null;
+                            let diachi = el.attributes.sonha ? el.attributes.sonha : el.attributes.diachi ? el.attributes.diachi : el.attributes.vitri ? el.attributes.vitri : el.attributes.diadiem ? el.attributes.diadiem : el.attributes.diachisuki ? el.attributes.diachisuki : null;
+                            let id = el.attributes.objectid_1 ? el.attributes.objectid_1 : el.attributes.objectid;
+                            html += `
+                            <div class="col-12 pa-list-item" data-oid="${id}">
 						        <h4>${ten}</h4>
 						        <p>${diachi}</p>
 					        </div>
@@ -2504,6 +2595,54 @@ $(document).ready(function () {
                         return true
                     }
                     return false
+                }
+
+                // This function converts the string to lowercase, then perform the conversion
+                function toLowerCaseNonAccentVietnamese(str) {
+                    str = str.toLowerCase();
+                    //     We can also use this instead of from line 11 to line 17
+                    //     str = str.replace(/\u00E0|\u00E1|\u1EA1|\u1EA3|\u00E3|\u00E2|\u1EA7|\u1EA5|\u1EAD|\u1EA9|\u1EAB|\u0103|\u1EB1|\u1EAF|\u1EB7|\u1EB3|\u1EB5/g, "a");
+                    //     str = str.replace(/\u00E8|\u00E9|\u1EB9|\u1EBB|\u1EBD|\u00EA|\u1EC1|\u1EBF|\u1EC7|\u1EC3|\u1EC5/g, "e");
+                    //     str = str.replace(/\u00EC|\u00ED|\u1ECB|\u1EC9|\u0129/g, "i");
+                    //     str = str.replace(/\u00F2|\u00F3|\u1ECD|\u1ECF|\u00F5|\u00F4|\u1ED3|\u1ED1|\u1ED9|\u1ED5|\u1ED7|\u01A1|\u1EDD|\u1EDB|\u1EE3|\u1EDF|\u1EE1/g, "o");
+                    //     str = str.replace(/\u00F9|\u00FA|\u1EE5|\u1EE7|\u0169|\u01B0|\u1EEB|\u1EE9|\u1EF1|\u1EED|\u1EEF/g, "u");
+                    //     str = str.replace(/\u1EF3|\u00FD|\u1EF5|\u1EF7|\u1EF9/g, "y");
+                    //     str = str.replace(/\u0111/g, "d");
+                    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                    str = str.replace(/đ/g, "d");
+                    // Some system encode vietnamese combining accent as individual utf-8 characters
+                    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng 
+                    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+                    str = str.replace(/\W+/g, ' ');
+                    str = str.replace(/\s/g, '-');
+                    return str;
+                }
+
+                // This function keeps the casing unchanged for str, then perform the conversion
+                function toNonAccentVietnamese(str) {
+                    str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
+                    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+                    str = str.replace(/E|É|È|Ẽ|Ẹ|Ê|Ế|Ề|Ễ|Ệ/, "E");
+                    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+                    str = str.replace(/I|Í|Ì|Ĩ|Ị/g, "I");
+                    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+                    str = str.replace(/O|Ó|Ò|Õ|Ọ|Ô|Ố|Ồ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ỡ|Ợ/g, "O");
+                    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+                    str = str.replace(/U|Ú|Ù|Ũ|Ụ|Ư|Ứ|Ừ|Ữ|Ự/g, "U");
+                    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+                    str = str.replace(/Y|Ý|Ỳ|Ỹ|Ỵ/g, "Y");
+                    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+                    str = str.replace(/Đ/g, "D");
+                    str = str.replace(/đ/g, "d");
+                    // Some system encode vietnamese combining accent as individual utf-8 characters
+                    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng 
+                    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+                    return str;
                 }
             }
 
