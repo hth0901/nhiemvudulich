@@ -1,4 +1,39 @@
-﻿#viewDiv {
+﻿@font-face {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto-Regular'), url(../fonts/Roboto/Roboto-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: Roboto Medium;
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto-Medium'), url(../fonts/Roboto/Roboto-Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto Light';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto-Light'), url(../fonts/Roboto/Roboto-Light.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto Bold';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto-Bold'), url(../fonts/Roboto/Roboto-Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto Italic';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto-Italic'), url(../fonts/Roboto/Roboto-Italic.ttf) format('truetype');
+}
+
+#viewDiv {
     padding: 0;
     margin: 0;
     height: calc(100vh - 150px);
@@ -26,14 +61,16 @@
     display: none;
 }
 
-#filter-slider {
+#filter-slider,
+#pa-slider{
     width: 60%;
     min-width: 300px;
 }
 
-    #filter-sidebar > div {
-        padding-right: 10px;
-    }
+#filter-sidebar > div,
+#pa-sidebar > div {
+    padding-right: 10px;
+}
 
     .m-primary-color {
         border-color: #452994 !important;
@@ -84,8 +121,49 @@
         background-color: rgba(236, 236, 236, 0.5);
     }
 
+    .result-list-item h4 {
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #030E37;
+    }
+
     .result-list-item p {
         margin-bottom: 4px;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #030E37;
+        opacity: 0.6;
+    }
+
+.pa-list-item {
+    padding: 8px 20px;
+    cursor: pointer;
+}
+
+    .pa-list-item:hover {
+        background-color: rgba(236, 236, 236, 0.5);
+    }
+
+    .pa-list-item h4 {
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #030E37;
+    }
+
+    .pa-list-item p {
+        margin-bottom: 4px;
+        font-family: 'Roboto';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #030E37;
+        opacity: 0.6;
     }
 
 .treejs-icon {
