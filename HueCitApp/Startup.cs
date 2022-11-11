@@ -28,7 +28,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Quartz;
+using HueCitApp.Models;
+using HueCitApp.Services.ScheduledTask;
+using Quartz.Impl;
+using Microsoft.Extensions.Options;
+using System.Configuration;
+using API.Services;
+using HueCitApp.Services;
 
 namespace HueCitApp
 {
@@ -50,12 +57,47 @@ namespace HueCitApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+         
+
             services.AddControllersWithViews();
+            //
+            //services.AddQuartz(q =>
+            //{
+            //    // Use a Scoped container to create jobs. I'll touch on this later
+            //    q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+            //    // Create a "key" for the job
+            //    var jobKey = new JobKey("HelloWorldJob");
+
+            //    // Register the job with the DI container
+            //    q.AddJob<JobScheduled>(opts => opts.WithIdentity(jobKey));
+
+            //    // Create a trigger for the job
+            //    q.AddTrigger(opts => opts
+            //        .ForJob(jobKey) // link to the HelloWorldJob
+            //        .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
+            //        .WithCronSchedule("0/5 * * * * ?"));
+            //    // run every 5 seconds
+            //});
+
+            //// Add the Quartz.NET hosted service
+
+            //services.AddQuartzHostedService(
+            //    q => q.WaitForJobsToComplete = true);
+
+            ////
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TravelApi", Version = "v1" });
             });
+            services.Configure<MailSettings>(_config.GetSection("MailSettings"));
+            services.AddTransient<ImailService, MailService>();
+
+
+
+
+
+
             services.AddControllersWithViews().AddFluentValidation(config =>
             {
                 config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongEdit>();
@@ -105,6 +147,7 @@ namespace HueCitApp
             });
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
+          
 
             services.AddCors(opt =>
             {
@@ -113,6 +156,8 @@ namespace HueCitApp
                     policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
                 });
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
