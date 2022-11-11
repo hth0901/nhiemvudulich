@@ -1,7 +1,7 @@
 ﻿using API.Services;
 using Application.Core;
 using Application.DiemGiaoDich;
-using Application.EmailDelay;
+
 using Dapper;
 using Domain.RequestEntity;
 using HueCitApp.Models;
@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Quartz;
@@ -25,22 +26,24 @@ namespace HueCitApp.Services.ScheduledTask
     [DisallowConcurrentExecution]
     public class JobScheduled : IJob
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ILogger<JobScheduled> _logger;
         private readonly IOptions<MailSettings> _mailSettings;
         private readonly ImailService _mailService;
         private readonly IConfiguration _configuration;
 
-        public JobScheduled(ILogger<JobScheduled> logger, ImailService mailService,IConfiguration config)
+        public JobScheduled(ILogger<JobScheduled> logger, IWebHostEnvironment hostingEnvironment, ImailService mailService,IConfiguration config)
         {
+            _hostingEnvironment = hostingEnvironment;
             _logger = logger;
             _mailService = mailService;
             _configuration = config;
         }
         public async Task Execute(IJobExecutionContext context)
         {
-
-
-            EmailScheduled emailScheduled = new EmailScheduled(_configuration);
+            //
+             
+          
             MailRequest request= new MailRequest();
          
             var lstResult = new List<string>(); 
@@ -52,18 +55,23 @@ namespace HueCitApp.Services.ScheduledTask
                 var result = await connection.QueryAsync<string>(new CommandDefinition(spName, null, commandType: System.Data.CommandType.StoredProcedure));
                 //var check = result;
                 lstResult = result.ToList();
-            }
+              }
 
             int soluong = lstResult.Count();
-            string string_mail="" ;
-            for (int i=0; i < soluong; i++)
+            
+            if (soluong > 0)
             {
 
-                request.ToEmail = string_mail;
-                await _mailService.SendWelcomeEmailAsync(request);
-             
-              
-             
+                //timer
+                for (int i = 0; i < soluong; i++)
+                {
+
+                    request.ToEmail = lstResult[i];
+                    await _mailService.SendWelcomeEmailAsync(request);
+
+
+
+                }
             }
 
      

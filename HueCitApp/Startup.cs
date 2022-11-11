@@ -13,7 +13,6 @@ using Application.HeThongSoHoaTinhDuLieuMuaSamCapNhat;
 using Application.HeThongSoHoaTinhDuLieuTheThaoCapNhat;
 using Application.HeThongSoHoaTinhDuLieuVuiChoiGiaiTriCapNhat;
 using Application.HeThongSoHoaTinhHuongDanVienCapNhat;
-
 using FluentValidation.AspNetCore;
 using HueCitApp.Extensions;
 using HueCitApp.MiddleWare;
@@ -65,6 +64,7 @@ namespace HueCitApp
             //{
             //    // Use a Scoped container to create jobs. I'll touch on this later
             //    q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
 
             //    // Create a "key" for the job
             //    var jobKey = new JobKey("HelloWorldJob");

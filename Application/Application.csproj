@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EmailDelay\" />
     <Folder Include="LoaiPhuongtienGiaoThong\" />
   </ItemGroup>
 
