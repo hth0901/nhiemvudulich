@@ -68,6 +68,36 @@ namespace HueCitApp
             });
 
             services.AddApplication();
+            // Use a Scoped container to create jobs. I'll touch on this later
+            services.AddQuartz(q =>
+            {
+                // Use a Scoped container to create jobs. I'll touch on this later
+                q.UseMicrosoftDependencyInjectionScopedJobFactory();
+
+                // Create a "key" for the job
+                var jobKey = new JobKey("HelloWorldJob");
+
+                // Register the job with the DI container
+                q.AddJob<JobScheduled>(opts => opts.WithIdentity(jobKey).Build());
+
+                // Create a trigger for the job
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey) // link to the HelloWorldJob
+                    .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
+                    .WithDailyTimeIntervalSchedule((x =>
+           x.WithIntervalInSeconds(10).Build())));
+                // run every 5 seconds
+            });
+
+            // Add the Quartz.NET hosted service
+
+            services.AddQuartzHostedService(
+                q => q.WaitForJobsToComplete = true);
+            //
+            //services.AddQuartz(q =>
+            //{
+            //    // Use a Scoped container to create jobs. I'll touch on this later
+            //    q.UseMicrosoftDependencyInjectionScopedJobFactory();
 
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 

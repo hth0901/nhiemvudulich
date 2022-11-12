@@ -57,29 +57,30 @@ namespace HueCitApp
             Host.CreateDefaultBuilder(args).ConfigureServices((hostContext, services) =>
             {
                 //// Add the required Quartz.NET services
-                services.AddQuartz(q =>
-                {
-                    // Use a Scoped container to create jobs. I'll touch on this later
-                    q.UseMicrosoftDependencyInjectionScopedJobFactory();
+               // services.AddQuartz(q =>
+               // {
+               //     // Use a Scoped container to create jobs. I'll touch on this later
+               //     q.UseMicrosoftDependencyInjectionScopedJobFactory();
 
-                    // Create a "key" for the job
-                    var jobKey = new JobKey("HelloWorldJob");
+               //     // Create a "key" for the job
+               //     var jobKey = new JobKey("HelloWorldJob");
 
-                    // Register the job with the DI container
-                    q.AddJob<JobScheduled>(opts => opts.WithIdentity(jobKey));
+               //     // Register the job with the DI container
+               //     q.AddJob<JobScheduled>(opts => opts.WithIdentity(jobKey).Build());
 
-                    // Create a trigger for the job
-                    q.AddTrigger(opts => opts
-                        .ForJob(jobKey) // link to the HelloWorldJob
-                        .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
-                        .WithCronSchedule("0 0/42 * * * ?"));
-                    // run every 5 seconds
-                });
+               //     // Create a trigger for the job
+               //     q.AddTrigger(opts => opts
+               //         .ForJob(jobKey) // link to the HelloWorldJob
+               //         .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
+               //         .WithDailyTimeIntervalSchedule((x =>
+               //x.WithIntervalInMinutes(42).Build())));
+               //     // run every 5 seconds
+               // });
 
-                // Add the Quartz.NET hosted service
+               // // Add the Quartz.NET hosted service
 
-                services.AddQuartzHostedService(
-                    q => q.WaitForJobsToComplete = true);
+               // services.AddQuartzHostedService(
+               //     q => q.WaitForJobsToComplete = true);
 
                 // other config
             })
