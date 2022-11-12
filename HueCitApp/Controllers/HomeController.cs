@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
@@ -39,6 +40,7 @@ namespace HueCitApp.Controllers
         [Authorize]
         public IActionResult Privacy()
         {
+            //var user = (ClaimsIdentity)User.Identity;
             return View();
         }
 

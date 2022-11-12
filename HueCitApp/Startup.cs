@@ -39,6 +39,8 @@ using Persistence;
 using Microsoft.EntityFrameworkCore;
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Application;
+using Application.Core;
 
 namespace HueCitApp
 {
@@ -64,6 +66,10 @@ namespace HueCitApp
             {
                 option.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddApplication();
+
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             services.AddIdentity<AppUser, IdentityRole>(config =>
             {
