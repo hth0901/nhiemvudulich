@@ -125,7 +125,10 @@ namespace HueCitApp
             services.Configure<MailSettings>(_config.GetSection("MailSettings"));
             services.AddTransient<ImailService, MailService>();
 
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 
 
 
@@ -220,6 +223,7 @@ namespace HueCitApp
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

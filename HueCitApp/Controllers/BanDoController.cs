@@ -57,5 +57,32 @@ namespace HueCitApp.Controllers
 
             return HandlerResult(result);
         }
+
+        [HttpGet("lvpa")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LinhVucPhanAnhGets(CancellationToken ct)
+        {
+            var result = await Mediator.Send(new LinhVucPhanAnhGets.Query { }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpGet("llh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoaiLeHoiGets(CancellationToken ct)
+        {
+            var result = await Mediator.Send(new LoaiLeHoiGets.Query { }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpGet("setting")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SettingBanDoGets(CancellationToken ct)
+        {
+            var result = await Mediator.Send(new BanDoSettingGets.Query { }, ct);
+
+            return HandlerResult(result);
+        }
     }
 }

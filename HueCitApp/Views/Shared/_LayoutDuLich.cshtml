@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -79,7 +82,7 @@
                         <li class="dropdown nav-item mega-dropdown">
                             <a class="dropdown-toggle nav-link"
                                href="javascript:void(0)"
-                               data-toggle="dropdown"><span style="background-color: transparent; padding: 5px; border-radius: 4px" id="txtCurrentAqi">AQI 0</span></a>
+                               data-toggle="dropdown"><span style="background-color: transparent; padding: 5px; border-radius: 4px; color: black" id="txtCurrentAqi">AQI 0</span></a>
                             <ul class="mega-dropdown-menu dropdown-menu row">
                                 <li class="col-md-12">
                                     <div class="row match-height">
@@ -107,7 +110,7 @@
                                                                    aria-controls="link"
                                                                    aria-expanded="false">Trong 30 ngày</a>
                                                             </li>
-                    </ul>
+                                                        </ul>
                                                         <div class="tab-content px-1 pt-1">
                                                             <div role="tabpanel"
                                                                  class="tab-pane active in"
@@ -122,14 +125,14 @@
                                                                  aria-labelledby="link-tab"
                                                                  aria-expanded="false">
                                                                 <div id="quantrac30ngay"></div>
-                                                            </div> 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </li>                                
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -171,25 +174,52 @@
                         <i class="ft-home"></i><span class="menu-title" data-i18n="">Trang chủ</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="Bando">
-                        <i class="ft-map"></i><span class="menu-title" data-i18n="">Bản đồ du lịch - dịch vụ</span>
-                    </a>
-                </li>
-                @*@await Component.InvokeAsync("Sample")*@
-                <li class="nav-item">
-                    <a href="#">
-                        <i class="ft-settings"></i><span class="menu-title" data-i18n="">Quản trị</span>
-                    </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a asp-area="" asp-controller="Admin" asp-action="QuanLyTaiKhoan">Quản lý người dùng</a>
+                @{string menu = HttpContextAccessor.HttpContext.Session.GetString("menuInfo");}
+                @if (menu != null && !(string.IsNullOrEmpty(menu)))
+                {
+                    if (menu.Contains('1'))
+                    { 
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="Bando">
+                                <i class="ft-map"></i><span class="menu-title" data-i18n="">Bản đồ du lịch - dịch vụ</span>
+                            </a>
                         </li>
-                        <li>
-                            <a asp-area="" asp-controller="Admin" asp-action="QuanLyNhomVaiTro">Quản lý vai trò</a>
+                    }
+                    if (menu.Contains('2') || menu.Contains('3') || menu.Contains('4') || menu.Contains('5'))
+                    {
+                        <li class="nav-item">
+                            <a href="#">
+                                <i class="ft-settings"></i><span class="menu-title" data-i18n="">Quản trị</span>
+                            </a>
+                            <ul class="menu-content">
+                                @if (menu.Contains('2'))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="Admin" asp-action="QuanLyTaiKhoan">Quản lý người dùng</a>
+                                    </li>
+                                }
+                                @if (menu.Contains('3'))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="Admin" asp-action="QuanLyNhomVaiTro">Quản lý vai trò</a>
+                                    </li>
+                                }
+                                @if (menu.Contains('4'))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="Admin" asp-action="QuanLyPhanQuyen">Quản lý phân quyền</a>
+                                    </li>
+                                }
+                                @if (menu.Contains('5'))
+                                {
+                                    <li>
+                                        <a asp-area="" asp-controller="Admin" asp-action="QuanLyCauHinh">Cấu hình hệ thống</a>
+                                    </li>
+                                }
+                            </ul>
                         </li>
-                    </ul>
-                </li>
+                    }
+                }
 
                 @*<li class="navigation-header">
                         <span>Others</span><i class="ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Others"></i>

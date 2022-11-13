@@ -312,6 +312,21 @@ const dataDirection = [
     },
 ]
 
+function returnDisplayUnit(u) {
+    if (u == "meters") {
+        return "(m)";
+    } else if (u == "kilometers") {
+        return "(km)";
+    } else if (u == "feet") {
+        return "(bước chân)";
+    }
+    return "(m)";
+}
+
+let radiusMin = 5;
+let radiusMax = 5000;
+let settingUnit = 'meters';
+
 $(document).ready(function () {
     $(".select2").select2({
         width: '100%',
@@ -332,6 +347,31 @@ $(document).ready(function () {
             data.forEach(element => {
                 $('#filter-ddl-ch-slt').append(`<option value=${element.id}>${element.tenDiaPhuong}</option>`)
             });
+        },
+        error: function (err) {
+            alert('Lỗi.');
+        }
+    });
+
+    $.ajax({
+        type: 'get',
+        async: false,
+        url: '/api/BanDo/setting',
+        success: function (data) {
+            data.forEach((el) => {
+                if (el.id == 1) {
+                    radiusMin = Number(el.giaTri)
+                } else if (el.id == 2) {
+                    radiusMax = Number(el.giaTri)
+                } else if (el.id == 3) {
+                    settingUnit = el.giaTri
+                }
+            });
+
+            $('#displayRadiusMinValue').text(radiusMin)
+            $('#displayRadiusMaxValue').text(radiusMax)
+            let displayUnit = returnDisplayUnit(settingUnit)
+            $('#displayRadiusUnit').text(displayUnit)
         },
         error: function (err) {
             alert('Lỗi.');
@@ -1000,6 +1040,12 @@ $(document).ready(function () {
                         className: "esri-icon-directions",
                         type: "button",
                     },
+                    {
+                        title: "Chi tiết",
+                        id: "detail",
+                        className: "esri-icon-review",
+                        type: "button",
+                    },
                 ],
             },
             spatialReference: new SpatialReference({
@@ -1187,24 +1233,72 @@ $(document).ready(function () {
                     $('#filter-lh-slt').empty();
                     const found = groupData.find(x => x.id == slt);
                     if (found) {
-                        if (found.child && found.child.length > 0) {
-                            if (($('#filter-lh-slt-wrapper').hasClass('d-none'))) {
-                                $('#filter-lh-slt-wrapper').removeClass('d-none');
-                            }
-
-                            found.child.forEach((el) => {
-                                $('#filter-lh-slt').append(
-                                    `<option value="${el.fid}">${el.text}</option>`
-                                );
+                        if (found.lid == "12") {
+                            $.ajax({
+                                type: 'get',
+                                async: false,
+                                url: '/api/BanDo/llh',
+                                success: function (data) {
+                                    $(`#filter-ddl-le-hoi-slt`).empty();
+                                    $('#filter-ddl-le-hoi-slt').append(`<option value=${-1}>Tất cả</option>`)
+                                    data.forEach(element => {
+                                        $('#filter-ddl-le-hoi-slt').append(`<option value=${element.id}>${element.ten}</option>`)
+                                    });
+                                },
+                                error: function (err) {
+                                    alert('Lỗi.');
+                                }
                             });
 
-                            $('#filter-lh-slt').val($("#filter-lh-slt option:first").val()).trigger('change');
+                            if (($('#filter-adv-le-hoi-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-le-hoi-wrapper').removeClass('d-none')
+                            }
+
+                            if (!($('#filter-pl-wrapper').hasClass('d-none'))) {
+                                $('#filter-pl-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-cslt-wrapper').hasClass('d-none'))) {
+                                $('#filter-cslt-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-pa-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-pa-wrapper').addClass('d-none')
+                            }
                         }
-                        else {
-                            $('#filter-lh-slt-wrapper').addClass('d-none');
-                        }
-                        //An khi chon PhanAnh
-                        if (found.lid == "13") {
+                        else if (found.lid == "13") {
+                            $.ajax({
+                                type: 'get',
+                                async: false,
+                                url: '/api/BanDo/lvpa',
+                                success: function (data) {
+                                    $(`#filter-ddl-pa-slt`).empty();
+                                    $('#filter-ddl-pa-slt').append(`<option value=${-1}>Tất cả</option>`)
+                                    data.forEach(element => {
+                                        $('#filter-ddl-pa-slt').append(`<option value=${element.id}>${element.linhVuc}</option>`)
+                                    });
+                                },
+                                error: function (err) {
+                                    alert('Lỗi.');
+                                }
+                            });
+
+                            if (($('#filter-adv-pa-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-pa-wrapper').removeClass('d-none')
+                            }
+
+                            if (!($('#filter-pl-wrapper').hasClass('d-none'))) {
+                                $('#filter-pl-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-cslt-wrapper').hasClass('d-none'))) {
+                                $('#filter-cslt-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-le-hoi-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-le-hoi-wrapper').addClass('d-none')
+                            }
+
                             if (!($('#filter-ch-wrapper').hasClass('d-none'))) {
                                 $('#filter-ch-wrapper').addClass('d-none')
                             }
@@ -1220,7 +1314,24 @@ $(document).ready(function () {
 
                             $('#filter-ddl-ch-slt').val(-1).trigger('change');
                             $('#filter-ddl-cx-slt').val(-1).trigger('change');
-                        } else {
+                        }
+                        else {
+                            if (!($('#filter-pl-wrapper').hasClass('d-none'))) {
+                                $('#filter-pl-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-cslt-wrapper').hasClass('d-none'))) {
+                                $('#filter-cslt-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-pa-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-pa-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-le-hoi-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-le-hoi-wrapper').addClass('d-none')
+                            }
+
                             if (($('#filter-ch-wrapper').hasClass('d-none'))) {
                                 $('#filter-ch-wrapper').removeClass('d-none')
                             }
@@ -1233,6 +1344,23 @@ $(document).ready(function () {
                                 $('#filter-td-wrapper').removeClass('col-12')
                                 $('#filter-td-wrapper').addClass('col-lg-4')
                             }
+                        }
+
+                        if (found.child && found.child.length > 0) {
+                            if (($('#filter-lh-slt-wrapper').hasClass('d-none'))) {
+                                $('#filter-lh-slt-wrapper').removeClass('d-none');
+                            }
+
+                            found.child.forEach((el) => {
+                                $('#filter-lh-slt').append(
+                                    `<option value="${el.fid}">${el.text}</option>`
+                                );
+                            });
+
+                            $('#filter-lh-slt').val($("#filter-lh-slt option:first").val()).trigger('change');
+                        }
+                        else {
+                            $('#filter-lh-slt-wrapper').addClass('d-none');
                         }
                     }
                 })
@@ -1330,6 +1458,14 @@ $(document).ready(function () {
                             if (($('#filter-cslt-wrapper').hasClass('d-none'))) {
                                 $('#filter-cslt-wrapper').removeClass('d-none')
                             }
+
+                            if (!($('#filter-adv-pa-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-pa-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-le-hoi-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-le-hoi-wrapper').addClass('d-none')
+                            }
                         }
                         else {
                             if (!($('#filter-pl-wrapper').hasClass('d-none'))) {
@@ -1338,6 +1474,14 @@ $(document).ready(function () {
 
                             if (!($('#filter-cslt-wrapper').hasClass('d-none'))) {
                                 $('#filter-cslt-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-pa-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-pa-wrapper').addClass('d-none')
+                            }
+
+                            if (!($('#filter-adv-le-hoi-wrapper').hasClass('d-none'))) {
+                                $('#filter-adv-le-hoi-wrapper').addClass('d-none')
                             }
                         }
                     }
@@ -1736,6 +1880,7 @@ $(document).ready(function () {
                             console.log("img")
                         }
                         else if (evt.action.id === "phananh") {
+                            currentLayerSearch = 13;
                             const mPopup = view.popup;
 
                             if (phanAnhFlag == false) {
@@ -1797,9 +1942,9 @@ $(document).ready(function () {
 
                                             if (arr.length > 0) {
                                                 resultArr = arr;
-                                                renderResultPhanAnh(resultArr)
+                                                renderResult(resultArr)
                                             } else {
-                                                renderResultPhanAnh(null)
+                                                renderResult(null)
                                             }
                                         })
                                         .catch((error) => {
@@ -1840,11 +1985,21 @@ $(document).ready(function () {
 
                                     if (arr.length > 0) {
                                         resultArr = arr;
-                                        renderResultPhanAnh(resultArr)
+                                        renderResult(resultArr)
                                     } else {
-                                        renderResultPhanAnh(null)
+                                        renderResult(null)
                                     }
                                 }
+                            }
+                        }
+                        else if (evt.action.id === "detail") {
+                            const mPopup = view.popup;
+                            if (mPopup && mPopup.selectedFeature && mPopup.selectedFeature.attributes) {
+                                const tieuDe = mPopup.selectedFeature.attributes.tieude;
+                                const id = mPopup.selectedFeature.attributes.phananhid;
+
+                                const build = ROOTHOST + toLowerCaseNonAccentVietnamese(tieuDe) + `-a${id}.html`;
+                                window.open(build, "_blank");
                             }
                         }
                     });
@@ -1949,10 +2104,10 @@ $(document).ready(function () {
                                                                 );
 
                                                                 let radius = $('#bk-input').val();
-                                                                if (radius < 5) {
-                                                                    radius = 5;
-                                                                } else if (radius > 5000) {
-                                                                    radius = 5000;
+                                                                if (radius < radiusMin) {
+                                                                    radius = radiusMin;
+                                                                } else if (radius > radiusMax) {
+                                                                    radius = radiusMax;
                                                                 }
 
                                                                 let query = null;
@@ -1987,7 +2142,7 @@ $(document).ready(function () {
                                         }
                                         else if (type == "nc") {
                                             //Tim kiem nang cao
-                                            const query = buildQuery(layer, tid);
+                                            let query = buildQuery(layer, tid);
 
                                             if (layer.id == "00") {
                                                 //CSLT - PhanLoai
@@ -2066,6 +2221,48 @@ $(document).ready(function () {
                                                         })
                                                         .catch(error => console.log('error', error));
 
+                                                }
+                                            }
+                                            else if (layer.id == "12") {
+                                                const loai = $('#filter-ddl-le-hoi-slt').val();
+                                                if (loai != "-1") {
+                                                    query += ` AND loai = ${loai}`
+                                                }
+
+                                                let arr = [];
+                                                arr.push(...(await getDataWithQuery(layer, query)));
+
+                                                $('#filter-slider').toggleClass('toggle-display');
+                                                $('#result-slider').toggleClass('toggle-display');
+
+                                                $('#filter-btn').removeClass('disabled')
+
+                                                if (arr.length > 0) {
+                                                    resultArr = arr;
+                                                    renderResult(resultArr)
+                                                } else {
+                                                    renderResult(null)
+                                                }
+                                            }
+                                            else if (layer.id == "13") {
+                                                const loai = $('#filter-ddl-pa-slt').val();
+                                                if (loai != "-1") {
+                                                    query += ` AND malinhvuc = ${loai}`
+                                                }
+
+                                                let arr = [];
+                                                arr.push(...(await getDataWithQuery(layer, query)));
+
+                                                $('#filter-slider').toggleClass('toggle-display');
+                                                $('#result-slider').toggleClass('toggle-display');
+
+                                                $('#filter-btn').removeClass('disabled')
+
+                                                if (arr.length > 0) {
+                                                    resultArr = arr;
+                                                    renderResult(resultArr)
+                                                } else {
+                                                    renderResult(null)
                                                 }
                                             }
                                             else {
@@ -2225,7 +2422,7 @@ $(document).ready(function () {
                     queryId.where = clause;
                     queryId.geometry = point;
                     queryId.distance = radius;
-                    queryId.units = "meters";
+                    queryId.units = settingUnit;
                     queryId.spatialRelationship = "intersects";
 
                     const results = await layer.queryObjectIds(queryId);

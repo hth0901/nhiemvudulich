@@ -1,0 +1,201 @@
+﻿@{
+	ViewData["Title"] = "Quản lý cấu hình hệ thống";
+}
+
+@section Css {
+	<link rel="stylesheet" href="~/css/style.css" />
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Quản lý cấu hình hệ thống</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard m-custom-group">
+                    <form role="form" id="formAdd">
+                        <div class="row form-group">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="radiusMin" class="editor-label">Phạm vi tìm kiếm tối thiểu<span class="red-text"> *</span></label>
+                                    <input type="number" class="form-control" id="radiusMin" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="radiusMax" class="editor-label">Phạm vi tìm kiếm tối đa<span class="red-text"> *</span></label>
+                                    <input type="number" class="form-control" id="radiusMax" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="unitXQ" class="editor-label">Đơn vị<span class="red-text"> *</span></label>
+                                    <select class="form-control" id="unitXQ">
+                                        <option value="meters" selected>Meters</option>
+                                        <option value="kilometers">Kilometers</option>
+                                        <option value="feet">Bước chân</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <label class="editor-label">Email gửi<span class="red-text"> *</span></label>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sendEmail" class="editor-label">Email</label>
+                                <input type="text" class="form-control" id="sendEmail" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sendPassword" class="editor-label">Mật khẩu</label>
+                                <input type="text" class="form-control" id="sendPassword" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sendDisplayName" class="editor-label">Tên hiển thị</label>
+                                <input type="text" class="form-control" id="sendDisplayName" required>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <label class="editor-label">Email nhận<span class="red-text"> *</span></label>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="toEmail" class="editor-label">Email</label>
+                                <input type="text" class="form-control" id="toEmail" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="toEmail" class="editor-label">Tên hiển thị</label>
+                                <input type="text" class="form-control" id="toName" required>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <label for="toEmail" class="editor-label d-block">Thời gian tự động gửi (phút)<span class="red-text"> *</span></label>
+                                <input type="number" class="form-control" id="schedulerTime" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $( document ).ready(function() {
+            $('#unitXQ').select2({
+                width: "100%",
+                language: "vi",
+                minimumResultsForSearch: -1
+            });
+
+            $.ajax({
+                type: 'get',
+                async: false,
+                url: '/api/Setting/danhsach',
+                success: function (data) {
+                    if(data) {
+                        data.forEach((el) => {
+                            if(el.id == 1) {
+                                $('#radiusMin').val(Number(el.giaTri));
+                            } 
+                            else if(el.id == 2) {
+                                $('#radiusMax').val(Number(el.giaTri));
+                            }
+                            else if(el.id == 3) {
+                                $('#unitXQ').val(el.giaTri).trigger('change');
+                            }
+                            else if(el.id == 4) {
+                                $('#sendEmail').val(el.giaTri);
+                            }
+                            else if(el.id == 5) {
+                                $('#sendPassword').val(el.giaTri);
+                            }
+                            else if(el.id == 6) {
+                                $('#sendDisplayName').val(el.giaTri);
+                            }
+                            else if(el.id == 7) {
+                                $('#toEmail').val(el.giaTri);
+                            }
+                            else if(el.id == 8) {
+                                $('#toName').val(el.giaTri);
+                            }
+                            else if(el.id == 9) {
+                                $('#schedulerTime').val(Number(el.giaTri));
+                            }
+                        })
+                    }
+                },
+                error: function (err) {
+                    alert('Lỗi.');
+                }
+            });
+
+            $("#formAdd").submit(function(e) {
+                e.preventDefault();
+                dataAdd();
+            });
+
+            function dataAdd() {
+                let radiusMin = $('#radiusMin').val();
+                let radiusMax = $('#radiusMax').val();
+                let unit = $('#unitXQ').val();
+
+                let sendEmail = $('#sendEmail').val();
+                let sendPassword = $('#sendPassword').val();
+                let sendDisplayName = $('#sendDisplayName').val();
+
+                let toEmail = $('#toEmail').val();
+                let toName = $('#toName').val();
+
+                let schedulerTime = $('#schedulerTime').val();
+
+                if (!checkEmptyBlank(sendEmail) && !checkEmptyBlank(sendPassword) && !checkEmptyBlank(sendDisplayName) && !checkEmptyBlank(toEmail) 
+                        && !checkEmptyBlank(toName) && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0) {
+
+                    const data = {
+                        "radiusMin": Number(radiusMin),
+                        "radiusMax": Number(radiusMax),
+                        "unit": unit,
+                        "sendEmail": sendEmail,
+                        "sendPassword": sendPassword,
+                        "sendDisplayName": sendDisplayName,
+                        "toEmail": toEmail,
+                        "toName": toName,
+                        "scheduler": Number(schedulerTime)
+                    }
+
+                    $.ajax({
+                        type: 'put',
+                        async: false,
+                        url: '/api/Setting/capnhat',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            alert('Cập nhật dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+                else {
+                    alert('Thông tin bắt buộc không được để trống!')
+                }
+            }
+        });
+
+        function checkEmptyBlank(str) {
+            if (str.trim().length === 0 || str == null) {
+                return true
+            }
+            return false
+        }
+        
+    </script>
+}

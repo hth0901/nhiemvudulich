@@ -128,15 +128,37 @@
 									</div>
 								</div>
 							</div>
+							<div class="row d-none" id="filter-adv-pa-wrapper">
+								<div class="col-12 m-custom-col">
+									<label>Lĩnh vực</label>
+								</div>
+								<div class="col-12 m-custom-col">
+									<fieldset class="form-group">
+										<select class="form-control select2" id="filter-ddl-pa-slt">
+										</select>
+									</fieldset>
+								</div>
+							</div>
+							<div class="row d-none" id="filter-adv-le-hoi-wrapper">
+								<div class="col-12 m-custom-col">
+									<label>Loại lễ hội</label>
+								</div>
+								<div class="col-12 m-custom-col">
+									<fieldset class="form-group">
+										<select class="form-control select2" id="filter-ddl-le-hoi-slt">
+										</select>
+									</fieldset>
+								</div>
+							</div>
 						</section>
 					</section>
 					<section class="w-100 d-none" id="adv-filter-xq-content">
 						<div class="col-12 m-custom-col">
 							<fieldset class="form-group">
-								<label>Bán kính tìm kiếm (m)</label>
+								<label>Bán kính tìm kiếm <span id="displayRadiusUnit">(m)</span></label>
 								<input type="number" class="form-control" value="100" min="10" max="5000" id="bk-input">
 								<p>
-									<small class="text-muted">Giá trị tối thiểu là 5 và tối đa là 5000</small>
+									<small class="text-muted">Giá trị tối thiểu là <span id="displayRadiusMinValue">5</span> và tối đa là <span id="displayRadiusMaxValue">5</span></small>
 								</p>
 							</fieldset>
 						</div>

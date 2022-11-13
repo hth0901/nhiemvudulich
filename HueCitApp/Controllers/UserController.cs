@@ -14,15 +14,29 @@ using Application.BanDo;
 using System.Collections.Generic;
 using Domain.TechLife;
 using Domain.HueCit;
+using Domain;
+using HueCitApp.DTOs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
 {
     public class UserController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public UserController(IWebHostEnvironment hostingEnvironment) : base(hostingEnvironment)
+
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        public UserController(IWebHostEnvironment hostingEnvironment, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : base(hostingEnvironment)
         {
             _webHostEnvironment = hostingEnvironment;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost("nguoidung")] 
@@ -41,9 +55,34 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> UserAdd(CancellationToken ct, [FromBody] SYS_User request)
         {
-            var result = await Mediator.Send(new UserAdd.Command { Request = request }, ct);
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.HopThu))
+            {
+                return BadRequest("Email đã tồn tại");
+            }
 
-            return HandlerResult(result);
+            if (await _userManager.Users.AnyAsync(x => x.UserName == request.TenDangNhap))
+            {
+                return BadRequest("Tên tài khoản đã tồn tại!");
+            }
+
+            var user = new AppUser
+            {
+                DisplayName = request.HoTen,
+                Email = request.HopThu,
+                UserName = request.TenDangNhap
+            };
+
+            var result = await _userManager.CreateAsync(user, request.MatKhau);
+            if (result.Succeeded)
+            {
+                request.MatKhau = "";
+                var res = await Mediator.Send(new UserAdd.Command { Request = request }, ct);
+                return HandlerResult(res);
+            }
+            else
+            {
+                return BadRequest("Không thể tạo tài khoản!!");
+            }
         }
 
         [HttpPut("nguoidungedit")]
@@ -96,6 +135,41 @@ namespace HueCitApp.Controllers
         public async Task<IActionResult> RoleDelete(CancellationToken ct, int request)
         {
             var result = await Mediator.Send(new RoleDelete.Command { Request = request }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpGet("phanquyen/{request}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PhanQuyenGet(CancellationToken ct, int request)
+        {
+            var result = await Mediator.Send(new PhanQuyenGet.Query
+            {
+                Role = request
+            }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpPost("phanquyen")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PhanQuyen(CancellationToken ct, [FromBody] SYS_PhanQuyenRequest request)
+        {
+            var result = await Mediator.Send(new PhanQuyenRole.Command
+            {
+                Request = request
+            }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpGet("menu")]
+        [AllowAnonymous]
+        public async Task<IActionResult> MenuGets(CancellationToken ct)
+        {
+            var result = await Mediator.Send(new MenuGets.Query
+            {
+            }, ct);
 
             return HandlerResult(result);
         }

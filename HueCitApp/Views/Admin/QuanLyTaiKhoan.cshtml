@@ -93,7 +93,7 @@
                         <input type="text" class="form-control" id="dienThoaiAdd">
                     </div>
                     <div class="form-group">
-                        <label for="hopThuAdd" class="editor-label">Hộp thư</label>
+                        <label for="hopThuAdd" class="editor-label">Hộp thư<span class="red-text"> *</span></label>
                         <input type="text" class="form-control" id="hopThuAdd">
                     </div>
                     <div class="form-group">
@@ -162,7 +162,7 @@
                         <input type="text" class="form-control" id="dienThoaiEdit">
                     </div>
                     <div class="form-group">
-                        <label for="hopThuEdit" class="editor-label">Hộp thư</label>
+                        <label for="hopThuEdit" class="editor-label">Hộp thư<span class="red-text"> *</span></label>
                         <input type="text" class="form-control" id="hopThuEdit">
                     </div>
                     <div class="form-group">
@@ -399,7 +399,7 @@
                 let vaiTro = $('#vaiTroAdd').val();
                 let trangThai = $('#trangThaiAdd').val();
 
-                if (!checkEmptyBlank(hoTen) && !checkEmptyBlank(tenDangNhap) && !checkEmptyBlank(matKhau)) {
+                if (!checkEmptyBlank(hoTen) && !checkEmptyBlank(tenDangNhap) && !checkEmptyBlank(matKhau) && !checkEmptyBlank(hopThu)) {
                     const data = {
                         "hoTen": hoTen,
                         "tenDangNhap": tenDangNhap,
@@ -445,7 +445,7 @@
                 let vaiTro = $('#vaiTroEdit').val();
                 let trangThai = $('#trangThaiEdit').val();
 
-                if (id && !checkEmptyBlank(hoTen)) {
+                if (id && !checkEmptyBlank(hoTen) && !checkEmptyBlank(hopThu)) {
                     const data = {
                         "id": id,
                         "hoTen": hoTen,

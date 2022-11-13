@@ -1,11 +1,20 @@
-﻿using Domain;
+﻿using Application.BanDo;
+using Dapper;
+using Domain;
+using Domain.HueCit;
 using HueCitApp.DTOs;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
@@ -16,15 +25,17 @@ namespace HueCitApp.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto request)
+        public async Task<ActionResult<UserDtoExt>> Login(CancellationToken ct, LoginDto request)
         {
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
@@ -32,13 +43,35 @@ namespace HueCitApp.Controllers
             var loginResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (loginResult.Succeeded)
             {
-                return new UserDto
+                DynamicParameters dynamicParameters = new DynamicParameters();
+                dynamicParameters.Add("@PUSER", request.Username);
+
+                string spName = "SP_UserGet";
+
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = "",
-                    Username = user.UserName
-                };
+                    connection.Open();
+                    var result = await connection.QueryFirstOrDefaultAsync<SYS_UserTable>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    
+                    UserDtoExt userinfo = new UserDtoExt
+                    {
+                        DisplayName = user.DisplayName,
+                        Image = null,
+                        Token = "",
+                        Username = user.UserName,
+                        Role = result.Quyen
+                    };
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@Role", result.Quyen);
+
+                    var menu = await connection.QueryAsync<int>(new CommandDefinition("SP_PhanQuyenGetMenu", parameters: parameters, commandType: System.Data.CommandType.StoredProcedure));
+
+                    HttpContext.Session.SetString("userInfo", JsonConvert.SerializeObject(userinfo));
+                    HttpContext.Session.SetString("menuInfo", JsonConvert.SerializeObject(menu));
+
+                    return userinfo;
+                }
             }
 
             return Unauthorized();

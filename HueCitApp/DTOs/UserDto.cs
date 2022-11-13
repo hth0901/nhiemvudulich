@@ -12,4 +12,13 @@ namespace HueCitApp.DTOs
         public string Username { get; set; }
         public string Image { get; set; }
     }
+
+    public class UserDtoExt
+    {
+        public string DisplayName { get; set; }
+        public string Token { get; set; }
+        public string Username { get; set; }
+        public string Image { get; set; }
+        public int? Role { get; set; }
+    }
 }
