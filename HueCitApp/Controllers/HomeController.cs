@@ -44,9 +44,18 @@ namespace HueCitApp.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Bando()
         {
-            return View("GisMap");
+            var menu = HttpContext.Session.GetString("menuInfo");
+            if (menu != null && !(string.IsNullOrEmpty(menu)))
+            {
+                if (menu.Contains('1'))
+                {
+                    return View("GisMap");
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
