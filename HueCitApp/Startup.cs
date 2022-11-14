@@ -19,7 +19,7 @@ using HueCitApp.MiddleWare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
@@ -35,6 +35,7 @@ using Microsoft.Extensions.Options;
 using System.Configuration;
 using API.Services;
 using HueCitApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
 using Domain;
@@ -85,7 +86,7 @@ namespace HueCitApp
                     .ForJob(jobKey) // link to the HelloWorldJob
                     .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
                     .WithDailyTimeIntervalSchedule((x =>
-           x.WithIntervalInSeconds(10).Build())));
+           x.WithIntervalInMinutes(42).Build())));
                 // run every 5 seconds
             });
 
@@ -123,7 +124,7 @@ namespace HueCitApp
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TravelApi", Version = "v1" });
             });
             services.Configure<MailSettings>(_config.GetSection("MailSettings"));
-            services.AddTransient<ImailService, MailService>();
+            services.AddSingleton<ImailService, MailService>();
 
             services.AddSession(options =>
             {
