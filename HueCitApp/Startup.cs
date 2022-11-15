@@ -83,10 +83,9 @@ namespace HueCitApp
 
                 // Create a trigger for the job
                 q.AddTrigger(opts => opts
-                    .ForJob(jobKey) // link to the HelloWorldJob
-                    .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
-                    .WithDailyTimeIntervalSchedule((x =>
-           x.WithIntervalInSeconds(10).Build())));
+                    // link to the HelloWorldJob
+                    .WithIdentity("HelloWorldJob-trigger").WithCronSchedule("0 0/40 * ? * * *").ForJob(jobKey)) // give the trigger a unique name
+           ;
                 // run every 5 seconds
             });
 
