@@ -1,4 +1,6 @@
 ﻿using HueCitApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,14 +20,60 @@ namespace HueCitApp.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult QuanLyTaiKhoan()
         {
-            return View();
+            var menu = HttpContext.Session.GetString("menuInfo");
+            if (menu != null && !(string.IsNullOrEmpty(menu)))
+            {
+                if (menu.Contains('2'))
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public IActionResult QuanLyNhomVaiTro()
         {
-            return View();
+            var menu = HttpContext.Session.GetString("menuInfo");
+            if (menu != null && !(string.IsNullOrEmpty(menu)))
+            {
+                if (menu.Contains('3'))
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult QuanLyCauHinh()
+        {
+            var menu = HttpContext.Session.GetString("menuInfo");
+            if (menu != null && !(string.IsNullOrEmpty(menu)))
+            {
+                if (menu.Contains('5'))
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult QuanLyPhanQuyen()
+        {
+            var menu = HttpContext.Session.GetString("menuInfo");
+            if (menu != null && !(string.IsNullOrEmpty(menu)))
+            {
+                if (menu.Contains('4'))
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
 
 

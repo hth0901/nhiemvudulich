@@ -243,10 +243,18 @@
         border: 1px solid #5734ba !important;
     }
 
+.select2-container--classic .select2-selection--multiple .select2-selection__choice,
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #5734ba !important;
+    border-color: #5734ba !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+    margin-bottom: 3px;
+}
+
 /*SELECT2*/
-
 /*ADMIN*/
-
 .center-align {
     text-align: center;
 }

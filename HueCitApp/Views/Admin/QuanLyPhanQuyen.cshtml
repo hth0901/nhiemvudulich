@@ -1,0 +1,187 @@
+﻿@{
+	ViewData["Title"] = "Quản lý phân quyền";
+}
+
+@section Css {
+	<link rel="stylesheet" href="~/css/style.css" />
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Quản lý phân quyền</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard m-custom-group">
+                    <form role="form" id="formAdd">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sltRole" class="editor-label">Vai trò</label>
+                                    <select class="form-control" id="sltRole">
+                                        <option value="-1" selected>Chọn</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sltMenu" class="editor-label">Chức năng</label>
+                                    <select class="form-control" id="sltMenu" multiple="multiple" disabled>
+                                        <option value="-1" selected>Chọn</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary m-primary-color" id="save-btn">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let flag = false;
+        $( document ).ready(function() {
+            $('#sltRole').select2({
+                width: "100%",
+                language: "vi",
+            });
+
+            $('#sltMenu').select2({
+                width: "100%",
+                language: "vi",
+            });
+
+            $('#sltRole').on('change', function() {
+                const id = $(this).val();
+                if(id == -1) {
+                    if(!($('#save-btn').hasClass('disabled'))) {
+                        $('#save-btn').addClass('disabled')
+                    }
+                    $('#sltMenu').val([]).trigger('change')
+                    $('#sltMenu').prop('disabled', true);
+                    flag = false;
+                }
+                else {
+                    if(($('#save-btn').hasClass('disabled'))) {
+                        $('#save-btn').removeClass('disabled')
+                    }
+                    getPhanQuyen(id);
+                    $('#sltMenu').prop('disabled', false);
+                    flag = true
+                }
+            })
+
+            $.ajax({
+                type: 'post',
+                async: false,
+                url: '/api/User/vaitro',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    "tuKhoa": null,
+                    "used": 1
+                }),
+                success: function (data) {
+                    if(data) {
+                        $('#sltRole').empty();
+                        $('#sltRole').append(`<option value=${-1}>Chọn</option>`)
+                        data.forEach(element => {
+                            $('#sltRole').append(`<option value=${element.id}>${element.ten}</option>`)
+                        });
+                    }
+                },
+                error: function (err) {
+                    alert('Lỗi.');
+                }
+            });
+
+            $.ajax({
+                type: 'get',
+                async: false,
+                url: '/api/User/menu',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    "tuKhoa": null,
+                    "used": 1
+                }),
+                success: function (data) {
+                    if(data) {
+                        $('#sltMenu').empty();
+                        data.forEach(element => {
+                            $('#sltMenu').append(`<option value=${element.id}>${element.ten}</option>`)
+                        });
+                    }
+                },
+                error: function (err) {
+                    alert('Lỗi.');
+                }
+            });
+
+            function getPhanQuyen(id) {
+                if(id) {
+                    $.ajax({
+                        type: 'get',
+                        async: false,
+                        url: '/api/User/phanquyen/' + id,
+                        success: function (data) {
+                            let arr = [];
+                            if(data && data.length > 0) {
+                                data.forEach((el) => {
+                                    arr.push(el.menuID);
+                                })
+                                $('#sltMenu').val(arr).trigger('change');
+                            }
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+            }
+
+            $("#formAdd").submit(function(e) {
+                e.preventDefault();
+                if(flag == true) {
+                    dataAdd();
+                }
+            });
+
+            function dataAdd() {
+                let role = $('#sltRole').val();
+                let list = $('#sltMenu').val();
+                
+                if (role) {
+                    let listMenu = [];
+                    list.forEach((el) => {
+                        listMenu.push(Number(el))
+                    })
+
+                    const data = {
+                        "roleID": Number(role),
+                        "menuList": listMenu.join()
+                    }
+
+                    $.ajax({
+                        type: 'post',
+                        async: false,
+                        url: '/api/User/phanquyen',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            alert('Phân quyền thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+            }
+        });
+        
+    </script>
+}

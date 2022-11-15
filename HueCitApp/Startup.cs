@@ -36,6 +36,12 @@ using System.Configuration;
 using API.Services;
 using HueCitApp.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence;
+using Microsoft.EntityFrameworkCore;
+using Domain;
+using Microsoft.AspNetCore.Identity;
+using Application;
+using Application.Core;
 
 namespace HueCitApp
 {
@@ -57,9 +63,12 @@ namespace HueCitApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-         
+            services.AddDbContext<DataContext>(option =>
+            {
+                option.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
+            });
 
-            services.AddControllersWithViews();
+            services.AddApplication();
             // Use a Scoped container to create jobs. I'll touch on this later
             services.AddQuartz(q =>
             {
@@ -91,27 +100,25 @@ namespace HueCitApp
             //    // Use a Scoped container to create jobs. I'll touch on this later
             //    q.UseMicrosoftDependencyInjectionScopedJobFactory();
 
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
-            //    // Create a "key" for the job
-            //    var jobKey = new JobKey("HelloWorldJob");
+            services.AddIdentity<AppUser, IdentityRole>(config =>
+            {
+                config.Password.RequiredLength = 4;
+                config.Password.RequireDigit = false;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
 
-            //    // Register the job with the DI container
-            //    q.AddJob<JobScheduled>(opts => opts.WithIdentity(jobKey));
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Huecit.Cookie";
+                config.LoginPath = "/Home/Login";
+            });
 
-            //    // Create a trigger for the job
-            //    q.AddTrigger(opts => opts
-            //        .ForJob(jobKey) // link to the HelloWorldJob
-            //        .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
-            //        .WithCronSchedule("0/5 * * * * ?"));
-            //    // run every 5 seconds
-            //});
-
-            //// Add the Quartz.NET hosted service
-
-            //services.AddQuartzHostedService(
-            //    q => q.WaitForJobsToComplete = true);
-
-            ////
+            services.AddControllersWithViews();
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TravelApi", Version = "v1" });
@@ -119,60 +126,63 @@ namespace HueCitApp
             services.Configure<MailSettings>(_config.GetSection("MailSettings"));
             services.AddSingleton<ImailService, MailService>();
 
-
-
-
-
-
-            services.AddControllersWithViews().AddFluentValidation(config =>
+            services.AddSession(options =>
             {
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongEdit>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongAdd>();
-
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDoanhNghiepDaiLiLuHanhAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDoanhNghiepDaiLiLuHanhEdit>();
-
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaCoSoLuuTruAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaCoSoLuuTruEdit>();
-
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuMuaSamAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuMuaSamEdit>();
-
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuTheThaoAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuTheThaoEdit>();
-
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienEdit>();
-
-
-
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriAdd>();
-                config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriEdit>();
-
-
-
-                config.RegisterValidatorsFromAssemblyContaining<CoSoChamSocSucKhoeSacDepGanViTriDuKhachGets>();
-
-                config.RegisterValidatorsFromAssemblyContaining<CoSoKhamChuaBenhGanViTriDuKhachGets>();
-             
-
-                config.RegisterValidatorsFromAssemblyContaining<DiemAnUongGanViTriDuKhachGets>();
-
-                config.RegisterValidatorsFromAssemblyContaining<DiaDiemDuLichGanViTriDuKhachGets>();
-                config.RegisterValidatorsFromAssemblyContaining<DiaDiemMuaSamGiaiTriGanViTriDuKhachGets>();
-                config.RegisterValidatorsFromAssemblyContaining<DiemGiaoDichGanViTriDuKhach>();
-                config.RegisterValidatorsFromAssemblyContaining<DiemVeSinhGanViTriDuKhachGets>();
-
-
-
-
-
-
-
-
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
-            services.AddApplicationServices(_config);
-            services.AddIdentityServices(_config);
+
+
+
+
+            //services.AddControllersWithViews().AddFluentValidation(config =>
+            //{
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongEdit>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuAnUongAdd>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDoanhNghiepDaiLiLuHanhAdd>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDoanhNghiepDaiLiLuHanhEdit>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaCoSoLuuTruAdd>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaCoSoLuuTruEdit>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuMuaSamAdd>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuMuaSamEdit>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuTheThaoAdd>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuTheThaoEdit>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienAdd>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaHuongDanVienEdit>();
+
+
+
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriAdd>();
+            //    config.RegisterValidatorsFromAssemblyContaining<HeThongSoHoaDuLieuVuiChoiGiaiTriEdit>();
+
+
+
+            //    config.RegisterValidatorsFromAssemblyContaining<CoSoChamSocSucKhoeSacDepGanViTriDuKhachGets>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<CoSoKhamChuaBenhGanViTriDuKhachGets>();
+
+
+            //    config.RegisterValidatorsFromAssemblyContaining<DiemAnUongGanViTriDuKhachGets>();
+
+            //    config.RegisterValidatorsFromAssemblyContaining<DiaDiemDuLichGanViTriDuKhachGets>();
+            //    config.RegisterValidatorsFromAssemblyContaining<DiaDiemMuaSamGiaiTriGanViTriDuKhachGets>();
+            //    config.RegisterValidatorsFromAssemblyContaining<DiemGiaoDichGanViTriDuKhach>();
+            //    config.RegisterValidatorsFromAssemblyContaining<DiemVeSinhGanViTriDuKhachGets>();
+
+
+
+
+
+
+
+
+            //});
+            //services.AddApplicationServices(_config);
+            //services.AddIdentityServices(_config);
           
 
             services.AddCors(opt =>
@@ -210,21 +220,22 @@ namespace HueCitApp
                 app.UseExceptionHandler("/Home/Error");
             }
             
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
-            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                    
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
