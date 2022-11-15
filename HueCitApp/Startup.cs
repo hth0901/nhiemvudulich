@@ -77,7 +77,7 @@ namespace HueCitApp
                     .ForJob(jobKey) // link to the HelloWorldJob
                     .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
                     .WithDailyTimeIntervalSchedule((x =>
-           x.WithIntervalInMinutes(42).Build())));
+           x.WithIntervalInSeconds(10).Build())));
                 // run every 5 seconds
             });
 

@@ -54,8 +54,8 @@ namespace HueCitApp
         //        });
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args).ConfigureServices((hostContext, services) =>
-            {
+            Host.CreateDefaultBuilder(args).
+            ConfigureServices((hostContext, services) =>   {
                 //// Add the required Quartz.NET services
                // services.AddQuartz(q =>
                // {
@@ -83,7 +83,7 @@ namespace HueCitApp
                //     q => q.WaitForJobsToComplete = true);
 
                 // other config
-            })
+           })
                 .ConfigureLogging(logBuilder => {
                     logBuilder.ClearProviders(); // removes all providers from LoggerFactory
                     logBuilder.AddConsole();
