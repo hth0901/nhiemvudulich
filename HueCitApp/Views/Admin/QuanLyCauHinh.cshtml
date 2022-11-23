@@ -50,30 +50,54 @@
                                 <label for="sendPassword" class="editor-label">Mật khẩu</label>
                                 <input type="text" class="form-control" id="sendPassword" required>
                             </div>
-                            <div class="col-md-4">
+                            @*<div class="col-md-4">
                                 <label for="sendDisplayName" class="editor-label">Tên hiển thị</label>
                                 <input type="text" class="form-control" id="sendDisplayName" required>
+                            </div>*@
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sendHost" class="editor-label">Host</label>
+                                    <input type="text" class="form-control" id="sendHost" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="sendPort" class="editor-label">Port</label>
+                                    <input type="text" class="form-control" id="sendPort" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <label for="sendTitle" class="editor-label">Tiêu đề gửi</label>
+                                <input type="text" class="form-control" id="sendTitle" required>
+                            </div>
+                            <div class="col-12 mt-1">
+                                <label for="sendContent" class="editor-label">Nội dung gửi</label>
+                                <textarea type="text" class="form-control" id="sendContent" required rows="4"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-12">
                                 <label class="editor-label">Email nhận<span class="red-text"> *</span></label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <label for="toEmail" class="editor-label">Email</label>
                                 <input type="text" class="form-control" id="toEmail" required>
                             </div>
-                            <div class="col-md-6">
+                            @*<div class="col-md-6">
                                 <label for="toEmail" class="editor-label">Tên hiển thị</label>
                                 <input type="text" class="form-control" id="toName" required>
-                            </div>
+                            </div>*@
                         </div>
-                        <div class="row form-group">
+                        @*<div class="row form-group">
                             <div class="col-12">
                                 <label for="toEmail" class="editor-label d-block">Thời gian tự động gửi (phút)<span class="red-text"> *</span></label>
                                 <input type="number" class="form-control" id="schedulerTime" required>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
                         </div>
@@ -127,6 +151,18 @@
                             else if(el.id == 9) {
                                 $('#schedulerTime').val(Number(el.giaTri));
                             }
+                            else if(el.id == 10) {
+                                $('#sendHost').val(el.giaTri);
+                            }
+                            else if(el.id == 11) {
+                                $('#sendTitle').val(el.giaTri);
+                            }
+                            else if(el.id == 12) {
+                                $('#sendContent').val(el.giaTri);
+                            }
+                            else if(el.id == 13) {
+                                $('#sendPort').val(el.giaTri);
+                            }
                         })
                     }
                 },
@@ -147,15 +183,24 @@
 
                 let sendEmail = $('#sendEmail').val();
                 let sendPassword = $('#sendPassword').val();
-                let sendDisplayName = $('#sendDisplayName').val();
+                //let sendDisplayName = $('#sendDisplayName').val();
+                let sendDisplayName = "";
+
+                let sendHost = $('#sendHost').val();
+                let sendPort = $('#sendPort').val();
+                let sendTitle = $('#sendTitle').val();
+                let sendContent = $('#sendContent').val();
 
                 let toEmail = $('#toEmail').val();
-                let toName = $('#toName').val();
+                //let toName = $('#toName').val();
+                let toName = ""
 
-                let schedulerTime = $('#schedulerTime').val();
+                //let schedulerTime = $('#schedulerTime').val();
+                let schedulerTime = 45;
 
                 if (!checkEmptyBlank(sendEmail) && !checkEmptyBlank(sendPassword) && !checkEmptyBlank(sendDisplayName) && !checkEmptyBlank(toEmail) 
-                        && !checkEmptyBlank(toName) && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0) {
+                        && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0 && 
+                        !checkEmptyBlank(sendHost) && !checkEmptyBlank(sendPort) && !checkEmptyBlank(sendTitle) && !checkEmptyBlank(sendContent)) {
 
                     const data = {
                         "radiusMin": Number(radiusMin),
@@ -166,7 +211,11 @@
                         "sendDisplayName": sendDisplayName,
                         "toEmail": toEmail,
                         "toName": toName,
-                        "scheduler": Number(schedulerTime)
+                        "scheduler": Number(schedulerTime),
+                        "sendHost": sendHost,
+                        "sendPort": sendPort,
+                        "sendTitle": sendTitle,
+                        "sendContent": sendContent
                     }
 
                     $.ajax({
@@ -191,9 +240,12 @@
         });
 
         function checkEmptyBlank(str) {
-            if (str.trim().length === 0 || str == null) {
-                return true
+            if(str) {
+                if (str.trim().length === 0 || str == null) {
+                    return true
+                }
             }
+            
             return false
         }
         

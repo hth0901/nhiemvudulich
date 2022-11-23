@@ -22,19 +22,19 @@ namespace HueCitApp.Controllers
         }
 
    
-        [AllowAnonymous]
-        [HttpPost("welcome")]
-        public async Task<IActionResult> SendWelcomeEmail([FromBody] MailRequest _request)
-        {
-            try
-            {
-                await _mailService.SendWelcomeEmailAsync(_request);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //[AllowAnonymous]
+        //[HttpPost("welcome")]
+        //public async Task<IActionResult> SendWelcomeEmail([FromBody] MailRequest _request)
+        //{
+        //    try
+        //    {
+        //        await _mailService.SendWelcomeEmailAsync(_request);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }

@@ -38,7 +38,7 @@ namespace Application.BanDo
                 {   
                     connection.Open();
                     int num = 0;
-                    for (int i = 1; i < 10; i++)
+                    for (int i = 1; i < 14; i++)
                     {
                         DynamicParameters dynamicParameters = new DynamicParameters();
                         dynamicParameters.Add("@ID", i);
@@ -77,6 +77,22 @@ namespace Application.BanDo
                         else if (i == 9)
                         {
                             dynamicParameters.Add("@GiatRI", request.Request.Scheduler.ToString());
+                        }
+                        else if (i == 10)
+                        {
+                            dynamicParameters.Add("@GiatRI", request.Request.SendHost.ToString());
+                        }
+                        else if (i == 11)
+                        {
+                            dynamicParameters.Add("@GiatRI", request.Request.SendTitle.ToString());
+                        }
+                        else if (i == 12)
+                        {
+                            dynamicParameters.Add("@GiatRI", request.Request.SendContent.ToString());
+                        }
+                        else if (i == 13)
+                        {
+                            dynamicParameters.Add("@GiatRI", request.Request.SendPort.ToString());
                         }
 
                         var result = await connection.QueryFirstOrDefaultAsync<SYS_Setting>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));

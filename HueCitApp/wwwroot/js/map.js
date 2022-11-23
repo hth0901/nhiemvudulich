@@ -51,6 +51,14 @@ const linhVucData = [
 
 const dataDirection = [
     {
+        en: "enter the roundabout and keep the 2nd exit on",
+        vi: "vào bùng binh và đi ra ở lối thứ 2 trên"
+    },
+    {
+        en: "enter the roundabout and keep the 1st exit on",
+        vi: "vào bùng binh và đi ra ở lối thứ 1 trên"
+    },
+    {
         en: "bear right onto ramp",
         vi: "sang phải vào trên đoạn đường nối",
     },
@@ -87,12 +95,68 @@ const dataDirection = [
         vi: "ở lại phà cho",
     },
     {
+        en: "enter the roundabout",
+        vi: "đi vào bùng binh"
+    },
+    {
         en: "on the right",
         vi: "phía bên phải",
     },
     {
         en: "on the left",
         vi: "phía bên trái",
+    },
+    {
+        en: "and go on",
+        vi: "và tiến lên",
+    },
+    {
+        en: "bear right",
+        vi: "sang bên phải",
+    },
+    {
+        en: "bear left",
+        vi: "sang bên trái",
+    },
+    {
+        en: "turn right",
+        vi: "rẽ phải",
+    },
+    {
+        en: "turn left",
+        vi: "rẽ trái",
+    },
+    {
+        en: "near left",
+        vi: "gần phía bên trái",
+    },
+    {
+        en: "near right",
+        vi: "gần phía bên phải",
+    },
+    {
+        en: "at exit",
+        vi: "ở lối ra",
+    },
+    {
+        en: "go back",
+        vi: "quay lại",
+    },
+    {
+        en: "take ramp",
+        vi: "theo đường dốc",
+    },
+    {
+        en: "the 1st",
+        vi: "lối thứ 1"
+    },
+    {
+        en: "the 2nd",
+        vi: "lối thứ 2"
+    },
+    {
+        en: "your destination",
+        vi: "điểm đến của bạn"
     },
     {
         en: "northeast",
@@ -127,48 +191,8 @@ const dataDirection = [
         vi: "hướng Tây",
     },
     {
-        en: "at exit",
-        vi: "ở lối ra",
-    },
-    {
-        en: "go back",
-        vi: "quay lại",
-    },
-    {
-        en: "take ramp",
-        vi: "theo đường dốc",
-    },
-    {
         en: "straight",
         vi: "đi thẳng",
-    },
-    {
-        en: "and go on",
-        vi: "và tiến lên",
-    },
-    {
-        en: "bear right",
-        vi: "sang bên phải",
-    },
-    {
-        en: "bear left",
-        vi: "sang bên trái",
-    },
-    {
-        en: "turn right",
-        vi: "rẽ phải",
-    },
-    {
-        en: "turn left",
-        vi: "rẽ trái",
-    },
-    {
-        en: "near left",
-        vi: "gần phía bên trái",
-    },
-    {
-        en: "near right",
-        vi: "gần phía bên phải",
     },
     {
         en: "after",
@@ -240,7 +264,7 @@ const dataDirection = [
     },
     {
         en: "keep",
-        vi: "giữ",
+        vi: "tiếp dục đi",
     },
     {
         en: "turn",
@@ -309,6 +333,14 @@ const dataDirection = [
     {
         en: "in",
         vi: "trong",
+    },
+    {
+        en: "and",
+        vi: "và",
+    },
+    {
+        en: "exit",
+        vi: "đi ra",
     },
 ]
 
@@ -472,12 +504,12 @@ $(document).ready(function () {
                 className: "esri-icon-directions",
                 type: "button",
             },
-            {
-                title: "Hình ảnh",
-                id: "images",
-                className: "esri-icon-media",
-                type: "button",
-            },
+            //{
+            //    title: "Hình ảnh",
+            //    id: "images",
+            //    className: "esri-icon-media",
+            //    type: "button",
+            //},
             {
                 title: "Phản ánh",
                 id: "phananh",
