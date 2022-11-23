@@ -161,7 +161,7 @@ namespace Application.TaiNguyenDuLich
 
 
 
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
                     var result = await connection.ExecuteScalarAsync<DL_BangTaiNguyen>(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
