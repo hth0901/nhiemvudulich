@@ -3,6 +3,7 @@ using Application.Core;
 using Application.DiemGiaoDich;
 
 using Dapper;
+using Domain.HueCit;
 using Domain.RequestEntity;
 using HueCitApp.Models;
 using MediatR;
@@ -46,35 +47,71 @@ namespace HueCitApp.Services.ScheduledTask
           
             MailRequest request= new MailRequest();
          
-            var lstResult = new List<string>(); 
-            string spName = "SP_EMAIL_QuanTracMoiTruong";
+            List<string> lstResult = new List<string>();
+            SYS_SettingMail info = new SYS_SettingMail();
+            string spName = "SP_MailGetsMailTo";
             using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
             {
             
                 connection.Open();
                 var result = await connection.QueryAsync<string>(new CommandDefinition(spName, null, commandType: System.Data.CommandType.StoredProcedure));
                 //var check = result;
-                lstResult = result.ToList();
-              }
-
-            int soluong = lstResult.Count();
-            
-            if (soluong > 0)
-            {
-
-                //timer
-                for (int i = 0; i < soluong; i++)
+                if (result != null && result.Any() && result.FirstOrDefault() != null)
                 {
+                    lstResult = result.FirstOrDefault().Split(',').ToList();
+                }
 
-                    request.ToEmail = lstResult[i];
-                    await _mailService.SendWelcomeEmailAsync(request);
-
-
-
+                var res = await connection.QueryAsync<SYS_Setting>(new CommandDefinition("SP_MailGetsSetting", commandType: System.Data.CommandType.StoredProcedure));
+                foreach (var r in res)
+                {
+                    if (r.ID == 4)
+                    {
+                        info.SendEmail = r.GiaTri;
+                    }
+                    else if (r.ID == 5)
+                    {
+                        info.SendPassword = r.GiaTri;
+                    }
+                    else if (r.ID == 6)
+                    {
+                        info.SendDisplayName = r.GiaTri;
+                    }
+                    else if (r.ID == 7)
+                    {
+                        info.ToEmail = r.GiaTri;
+                    }
+                    else if (r.ID == 10)
+                    {
+                        info.SendHost = r.GiaTri;
+                    }
+                    else if (r.ID == 11)
+                    {
+                        info.SendTitle = r.GiaTri;
+                    }
+                    else if (r.ID == 12)
+                    {
+                        info.SendContent = r.GiaTri;
+                    }
+                    else if (r.ID == 13)
+                    {
+                        info.SendPort = r.GiaTri;
+                    }
                 }
             }
 
-     
+            int soluong = lstResult.Count();
+
+            if (soluong > 0 && info != null)
+            {
+                //timer
+                for (int i = 0; i < soluong; i++)
+                {
+                    request.ToEmail = lstResult[i];
+                    await _mailService.SendWelcomeEmailAsync(request, info);
+                }
+            }
+
+
             //await _mailService.SendWelcomeEmailAsync(request);
 
             //MailService tammail = new MailService(_mailSettings);

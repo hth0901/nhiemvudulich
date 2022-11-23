@@ -25,6 +25,7 @@ using System.Linq;
 using API.Services;
 using System;
 using MimeKit.Text;
+using Domain.HueCit;
 
 namespace HueCitApp.Services
 {
@@ -37,20 +38,21 @@ namespace HueCitApp.Services
             _mailSettings = mailSettings;
         }
 
-        public async Task SendWelcomeEmailAsync(MailRequest _request)
+        public async Task SendWelcomeEmailAsync(MailRequest _request, SYS_SettingMail settings)
         {
     
 
             var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(_mailSettings.Value.Mail);
+            //email.Sender = MailboxAddress.Parse(_mailSettings.Value.Mail);
+            email.Sender = MailboxAddress.Parse(settings.SendEmail);
             email.To.Add(MailboxAddress.Parse(_request.ToEmail));
-            email.Subject = "Cảnh báo chất lượng môi trường không khí" ;
+            email.Subject = settings.SendTitle;
             var builder = new BodyBuilder();
-            email.Body = new TextPart(TextFormat.Html) { Text="<h3>Chỉ số chất lượng môi trường không khí AQI đang vượt mức 1 - Hệ thống Hỗ trợ Điều hành Du lịch Thông minh Thừa Thiên Huế</h3>" };
+            email.Body = new TextPart(TextFormat.Html) { Text= settings.SendContent };
            
             using var smtp = new SmtpClient();
-            smtp.Connect(_mailSettings.Value.Host, _mailSettings.Value.Port, MailKit.Security.SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Value.Mail, _mailSettings.Value.Password);
+            smtp.Connect(settings.SendHost, Int32.Parse(settings.SendPort), MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(settings.SendEmail, settings.SendPassword);
 
             await smtp.SendAsync(email);
 

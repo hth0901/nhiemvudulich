@@ -24,6 +24,22 @@ namespace Domain.HueCit
         public string ToEmail { get; set; }
         public string ToName { get; set; }
         public int Scheduler { get; set; }
+        public string SendHost { get; set; }
+        public string SendPort { get; set; }
+        public string SendTitle { get; set; }
+        public string SendContent { get; set; }
 
+    }
+
+    public class SYS_SettingMail
+    {
+        public string SendEmail { get; set; }
+        public string SendPassword { get; set; }
+        public string SendDisplayName { get; set; }
+        public string ToEmail { get; set; }
+        public string SendHost { get; set; }
+        public string SendPort { get; set; }
+        public string SendTitle { get; set; }
+        public string SendContent { get; set; }
     }
 }

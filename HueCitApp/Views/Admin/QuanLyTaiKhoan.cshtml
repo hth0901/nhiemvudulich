@@ -83,6 +83,9 @@
                     <div class="form-group">
                         <label for="matKhauAdd" class="editor-label">Mật khẩu<span class="red-text"> *</span></label>
                         <input type="password" class="form-control" id="matKhauAdd" required>
+                        <p>
+							<small class="text-muted">Mật khẩu gồm: ký tự in hoa, ký tự thường, số, ký tự đặc biệt</small>
+						</p>
                     </div>
                     <div class="form-group">
                         <label for="diaChiAdd" class="editor-label">Địa chỉ</label>
@@ -280,7 +283,7 @@
             });
 
             function buildData() {
-                let tuKhoa = $('#tu-khoa-text-box').val();
+                let tuKhoa = $('#tu-khoa-search').val();
                 //let trangThai = $('#trang-thai-select-box').val();
 
                 const request = {
