@@ -12,6 +12,7 @@ using Application.DoanhNghiep;
 using Domain.TechLife;
 using Application.SuKien;
 using Application.TaiNguyenDuLich;
+using Domain.RequestEntity;
 
 namespace HueCitApp.Controllers
 {
@@ -25,18 +26,18 @@ namespace HueCitApp.Controllers
         [HttpPost("themmoitainguyen")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> ThemMoiTaiNguyenDuLich(CancellationToken ct, [FromBody] DL_BangTaiNguyen _request)
+        public async Task<IActionResult> ThemMoiTaiNguyenDuLich(CancellationToken ct, [FromBody] HoSoRequestAdd _request)
         {
-            var result = await Mediator.Send(new ThemMoiTaiNguyen.Command { _tainguyen = _request },ct);
+            var result = await Mediator.Send(new ThemMoiTaiNguyen.Command { infor = _request },ct);
 
             return HandlerResult(result);
 
         }
         [HttpPost("capnhattainguyen")]
         [AllowAnonymous]
-        public async Task<IActionResult> CapNhatTaiNguyenDuLich(CancellationToken ct, [FromBody] DL_BangTaiNguyen _request)
+        public async Task<IActionResult> CapNhatTaiNguyenDuLich(CancellationToken ct, [FromBody] HoSo _request)
         {
-            var result = await Mediator.Send(new CapNhatTaiNguyen.Command { _tainguyen = _request }, ct);
+            var result = await Mediator.Send(new CapNhatTaiNguyen.Command { infor = _request }, ct);
 
             return HandlerResult(result);
         }

@@ -2,6 +2,7 @@
 using Dapper;
 using Domain;
 using Domain.HueCit;
+using Domain.TechLife;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -18,15 +19,15 @@ namespace Application.TaiNguyenDuLich
 {
     public class CapNhatTaiNguyen
     {
-        public class Command : IRequest<Result<DL_BangTaiNguyen>>
+        public class Command : IRequest<Result<HoSo>>
         {
-            public DL_BangTaiNguyen _tainguyen { get; set; }
+            public HoSo infor { get; set; }
         }
-        public class CommandValidator : AbstractValidator<DL_BangTaiNguyen>
+        public class CommandValidator : AbstractValidator<HoSo>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.ID).NotEmpty().WithMessage("ID không được rỗng");
+                RuleFor(x => x.Id).NotEmpty().WithMessage("ID không được rỗng");
                 RuleFor(x => x.Ten).NotEmpty().WithMessage("Tên không được rỗng");
                 RuleFor(x => x.LinhVucKinhDoanhId).NotEmpty().WithMessage("Mã kinh lĩnh vực doanh không được rỗng");
                 RuleFor(x => x.HangSao).NotEmpty().WithMessage("Hạng sao không được rỗng");
@@ -69,7 +70,7 @@ namespace Application.TaiNguyenDuLich
 
             }
         }
-        public class Handler : IRequestHandler<Command, Result<DL_BangTaiNguyen>>
+        public class Handler : IRequestHandler<Command, Result<HoSo>>
         {
             private readonly DataContext _context;
             private readonly IConfiguration _configuration;
@@ -79,93 +80,92 @@ namespace Application.TaiNguyenDuLich
                 _context = context;
                 _configuration = configuration;
             }
-            public async Task<Result<DL_BangTaiNguyen>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<HoSo>> Handle(Command request, CancellationToken cancellationToken)
             {
-                string spName = "SP_edit_TaiNguyen";
+                string spName = "SP_DuLieuSoHoa_Edit";
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@ID", request._tainguyen.ID);
-                parameters.Add("@Ten", request._tainguyen.Ten);
-                parameters.Add("@LinhVucKinhDoanhId", request._tainguyen.LinhVucKinhDoanhId);
-                parameters.Add("@HangSao", request._tainguyen.HangSao);
-                parameters.Add("@SoQuyetDinh", request._tainguyen.SoQuyetDinh);
-                parameters.Add("@NgayQuyetDinh", request._tainguyen.NgayQuyetDinh);
-                parameters.Add("@LoaiHinhId", request._tainguyen.LoaiHinhId);
-                parameters.Add("@TongVonDauTuBanDauaa", request._tainguyen.TongVonDauTuBanDau);
-                parameters.Add("@TongVonDauTuBoSung", request._tainguyen.TongVonDauTuBoSung);
-                parameters.Add("@DienTichMatBang", request._tainguyen.DienTichMatBang);
-                parameters.Add("@DienTichMatBangXayDung", request._tainguyen.DienTichMatBangXayDung);
-                parameters.Add("@DienTichXayDung", request._tainguyen.DienTichXayDung);
-                parameters.Add("@SoTang", request._tainguyen.SoTang);
-                parameters.Add("@TongSoPhong", request._tainguyen.TongSoPhong);
-                parameters.Add("@TongSoGiuong", request._tainguyen.TongSoGiuong);
-                parameters.Add("@SoGiayPhep", request._tainguyen.SoGiayPhep);
-                parameters.Add("@SoLanChuyenChu", request._tainguyen.SoLanChuyenChu);
-                parameters.Add("@SoNha", request._tainguyen.SoNha);
-                parameters.Add("@DuongPho", request._tainguyen.DuongPho);
-                parameters.Add("@PhuongXaId", request._tainguyen.PhuongXaId);
-                parameters.Add("@QuanHuyenId", request._tainguyen.QuanHuyenId);
-                parameters.Add("@TinhThanhId", request._tainguyen.TinhThanhId);
-                parameters.Add("@SoDienThoai", request._tainguyen.SoDienThoai);
-                parameters.Add("@Fax", request._tainguyen.Fax);
-                parameters.Add("@Email", request._tainguyen.Email);
-                parameters.Add("@Website", request._tainguyen.Website);
-                parameters.Add("@HoTenNguoiDaiDien", request._tainguyen.HoTenNguoiDaiDien);
-                parameters.Add("@ChucVuNguoiDaiDien", request._tainguyen.ChucVuNguoiDaiDien);
-                parameters.Add("@GioiTinhNguoiDaiDien", request._tainguyen.GioiTinhNguoiDaiDien);
-                parameters.Add("@SoDienThoaiNguoiDaiDien", request._tainguyen.SoDienThoaiNguoiDaiDien);
-                parameters.Add("@SoLuongLaoDong", request._tainguyen.SoLuongLaoDong);
-                parameters.Add("@DoTuoiTBNam", request._tainguyen.DoTuoiTBNam);
-                parameters.Add("@DoTuoiTBNu", request._tainguyen.DoTuoiTBNu);
-                parameters.Add("@KhamSucKhoeDinhKy", request._tainguyen.KhamSucKhoeDinhKy);
-                parameters.Add("@TrangPhucRieng", request._tainguyen.TrangPhucRieng);
-                parameters.Add("@PhongChayNo", request._tainguyen.PhongChayNo);
-                parameters.Add("@CNVSMoiTruong", request._tainguyen.CNVSMoiTruong);
-                parameters.Add("@GhiChu", request._tainguyen.GhiChu);
-                parameters.Add("@IsStatus", request._tainguyen.IsStatus);
-                parameters.Add("@IsDelete", request._tainguyen.IsDelete);
-                parameters.Add("@ThoiDiemBatDauKinhDoanh", request._tainguyen.ThoiDiemBatDauKinhDoanh);
-                parameters.Add("@GioDongCua", request._tainguyen.GioDongCua);
-                parameters.Add("@GioMoCua", request._tainguyen.GioMoCua);
-                parameters.Add("@SoLDGianTiep", request._tainguyen.SoLDGianTiep);
-                parameters.Add("@SoLDNamNgoaiNuoc", request._tainguyen.SoLDNamNgoaiNuoc);
-                parameters.Add("@SoLDNamTrongNuoc", request._tainguyen.SoLDNamTrongNuoc);
-                parameters.Add("@SoLDNuNgoaiNuoc", request._tainguyen.SoLDNuNgoaiNuoc);
-                parameters.Add("@SoLDNuTrongNuoc", request._tainguyen.SoLDNuTrongNuoc);
-                parameters.Add("@SoLDThoiVu", request._tainguyen.SoLDThoiVu);
-                parameters.Add("@SoLDThuongXuyen", request._tainguyen.SoLDThuongXuyen);
-                parameters.Add("@SoLDTrucTiep", request._tainguyen.SoLDTrucTiep);
-                parameters.Add("@TenVietTat", request._tainguyen.TenVietTat);
-                parameters.Add("@ViTriTrenBanDo", request._tainguyen.ViTriTrenBanDo);
-                parameters.Add("@ToaDoX", request._tainguyen.ToaDoX);
-                parameters.Add("@ToaDoY", request._tainguyen.ToaDoY);
-                parameters.Add("@DonViCapPhep", request._tainguyen.DonViCapPhep);
-                parameters.Add("@MaSoCapPhep", request._tainguyen.MaSoCapPhep);
-                parameters.Add("@NgayCapPhep", request._tainguyen.NgayCapPhep);
-                parameters.Add("@IsDatChuan", request._tainguyen.IsDatChuan);
-                parameters.Add("@NgayCVDatChuan", request._tainguyen.NgayCVDatChuan);
-                parameters.Add("@SoCVDatChuan", request._tainguyen.SoCVDatChuan);
-                parameters.Add("@NgayHetHan", request._tainguyen.NgayHetHan);
-                parameters.Add("@CSLTId", request._tainguyen.CSLTId);
-                parameters.Add("@IsNhaHangTrongCSLT", request._tainguyen.IsNhaHangTrongCSLT);
-                parameters.Add("@NhaCungCapId", request._tainguyen.NhaCungCapId);
-                parameters.Add("@GioiThieu", request._tainguyen.GioiThieu);
-                parameters.Add("@NgonNguId", request._tainguyen.NgonNguId);
-                parameters.Add("@GiaThamKhaoTu", request._tainguyen.GiaThamKhaoTu);
-                parameters.Add("@GiaThamKhaoDen", request._tainguyen.GiaThamKhaoDen);
-                parameters.Add("@LoaiDiaDiemAnUong", request._tainguyen.LoaiDiaDiemAnUong);
-                parameters.Add("@PhucVu", request._tainguyen.PhucVu);
-                parameters.Add("@MaDoanhNghiep", request._tainguyen.MaDoanhNghiep);
-                parameters.Add("@NguonDongBo", request._tainguyen.NguonDongBo);
+                parameters.Add("@ID", request.infor.Id);
+                parameters.Add("@Ten", request.infor.Ten);
+                //parameters.Add("@LinhVucKinhDoanhId", request.infor.LinhVucKinhDoanhId);
+                parameters.Add("@HangSao", request.infor.HangSao);
+                parameters.Add("@SoQuyetDinh", request.infor.SoQuyetDinh);
+                parameters.Add("@NgayQuyetDinh", request.infor.NgayQuyetDinh);
+                parameters.Add("@LoaiHinhId", request.infor.LoaiHinhId);
+                parameters.Add("@TongVonDauTuBanDau", request.infor.TongVonDauTuBanDau);
+                parameters.Add("@TongVonDauTuBoSung", request.infor.TongVonDauTuBoSung);
+                parameters.Add("@DienTichMatBang", request.infor.DienTichMatBang);
+                parameters.Add("@DienTichMatBangXayDung", request.infor.DienTichMatBangXayDung);
+                parameters.Add("@DienTichXayDung", request.infor.DienTichXayDung);
+                parameters.Add("@SoTang", request.infor.SoTang);
+                parameters.Add("@TongSoPhong", request.infor.TongSoPhong);
+                parameters.Add("@TongSoGiuong", request.infor.TongSoGiuong);
+                parameters.Add("@SoGiayPhep", request.infor.SoGiayPhep);
+                parameters.Add("@SoLanChuyenChu", request.infor.SoLanChuyenChu);
+                parameters.Add("@SoNha", request.infor.SoNha);
+                parameters.Add("@DuongPho", request.infor.DuongPho);
+                parameters.Add("@PhuongXaId", request.infor.PhuongXaId);
+                parameters.Add("@QuanHuyenId", request.infor.QuanHuyenId);
+                parameters.Add("@TinhThanhId", request.infor.TinhThanhId);
+                parameters.Add("@SoDienThoai", request.infor.SoDienThoai);
+                parameters.Add("@Fax", request.infor.Fax);
+                parameters.Add("@Email", request.infor.Email);
+                parameters.Add("@Website", request.infor.Website);
+                parameters.Add("@HoTenNguoiDaiDien", request.infor.HoTenNguoiDaiDien);
+                parameters.Add("@ChucVuNguoiDaiDien", request.infor.ChucVuNguoiDaiDien);
+                parameters.Add("@GioiTinhNguoiDaiDien", request.infor.GioiTinhNguoiDaiDien);
+                parameters.Add("@SoDienThoaiNguoiDaiDien", request.infor.SoDienThoaiNguoiDaiDien);
+                parameters.Add("@SoLuongLaoDong", request.infor.SoLuongLaoDong);
+                parameters.Add("@DoTuoiTBNam", request.infor.DoTuoiTBNam);
+                parameters.Add("@DoTuoiTBNu", request.infor.DoTuoiTBNu);
+                parameters.Add("@KhamSucKhoeDinhKy", request.infor.KhamSucKhoeDinhKy);
+                parameters.Add("@TrangPhucRieng", request.infor.TrangPhucRieng);
+                parameters.Add("@PhongChayNo", request.infor.PhongChayNo);
+                parameters.Add("@CNVSMoiTruong", request.infor.CNVSMoiTruong);
+                parameters.Add("@GhiChu", request.infor.GhiChu);
+                parameters.Add("@IsStatus", request.infor.IsStatus);
+                parameters.Add("@IsDelete", request.infor.IsDelete);
+                parameters.Add("@ThoiDiemBatDauKinhDoanh", request.infor.ThoiDiemBatDauKinhDoanh);
+                parameters.Add("@GioDongCua", request.infor.GioDongCua);
+                parameters.Add("@GioMoCua", request.infor.GioMoCua);
+                parameters.Add("@SoLDGianTiep", request.infor.SoLDGianTiep);
+                parameters.Add("@SoLDNamNgoaiNuoc", request.infor.SoLDNamNgoaiNuoc);
+                parameters.Add("@SoLDNamTrongNuoc", request.infor.SoLDNamTrongNuoc);
+                parameters.Add("@SoLDNuNgoaiNuoc", request.infor.SoLDNuNgoaiNuoc);
+                parameters.Add("@SoLDNuTrongNuoc", request.infor.SoLDNuTrongNuoc);
+                parameters.Add("@SoLDThoiVu", request.infor.SoLDThoiVu);
+                parameters.Add("@SoLDThuongXuyen", request.infor.SoLDThuongXuyen);
+                parameters.Add("@SoLDTrucTiep", request.infor.SoLDTrucTiep);
+                parameters.Add("@TenVietTat", request.infor.TenVietTat);
+                parameters.Add("@ViTriTrenBanDo", request.infor.ViTriTrenBanDo);
+                parameters.Add("@ToaDoX", request.infor.ToaDoX);
+                parameters.Add("@ToaDoY", request.infor.ToaDoY);
+                parameters.Add("@DonViCapPhep", request.infor.DonViCapPhep);
+                parameters.Add("@MaSoCapPhep", request.infor.MaSoCapPhep);
+                parameters.Add("@NgayCapPhep", request.infor.NgayCapPhep);
+                parameters.Add("@IsDatChuan", request.infor.IsDatChuan);
+                parameters.Add("@NgayCVDatChuan", request.infor.NgayCVDatChuan);
+                parameters.Add("@SoCVDatChuan", request.infor.SoCVDatChuan);
+                parameters.Add("@NgayHetHan", request.infor.NgayHetHan);
+                parameters.Add("@CSLTId", request.infor.CSLTId);
+                parameters.Add("@IsNhaHangTrongCSLT", request.infor.IsNhaHangTrongCSLT);
+                parameters.Add("@NhaCungCapId", request.infor.NhaCungCapId);
+                parameters.Add("@GioiThieu", request.infor.GioiThieu);
+                parameters.Add("@NgonNguId", request.infor.NgonNguId);
+                parameters.Add("@GiaThamKhaoTu", request.infor.GiaThamKhaoTu);
+                parameters.Add("@GiaThamKhaoDen", request.infor.GiaThamKhaoDen);
+                parameters.Add("@LoaiDiaDiemAnUong", request.infor.LoaiDiaDiemAnUong);
+                parameters.Add("@PhucVu", request.infor.PhucVu);
+                parameters.Add("@MaDoanhNghiep", request.infor.MaDoanhNghiep);
+                parameters.Add("@NguonDongBo", request.infor.NguonDongBo);
                 parameters.Add("@DongBoID", 1);
-
 
 
 
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.ExecuteScalarAsync<DL_BangTaiNguyen>(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-                    return Result<DL_BangTaiNguyen>.Success(result);
+                    var result = await connection.QueryFirstAsync<HoSo>(spName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                    return Result<HoSo>.Success(result);
                 }
             }
         }
