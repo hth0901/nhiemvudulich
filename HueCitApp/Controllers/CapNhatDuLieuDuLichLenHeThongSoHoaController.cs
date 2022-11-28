@@ -13,6 +13,7 @@ using Application.HeThongSoHoaTinhCoSoLuuTruDuLichCapNhat;
 
 using Domain.HueCit;
 using Domain.RequestEntity;
+using Application.HeThongSoHoaTinhTaiLieuLienQuanCapNhat;
 
 namespace HueCitApp.Controllers
 {
@@ -97,6 +98,30 @@ namespace HueCitApp.Controllers
 
 
         }
-      
+        [HttpPost("tailieulienquanadd")]
+        [AllowAnonymous]
+        public async Task<IActionResult> TaiLieuLienQuanAdd([FromBody] HoSoRequestAdd infor)
+        {
+            var Result = await Mediator.Send(new HeThongSoHoaTaiLieuLienQuanAdd.Command { infor = infor });
+
+            //return HandlerResult(listResult);
+            return HandlerResult(Result);
+
+
+
+        }
+        [HttpPut("tailieulienquanedit")]
+        [AllowAnonymous]
+        public async Task<IActionResult> TaiLieuLienQuanEdit([FromBody] HoSo infor)
+        {
+            var Result = await Mediator.Send(new HeThongSoHoaTaiLieuLienquanEdit.Command { infor = infor });
+
+            //return HandlerResult(listResult);
+            return HandlerResult(Result);
+
+
+
+        }
+
     }
 }
