@@ -205,7 +205,27 @@ namespace HueCitApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("congtyluhanh")]
+        public async Task<IActionResult> CongTyLuHanh()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_THONGKE_CONGTY_LUHANH", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet]
         [AllowAnonymous]
         [Route("soluongdiemgiaodich")]

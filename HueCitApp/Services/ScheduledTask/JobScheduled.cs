@@ -106,6 +106,15 @@ namespace HueCitApp.Services.ScheduledTask
                 //timer
                 for (int i = 0; i < soluong; i++)
                 {
+                    using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
+                    {
+
+                        connection.Open();
+                        DynamicParameters dynamicParameters = new DynamicParameters();
+                        dynamicParameters.Add("@Mail", lstResult[i]);
+                        dynamicParameters.Add("@Time", DateTime.Now);
+                        var result = await connection.QueryAsync<MailLog>(new CommandDefinition("SP_MailLogs", dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+                    }
                     request.ToEmail = lstResult[i];
                     await _mailService.SendWelcomeEmailAsync(request, info);
                 }

@@ -137,20 +137,46 @@
     <div class="col-xl-12 col-lg-12">
         <div class="card">
             <div class="card-header">
+                <h4 class="card-title">Biểu đồ chất lượng không khí trong 24h</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="aqi_24h" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Biểu đồ chất lượng không khí trong 30 ngày</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="aqi_30d" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
                 <h4 class="card-title">Số lượng khách sạn theo loại phòng</h4>
                 <a class="heading-elements-toggle">
                     <i class="fa fa-ellipsis-v font-medium-3"></i>
                 </a>
-                @*<div class="heading-elements">
-                    <fieldset class="form-group">
-                        <select class="form-control" id="basicSelect">
-                            <option>Chọn năm</option>
-                            <option>2020</option>
-                            <option>2021</option>
-                            <option selected>2022</option>
-                        </select>
-                    </fieldset>
-                </div>*@
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -209,6 +235,24 @@
             <div class="card-content">
                 <div class="card-body">
                     <div id="dich_vu_du_lich" style="height: 500px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row match-height">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Số Công ty lữ hành</h4>
+                <a class="heading-elements-toggle">
+                    <i class="fa fa-ellipsis-v font-medium-3"></i>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="congtyluhanh" style="height: 500px"></div>
                 </div>
             </div>
         </div>
@@ -331,6 +375,13 @@
             }
             return color;
         }
+
+        //const pad = (num, size) => {
+        //    num = num.toString()
+        //    while (num.length < size) num = '0' + num
+        //    return num
+        //}
+
         $(document).ready(function () {
             const currentYear = (new Date()).getFullYear();
             for (i = 0; i <= 4; i++) {
@@ -392,9 +443,9 @@
                         },
                     };
                 },
-                legend: {
-                    visible: false,
-                },
+                //legend: {
+                //    visible: false,
+                //},
                 customizePoint() {
                     return { color: getRandomColor() };
                 },
@@ -602,6 +653,34 @@
                 },
             }).dxChart("instance");
 
+            const chartCongTyLuHanh = $('#congtyluhanh').dxChart({
+                dataSource: [],
+                customizeLabel() {
+                    return {
+                        visible: true,
+                        backgroundColor: '#ff7c7c',
+                        customizeText() {
+                            return `${this.valueText}`;
+                        },
+                    };
+                },
+                palette: 'Office',
+                //palette: [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()],
+                title: {
+                    text: '',
+                },
+                commonSeriesSettings: {
+                    type: 'bar',
+                    valueField: 'TongSo',
+                    argumentField: 'Ten',
+                    ignoreEmptyPoints: true,
+                    barPadding: 0.5,
+                },
+                seriesTemplate: {
+                    nameField: 'Ten',
+                },
+            }).dxChart("instance");
+
             fetch(`/api/ThongKe/phananhientruongtong/${currentYear}`)
                 .then(res => res.json())
                 .then(data => {
@@ -735,6 +814,137 @@
                 .then(data => {
                     //console.log(data)
                     chartSoLuongDiemGiaoDich.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/ThongKe/congtyluhanh`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data)
+                    chartCongTyLuHanh.option("dataSource", data);
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            //aqi_30d
+
+            fetch(`/api/quantracmoitruong/thongkedanhsachtrongngay`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    var dkm = $('#aqi_24h').dxChart({
+                        palette: 'Violet',
+                        dataSource: data,
+                        commonSeriesSettings: {
+                            argumentField: 'ThoiGian',
+                            type: 'line'
+                        },
+                        customizeLabel() {
+                            return {
+                                visible: true,
+                                backgroundColor: '#ff7c7c',
+                                customizeText() {
+                                    return `${this.valueText}`;
+                                },
+                            };
+                        },
+                        argumentAxis: {
+                            valueMarginsEnabled: false,
+                            discreteAxisDivisionMode: 'crossLabels',
+                            grid: {
+                                visible: true,
+                            },
+                            label: {
+                                overlappingBehavior: "rotate",
+                                rotationAngle: 45
+                            },
+                        },
+                        series: [
+                            { valueField: 'AQI', name: 'AQI trong 24h' }
+                        ],
+                        legend: {
+                            verticalAlignment: 'bottom',
+                            horizontalAlignment: 'center',
+                            itemTextPosition: 'bottom',
+                        },
+                        title: {
+                            text: ''
+                        },
+                        export: {
+                            enabled: false,
+                        },
+                    }).dxChart('instance');
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+
+            fetch(`/api/quantracmoitruong/thongkedanhsachtrongthang`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Proccess Error')
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    var dkm = $('#aqi_30d').dxChart({
+                        palette: 'Soft Pastel',
+                        dataSource: data,
+                        commonSeriesSettings: {
+                            argumentField: 'ThoiGian',
+                            type: 'line'
+                        },
+                        customizeLabel() {
+                            return {
+                                visible: true,
+                                backgroundColor: '#ff7c7c',
+                                customizeText() {
+                                    return `${this.valueText}`;
+                                },
+                            };
+                        },
+                        argumentAxis: {
+                            valueMarginsEnabled: false,
+                            discreteAxisDivisionMode: 'crossLabels',
+                            grid: {
+                                visible: true,
+                            },
+                            label: {
+                                overlappingBehavior: "rotate",
+                                rotationAngle: 45
+                            },
+                        },
+                        series: [
+                            { valueField: 'AQI', name: 'AQI trong 30 ngày' }
+                        ],
+                        legend: {
+                            verticalAlignment: 'bottom',
+                            horizontalAlignment: 'center',
+                            itemTextPosition: 'bottom',
+                        },
+                        title: {
+                            text: '',
+                            visible: false
+                        },
+                        export: {
+                            enabled: false,
+                        },
+                    }).dxChart('instance');
                 })
                 .catch(err => {
                     console.error(err);

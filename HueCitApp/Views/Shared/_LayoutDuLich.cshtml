@@ -42,6 +42,12 @@
     <link rel="stylesheet" href="https://js.arcgis.com/4.22/esri/themes/light/main.css" />
     @RenderSection("Css", required: false)
     <link rel="stylesheet" type="text/css" href="~/template-asset/assets/css/style.css" />
+
+    <style>
+        .hth-tooltip {
+            background-color: #ff7c7c
+        }
+    </style>
 </head>
 <body class="vertical-layout vertical-menu 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
 
@@ -94,13 +100,21 @@
                                                 <div class="card-content">
                                                     <div class="card-body">
                                                         <ul class="nav nav-tabs nav-justified">
+                                                            @*<li class="nav-item nav-item-tab">
+                                                                <a class="nav-link active"
+                                                                   id="bieudo-tab"
+                                                                   data-toggle="tab"
+                                                                   href="#bieudo-tab-panel"
+                                                                   aria-controls="active"
+                                                                   aria-expanded="true">Biểu đồ chất lượng không khí</a>
+                                                            </li>*@
                                                             <li class="nav-item nav-item-tab">
                                                                 <a class="nav-link active"
                                                                    id="active-tab"
                                                                    data-toggle="tab"
                                                                    href="#active"
                                                                    aria-controls="active"
-                                                                   aria-expanded="true">Trong 24h</a>
+                                                                   aria-expanded="true">Bảng số liêu trong 24h</a>
                                                             </li>
                                                             <li class="nav-item nav-item-tab">
                                                                 <a class="nav-link"
@@ -108,23 +122,31 @@
                                                                    data-toggle="tab"
                                                                    href="#link"
                                                                    aria-controls="link"
-                                                                   aria-expanded="false">Trong 30 ngày</a>
+                                                                   aria-expanded="false">Bảng số liệu trong 30 ngày</a>
                                                             </li>
                                                         </ul>
                                                         <div class="tab-content px-1 pt-1">
+                                                            @*<div role="tabpanel"
+                                                                 class="tab-pane active in"
+                                                                 id="bieudo-tab-panel"
+                                                                 aria-labelledby="bieudo-tab"
+                                                                 aria-expanded="true">
+                                                                <div id="solieutrongngay" style="float: left; margin-left: 20px; width: 45%; height: 550px"></div>
+                                                                <div id="solieutrongthang" style="float: left; margin-left: 20px; width: 45%; height: 550px"></div>
+                                                            </div>*@
                                                             <div role="tabpanel"
                                                                  class="tab-pane active in"
                                                                  id="active"
                                                                  aria-labelledby="active-tab"
                                                                  aria-expanded="true">
-                                                                <div id="loadingTable"></div>
+                                                                <div id="loadingTable" style="float: left"></div>
                                                             </div>
                                                             <div class="tab-pane"
                                                                  id="link"
                                                                  role="tabpanel"
                                                                  aria-labelledby="link-tab"
                                                                  aria-expanded="false">
-                                                                <div id="quantrac30ngay"></div>
+                                                                <div id="quantrac30ngay" style="float: left"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -174,7 +196,8 @@
                         <i class="ft-home"></i><span class="menu-title" data-i18n="">Trang chủ</span>
                     </a>
                 </li>
-                @{string menu = HttpContextAccessor.HttpContext.Session.GetString("menuInfo");}
+                @await Component.InvokeAsync("NavUser")
+                @*@{string menu = HttpContextAccessor.HttpContext.Session.GetString("menuInfo");}
                 @if (menu != null && !(string.IsNullOrEmpty(menu)))
                 {
                     if (menu.Contains('1'))
@@ -219,7 +242,7 @@
                             </ul>
                         </li>
                     }
-                }
+                }*@
 
                 @*<li class="navigation-header">
                         <span>Others</span><i class="ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Others"></i>
@@ -318,6 +341,45 @@
             }
             updateClock();
 
+            //const chartSoLieuTrongThang = $('#solieutrongthang').dxChart({
+            //    palette: 'Material',
+            //    dataSource: [],
+            //    commonSeriesSettings: {
+            //        argumentField: 'Ngay',
+            //        type: 'line'
+            //    },
+            //    margin: {
+            //        //bottom: 20,
+            //    },
+            //    argumentAxis: {
+            //        valueMarginsEnabled: true,
+            //        discreteAxisDivisionMode: 'crossLabels',
+            //        grid: {
+            //            visible: true,
+            //        },
+            //        label: {
+            //            visible: false
+            //        },
+            //    },
+            //    series: [
+            //        { valueField: 'AQI', name: 'AQI trong 30 ngày' }
+            //    ],
+            //    legend: {
+            //        verticalAlignment: 'bottom',
+            //        horizontalAlignment: 'center',
+            //        itemTextPosition: 'bottom',
+            //    },
+            //    title: {
+            //        text: 'Chỉ số chất lượng không khí trong 30 ngày'
+            //    },
+            //    export: {
+            //        enabled: false,
+            //    },
+            //    tooltip: {
+            //        enabled: true
+            //    },
+            //}).dxChart('instance');
+
             $("#loadingTable").jsGrid({
                 width: "100%",
 
@@ -341,20 +403,20 @@
 
                 fields: [
                     {
-                        name: "thoiDiem", type: "date", width: 70, title: 'Thời điểm', itemTemplate: (value) => {
+                        name: "thoiDiem", type: "date", width: 100, title: 'Thời điểm', itemTemplate: (value) => {
                             const dateValue = new Date(value);
                             return `${pad(dateValue.getDate(), 2)
                                 }-${pad(dateValue.getMonth() + 1, 2)}-${dateValue.getFullYear()} ${pad(dateValue.getHours(), 2)}:${pad(dateValue.getMinutes(), 2)}`;
                         }
                     },
-                    { name: "aqi", type: "number", width: 70, title: 'AQI' },
-                    { name: "pM01", type: "number", width: 70, title: 'PM01' },
-                    { name: "pM25", type: "number", width: 70, title: 'PM25' },
-                    { name: "hum", type: "number", width: 70, title: 'HUM' },
-                    { name: "tvoc", type: "number", width: 70, title: 'TVOC' },
-                    { name: "cO2", type: "number", width: 70, title: 'CO2' },
-                    { name: "pM10", type: "number", width: 70, title: 'PM10' },
-                    { name: "temp", type: "number", width: 70, title: 'TEMP' },
+                    { name: "aqi", type: "number", width: 50, title: 'AQI' },
+                    { name: "pM01", type: "number", width: 50, title: 'PM01' },
+                    { name: "pM25", type: "number", width: 50, title: 'PM25' },
+                    { name: "hum", type: "number", width: 50, title: 'HUM' },
+                    { name: "tvoc", type: "number", width: 50, title: 'TVOC' },
+                    { name: "cO2", type: "number", width: 50, title: 'CO2' },
+                    { name: "pM10", type: "number", width: 50, title: 'PM10' },
+                    { name: "temp", type: "number", width: 50, title: 'TEMP' },
 
                 ]
             });
@@ -381,20 +443,20 @@
 
                 fields: [
                     {
-                        name: "thoiDiem", type: "date", width: 70, title: 'Ngày', itemTemplate: (value) => {
+                        name: "thoiDiem", type: "date", width: 100, title: 'Ngày', itemTemplate: (value) => {
                             const dateValue = new Date(value);
                             return `${pad(dateValue.getDate(), 2)
                                 }-${pad(dateValue.getMonth() + 1, 2)}-${dateValue.getFullYear()}`;
                         }
                     },
-                    { name: "aqi", type: "number", width: 70, title: 'AQI' },
-                    { name: "pM01", type: "number", width: 70, title: 'PM01' },
-                    { name: "pM25", type: "number", width: 70, title: 'PM25' },
-                    { name: "hum", type: "number", width: 70, title: 'HUM' },
-                    { name: "tvoc", type: "number", width: 70, title: 'TVOC' },
-                    { name: "cO2", type: "number", width: 70, title: 'CO2' },
-                    { name: "pM10", type: "number", width: 70, title: 'PM10' },
-                    { name: "temp", type: "number", width: 70, title: 'TEMP' },
+                    { name: "aqi", type: "number", width: 50, title: 'AQI' },
+                    { name: "pM01", type: "number", width: 50, title: 'PM01' },
+                    { name: "pM25", type: "number", width: 50, title: 'PM25' },
+                    { name: "hum", type: "number", width: 50, title: 'HUM' },
+                    { name: "tvoc", type: "number", width: 50, title: 'TVOC' },
+                    { name: "cO2", type: "number", width: 50, title: 'CO2' },
+                    { name: "pM10", type: "number", width: 50, title: 'PM10' },
+                    { name: "temp", type: "number", width: 50, title: 'TEMP' },
 
                 ]
             });
@@ -410,6 +472,75 @@
                 console.log(err)
                 alert(err.message)
             })
+
+
+
+            //fetch(`/api/quantracmoitruong/thongkedanhsachtrongngay`)
+            //    .then(res => {
+            //        if (!res.ok) {
+            //            throw new Error('Proccess Error')
+            //        }
+
+            //        return res.json();
+            //    })
+            //    .then(data => {
+            //        var dkm = $('#solieutrongngay').dxChart({
+            //            palette: 'Violet',
+            //            dataSource: data,
+            //            commonSeriesSettings: {
+            //                argumentField: 'ThoiDiem',
+            //                type: 'line'
+            //            },
+            //            margin: {
+            //                //bottom: 20,
+            //            },
+            //            argumentAxis: {
+            //                valueMarginsEnabled: false,
+            //                discreteAxisDivisionMode: 'crossLabels',
+            //                grid: {
+            //                    visible: true,
+            //                },
+            //                label: {
+            //                    visible: false
+            //                },
+            //            },
+            //            series: [
+            //                { valueField: 'AQI', name: 'AQI trong 24h' }
+            //            ],
+            //            legend: {
+            //                verticalAlignment: 'bottom',
+            //                horizontalAlignment: 'center',
+            //                itemTextPosition: 'bottom',
+            //            },
+            //            title: {
+            //                text: 'Chỉ số chất lượng không khí trong 24h'
+            //            },
+            //            export: {
+            //                enabled: false,
+            //            },
+            //            tooltip: {
+            //                enabled: true,
+            //            },
+            //        }).dxChart('instance');
+            //    })
+            //    .catch(err => {
+            //        console.error(err);
+            //    })
+            //fetch(`/api/quantracmoitruong/thongkedanhsachtrongthang`)
+            //    .then(res => {
+            //        if (!res.ok) {
+            //            throw new Error('Proccess Error')
+            //        }
+
+            //        return res.json();
+            //    })
+            //    .then(data => {
+            //        console.log(data)
+            //        chartSoLieuTrongThang.option("dataSource", data);
+            //    })
+            //    .catch(err => {
+            //        console.error(err);
+            //    })
         });
     </script>
     @RenderSection("Scripts", required: false)

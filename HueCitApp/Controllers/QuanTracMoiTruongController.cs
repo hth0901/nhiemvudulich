@@ -49,6 +49,46 @@ namespace HueCitApp.Controllers
         }
 
         [HttpGet]
+        [Route("thongkedanhsachtrongngay")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ThongKeDanhSachTrongNgay(CancellationToken ct)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_QUANTRACMOITRUONG_THONGKE_TRONGNGAY_ALL", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("thongkedanhsachtrongthang")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ThongKeDanhSachTrongThang(CancellationToken ct)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
+                {
+                    connection.Open();
+                    var result = await connection.QueryAsync("SP_QUANTRACMOITRUONG_THONGKE_TRONGTHANG_ALL", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("danhsachtrongthang/{pageIndex}/{pageSize}")]
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachTrongThang(CancellationToken ct, int pageIndex, int pageSize)

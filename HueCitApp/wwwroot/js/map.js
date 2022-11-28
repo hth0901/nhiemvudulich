@@ -485,17 +485,17 @@ $(document).ready(function () {
             id: "bhcmap"
         });
 
-        const baseMapQuanHuyen = new FeatureLayer({
-            url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/4",
-            id: "100",
-            visible: false
-        });
+        //const baseMapQuanHuyen = new FeatureLayer({
+        //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/4",
+        //    id: "100",
+        //    visible: false
+        //});
 
-        const baseMapPhuongXa = new FeatureLayer({
-            url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/5",
-            id: "101",
-            visible: false
-        });
+        //const baseMapPhuongXa = new FeatureLayer({
+        //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDoanhNghiep/DoanhNghiep_ThuaThienHue/FeatureServer/5",
+        //    id: "101",
+        //    visible: false
+        //});
 
         const ACTIONFEATURE = [
             {
@@ -1089,7 +1089,7 @@ $(document).ready(function () {
 
         const map = new Map({
             basemap: 'arcgis-topographic',
-            layers: [baseMapQuanHuyen, baseMapPhuongXa, layer_0, layer_1, layer_2, layer_3, layer_4, layer_5, layer_6, layer_7, layer_8, layer_9, layer_10, layer_11, layer_12, layer_13],
+            layers: [layer_0, layer_1, layer_2, layer_3, layer_4, layer_5, layer_6, layer_7, layer_8, layer_9, layer_10, layer_11, layer_12, layer_13],
         });
 
         graphicsLayer = new GraphicsLayer();
@@ -1282,6 +1282,10 @@ $(document).ready(function () {
                                 }
                             });
 
+                            if (!($('#tenDoanhNghiepWrapper').hasClass('d-none'))) {
+                                $('#tenDoanhNghiepWrapper').addClass('d-none')
+                            }
+
                             if (($('#filter-adv-le-hoi-wrapper').hasClass('d-none'))) {
                                 $('#filter-adv-le-hoi-wrapper').removeClass('d-none')
                             }
@@ -1314,6 +1318,10 @@ $(document).ready(function () {
                                     alert('Lỗi.');
                                 }
                             });
+
+                            if (($('#tenDoanhNghiepWrapper').hasClass('d-none'))) {
+                                $('#tenDoanhNghiepWrapper').removeClass('d-none')
+                            }
 
                             if (($('#filter-adv-pa-wrapper').hasClass('d-none'))) {
                                 $('#filter-adv-pa-wrapper').removeClass('d-none')
@@ -1348,6 +1356,10 @@ $(document).ready(function () {
                             $('#filter-ddl-cx-slt').val(-1).trigger('change');
                         }
                         else {
+                            if (!($('#tenDoanhNghiepWrapper').hasClass('d-none'))) {
+                                $('#tenDoanhNghiepWrapper').addClass('d-none')
+                            }
+
                             if (!($('#filter-pl-wrapper').hasClass('d-none'))) {
                                 $('#filter-pl-wrapper').addClass('d-none')
                             }
@@ -2278,8 +2290,13 @@ $(document).ready(function () {
                                             }
                                             else if (layer.id == "13") {
                                                 const loai = $('#filter-ddl-pa-slt').val();
+                                                const doanhNghiep = $('#ten-dn-input').val();
                                                 if (loai != "-1") {
                                                     query += ` AND malinhvuc = ${loai}`
+                                                }
+
+                                                if (doanhNghiep != null && doanhNghiep != "") {
+                                                    query += ` AND lower(tieude) LIKE '%${doanhNghiep.toLowerCase()}%'`
                                                 }
 
                                                 let arr = [];

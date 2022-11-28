@@ -123,7 +123,7 @@ namespace HueCitApp.Controllers
             HttpContext.Session.Clear();
 
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
     }
 }
