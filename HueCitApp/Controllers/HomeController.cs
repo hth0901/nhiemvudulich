@@ -92,8 +92,8 @@ namespace HueCitApp.Controllers
                     {
                         connection.Open();
                         var result = await connection.QueryFirstOrDefaultAsync<SYS_UserTable>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
-
-                        if (result != null)
+                        HttpContext.Session.SetString("userInfo", JsonConvert.SerializeObject(user));
+                        if (result != null && result.TrangThai == 1)
                         {
                             DynamicParameters parameters = new DynamicParameters();
                             parameters.Add("@Role", result.Quyen);
@@ -101,15 +101,18 @@ namespace HueCitApp.Controllers
                             var menu = await connection.QueryAsync<int>(new CommandDefinition("SP_PhanQuyenGetMenu", parameters: parameters, commandType: System.Data.CommandType.StoredProcedure));
                             HttpContext.Session.SetString("menuInfo", JsonConvert.SerializeObject(menu));
                         }
-
-                        HttpContext.Session.SetString("userInfo", JsonConvert.SerializeObject(user));
+                        else 
+                        {
+                            ViewBag.error = "Tên tài khoản hoặc mật khẩu không chính xác, vui lòng thử lại.";
+                            return View();
+                        }
                     }
 
                     return RedirectToAction("Index");
                 }
             }
-
-            return RedirectToAction("Index");
+            ViewBag.error = "Tên tài khoản hoặc mật khẩu không chính xác, vui lòng thử lại.";
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

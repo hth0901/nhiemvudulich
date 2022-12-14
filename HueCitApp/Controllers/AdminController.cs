@@ -23,57 +23,61 @@ namespace HueCitApp.Controllers
         [Authorize]
         public IActionResult QuanLyTaiKhoan()
         {
-            var menu = HttpContext.Session.GetString("menuInfo");
-            if (menu != null && !(string.IsNullOrEmpty(menu)))
-            {
-                if (menu.Contains('2'))
-                {
-                    return View();
-                }
-            }
-            return RedirectToAction("Index", "Home");
+            //var menu = HttpContext.Session.GetString("menuInfo");
+            //if (menu != null && !(string.IsNullOrEmpty(menu)))
+            //{
+            //    if (menu.Contains('2'))
+            //    {
+            //        return View();
+            //    }
+            //}
+            //return RedirectToAction("Index", "Home");
+            return View();
         }
 
         [Authorize]
         public IActionResult QuanLyNhomVaiTro()
         {
-            var menu = HttpContext.Session.GetString("menuInfo");
-            if (menu != null && !(string.IsNullOrEmpty(menu)))
-            {
-                if (menu.Contains('3'))
-                {
-                    return View();
-                }
-            }
-            return RedirectToAction("Index", "Home");
+            //var menu = HttpContext.Session.GetString("menuInfo");
+            //if (menu != null && !(string.IsNullOrEmpty(menu)))
+            //{
+            //    if (menu.Contains('3'))
+            //    {
+            //        return View();
+            //    }
+            //}
+            //return RedirectToAction("Index", "Home");
+            return View();
         }
 
         [Authorize]
         public IActionResult QuanLyCauHinh()
         {
-            var menu = HttpContext.Session.GetString("menuInfo");
-            if (menu != null && !(string.IsNullOrEmpty(menu)))
-            {
-                if (menu.Contains('5'))
-                {
-                    return View();
-                }
-            }
-            return RedirectToAction("Index", "Home");
+            //var menu = HttpContext.Session.GetString("menuInfo");
+            //if (menu != null && !(string.IsNullOrEmpty(menu)))
+            //{
+            //    if (menu.Contains('5'))
+            //    {
+            //        return View();
+            //    }
+            //}
+            //return RedirectToAction("Index", "Home");
+            return View();
         }
 
         [Authorize]
         public IActionResult QuanLyPhanQuyen()
         {
-            var menu = HttpContext.Session.GetString("menuInfo");
-            if (menu != null && !(string.IsNullOrEmpty(menu)))
-            {
-                if (menu.Contains('4'))
-                {
-                    return View();
-                }
-            }
-            return RedirectToAction("Index", "Home");
+            //var menu = HttpContext.Session.GetString("menuInfo");
+            //if (menu != null && !(string.IsNullOrEmpty(menu)))
+            //{
+            //    if (menu.Contains('4'))
+            //    {
+            //        return View();
+            //    }
+            //}
+            //return RedirectToAction("Index", "Home");
+            return View();
         }
 
 

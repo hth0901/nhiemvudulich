@@ -425,7 +425,11 @@
                             location.reload();
                         },
                         error: function (err) {
-                            alert('Lỗi.');
+                            if(err.responseText) {
+                                alert(err.responseText)
+                            } else {
+                                alert('Lỗi.');
+                            }
                         }
                     });
                 }
@@ -441,6 +445,7 @@
 
             function dataEdit() {
                 let id = $('#idEdit').val();
+                let tenDangNhap = $('#tenDangNhapEdit').val();
                 let hoTen = $('#hoTenEdit').val();
                 let diaChi = $('#diaChiEdit').val();
                 let dienThoai = $('#dienThoaiEdit').val();
@@ -451,6 +456,7 @@
                 if (id && !checkEmptyBlank(hoTen) && !checkEmptyBlank(hopThu)) {
                     const data = {
                         "id": id,
+                        "tenDangNhap": tenDangNhap,
                         "hoTen": hoTen,
                         "diaChi": diaChi,
                         "dienThoai": dienThoai,
@@ -470,7 +476,11 @@
                             location.reload();
                         },
                         error: function (err) {
-                            alert('Lỗi.');
+                            if(err.responseText) {
+                                alert(err.responseText)
+                            } else {
+                                alert('Lỗi.');
+                            }
                         }
                     });
                 }

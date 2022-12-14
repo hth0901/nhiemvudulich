@@ -57,7 +57,7 @@ namespace HueCitApp.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.HopThu))
             {
-                return BadRequest("Email đã tồn tại");
+                return BadRequest("Email đã tồn tại!");
             }
 
             if (await _userManager.Users.AnyAsync(x => x.UserName == request.TenDangNhap))
@@ -81,13 +81,13 @@ namespace HueCitApp.Controllers
             }
             else
             {
-                return BadRequest("Không thể tạo tài khoản!!");
+                return BadRequest("Mật khẩu không thỏa mãn yêu cầu!!");
             }
         }
 
         [HttpPut("nguoidungedit")]
         [AllowAnonymous]
-        public async Task<IActionResult> Useredit(CancellationToken ct, [FromBody] SYS_User request)
+        public async Task<IActionResult> UserEdit(CancellationToken ct, [FromBody] SYS_User request)
         {
             var result = await Mediator.Send(new UserEdit.Command { Request = request }, ct);
 
@@ -98,9 +98,25 @@ namespace HueCitApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> UserDelete(CancellationToken ct, int request)
         {
-            var result = await Mediator.Send(new UserDelete.Command { Request = request }, ct);
-
-            return HandlerResult(result);
+            var u = await Mediator.Send(new UserGetById.Query { Id = request }, ct);
+            if (u != null)
+            {
+                var user = await _userManager.FindByNameAsync(u.Value.TenDangNhap);
+                if (user != null)
+                {
+                    await _userManager.DeleteAsync(user);
+                    var result = await Mediator.Send(new UserDelete.Command { Request = request }, ct);
+                    return HandlerResult(result);
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy người dùng!");
+                }
+            }
+            else
+            {
+                return BadRequest("Không tìm thấy người dùng!");
+            }
         }
 
         [HttpPost("vaitro")]

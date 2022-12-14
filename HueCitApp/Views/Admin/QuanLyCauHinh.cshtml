@@ -202,36 +202,41 @@
                         && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0 && 
                         !checkEmptyBlank(sendHost) && !checkEmptyBlank(sendPort) && !checkEmptyBlank(sendTitle) && !checkEmptyBlank(sendContent)) {
 
-                    const data = {
-                        "radiusMin": Number(radiusMin),
-                        "radiusMax": Number(radiusMax),
-                        "unit": unit,
-                        "sendEmail": sendEmail,
-                        "sendPassword": sendPassword,
-                        "sendDisplayName": sendDisplayName,
-                        "toEmail": toEmail,
-                        "toName": toName,
-                        "scheduler": Number(schedulerTime),
-                        "sendHost": sendHost,
-                        "sendPort": sendPort,
-                        "sendTitle": sendTitle,
-                        "sendContent": sendContent
+                    if(Number(radiusMin) >= Number(radiusMax)) {
+                        alert('Giá trị Phạm vi tìm kiếm tối thiểu không thể lớn hơn hoặc bằng giá trị Phạm vi tìm kiếm tối đa')
                     }
-
-                    $.ajax({
-                        type: 'put',
-                        async: false,
-                        url: '/api/Setting/capnhat',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data),
-                        success: function (data) {
-                            alert('Cập nhật dữ liệu thành công.');
-                            location.reload();
-                        },
-                        error: function (err) {
-                            alert('Lỗi.');
+                    else {
+                        const data = {
+                            "radiusMin": Number(radiusMin),
+                            "radiusMax": Number(radiusMax),
+                            "unit": unit,
+                            "sendEmail": sendEmail,
+                            "sendPassword": sendPassword,
+                            "sendDisplayName": sendDisplayName,
+                            "toEmail": toEmail,
+                            "toName": toName,
+                            "scheduler": Number(schedulerTime),
+                            "sendHost": sendHost,
+                            "sendPort": sendPort,
+                            "sendTitle": sendTitle,
+                            "sendContent": sendContent
                         }
-                    });
+
+                        $.ajax({
+                            type: 'put',
+                            async: false,
+                            url: '/api/Setting/capnhat',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify(data),
+                            success: function (data) {
+                                alert('Cập nhật dữ liệu thành công.');
+                                location.reload();
+                            },
+                            error: function (err) {
+                                alert('Lỗi.');
+                            }
+                        });
+                    }
                 }
                 else {
                     alert('Thông tin bắt buộc không được để trống!')
