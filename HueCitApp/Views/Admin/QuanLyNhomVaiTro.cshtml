@@ -364,7 +364,7 @@
                     }
 
                     $.ajax({
-                        type: 'put',
+                        type: 'post',
                         async: false,
                         url: '/api/User/vaitroedit',
                         contentType: 'application/json; charset=utf-8',
@@ -393,7 +393,7 @@
 
                 if (id) {
                     $.ajax({
-                        type: 'delete',
+                        type: 'post',
                         async: false,
                         url: '/api/User/vaitrodelete/' + id,
                         success: function (data) {

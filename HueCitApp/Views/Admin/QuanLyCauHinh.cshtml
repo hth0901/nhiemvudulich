@@ -1,9 +1,9 @@
 ﻿@{
-	ViewData["Title"] = "Quản lý cấu hình hệ thống";
+    ViewData["Title"] = "Quản lý cấu hình hệ thống";
 }
 
 @section Css {
-	<link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
 }
 <div class="row">
     <div class="col-12">
@@ -51,9 +51,9 @@
                                 <input type="text" class="form-control" id="sendPassword" required>
                             </div>
                             @*<div class="col-md-4">
-                                <label for="sendDisplayName" class="editor-label">Tên hiển thị</label>
-                                <input type="text" class="form-control" id="sendDisplayName" required>
-                            </div>*@
+                                    <label for="sendDisplayName" class="editor-label">Tên hiển thị</label>
+                                    <input type="text" class="form-control" id="sendDisplayName" required>
+                                </div>*@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-6">
@@ -88,16 +88,16 @@
                                 <input type="text" class="form-control" id="toEmail" required>
                             </div>
                             @*<div class="col-md-6">
-                                <label for="toEmail" class="editor-label">Tên hiển thị</label>
-                                <input type="text" class="form-control" id="toName" required>
-                            </div>*@
+                                    <label for="toEmail" class="editor-label">Tên hiển thị</label>
+                                    <input type="text" class="form-control" id="toName" required>
+                                </div>*@
                         </div>
                         @*<div class="row form-group">
-                            <div class="col-12">
-                                <label for="toEmail" class="editor-label d-block">Thời gian tự động gửi (phút)<span class="red-text"> *</span></label>
-                                <input type="number" class="form-control" id="schedulerTime" required>
-                            </div>
-                        </div>*@
+                                <div class="col-12">
+                                    <label for="toEmail" class="editor-label d-block">Thời gian tự động gửi (phút)<span class="red-text"> *</span></label>
+                                    <input type="number" class="form-control" id="schedulerTime" required>
+                                </div>
+                            </div>*@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
                         </div>
@@ -105,13 +105,189 @@
                 </div>
             </div>
         </div>
+        <div class="card mt-2">
+            <div class="card-header">
+                <h4 class="card-title">Quản lý cấu hình Services</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard m-custom-group">
+                    <div class="row">
+                        <div class="col-12 m-custom-col search-group button-search d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#modalAdd">Thêm mới</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table class="table table-bordered m-table" id="dataGrid">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên hiển thị</th>
+                                <th>Cấp cha</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add-->
+<div class="modal fade text-left"
+     id="modalAdd"
+     role="dialog"
+     aria-labelledby="modalAddLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalAddLabel">
+                    Thêm mới Service
+                </h4>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="formServiceAdd">
+                    <div class="form-group">
+                        <label for="serviceNameAdd" class="editor-label">Tên hiển thị<span class="red-text"> *</span></label>
+                        <input type="text" class="form-control" id="serviceNameAdd" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceUrlAdd" class="editor-label">URL<span class="red-text"> *</span></label>
+                        <input type="text" class="form-control" id="serviceUrlAdd" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceLinhVucAdd" class="editor-label">Lĩnh vực kinh doanh<span class="red-text"> *</span></label>
+                        <input type="number" class="form-control" id="serviceLinhVucAdd" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceParentAdd" class="editor-label">Cấp cha</label>
+                        <select class="form-control" id="serviceParentAdd">
+                            <option value="0" selected>Chọn</option>
+                            <option value="-2">Du lịch</option>
+                            <option value="-3">Dịch vụ</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit-->
+<div class="modal fade text-left"
+     id="modalEdit"
+     role="dialog"
+     aria-labelledby="modalEditLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalEditLabel">
+                    Cập nhật Service
+                </h4>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="formServiceEdit">
+                    <input type="hidden" class="form-control" id="serviceIdEdit">
+                    <div class="form-group">
+                        <label for="serviceNameEdit" class="editor-label">Tên hiển thị<span class="red-text"> *</span></label>
+                        <input type="text" class="form-control" id="serviceNameEdit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceUrlEdit" class="editor-label">URL<span class="red-text"> *</span></label>
+                        <input type="text" class="form-control" id="serviceUrlEdit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceLinhVucEdit" class="editor-label">Lĩnh vực kinh doanh<span class="red-text"> *</span></label>
+                        <input type="number" class="form-control" id="serviceLinhVucEdit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceParentEdit" class="editor-label">Cấp cha</label>
+                        <select class="form-control" id="serviceParentEdit">
+                            <option value="0" selected>Chọn</option>
+                            <option value="-2">Du lịch</option>
+                            <option value="-3">Dịch vụ</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade text-left"
+     id="modalDelete"
+     role="dialog"
+     aria-labelledby="modalDeleteLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalDeleteLabel">
+                    Xóa Service
+                </h4>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="formServiceDelete">
+                    <input type="hidden" class="form-control" id="serviceIdDelete">
+                    <div class="form-group">
+                        Bạn có chắc chắn muốn xóa dữ liệu này?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary m-primary-color">Đồng ý</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <script>
-        $( document ).ready(function() {
+        $(document).ready(function () {
             $('#unitXQ').select2({
+                width: "100%",
+                language: "vi",
+                minimumResultsForSearch: -1
+            });
+
+            $('#serviceParentAdd').select2({
+                width: "100%",
+                language: "vi",
+                minimumResultsForSearch: -1
+            });
+
+            $('#serviceParentEdit').select2({
                 width: "100%",
                 language: "vi",
                 minimumResultsForSearch: -1
@@ -122,45 +298,45 @@
                 async: false,
                 url: '/api/Setting/danhsach',
                 success: function (data) {
-                    if(data) {
+                    if (data) {
                         data.forEach((el) => {
-                            if(el.id == 1) {
+                            if (el.id == 1) {
                                 $('#radiusMin').val(Number(el.giaTri));
-                            } 
-                            else if(el.id == 2) {
+                            }
+                            else if (el.id == 2) {
                                 $('#radiusMax').val(Number(el.giaTri));
                             }
-                            else if(el.id == 3) {
+                            else if (el.id == 3) {
                                 $('#unitXQ').val(el.giaTri).trigger('change');
                             }
-                            else if(el.id == 4) {
+                            else if (el.id == 4) {
                                 $('#sendEmail').val(el.giaTri);
                             }
-                            else if(el.id == 5) {
+                            else if (el.id == 5) {
                                 $('#sendPassword').val(el.giaTri);
                             }
-                            else if(el.id == 6) {
+                            else if (el.id == 6) {
                                 $('#sendDisplayName').val(el.giaTri);
                             }
-                            else if(el.id == 7) {
+                            else if (el.id == 7) {
                                 $('#toEmail').val(el.giaTri);
                             }
-                            else if(el.id == 8) {
+                            else if (el.id == 8) {
                                 $('#toName').val(el.giaTri);
                             }
-                            else if(el.id == 9) {
+                            else if (el.id == 9) {
                                 $('#schedulerTime').val(Number(el.giaTri));
                             }
-                            else if(el.id == 10) {
+                            else if (el.id == 10) {
                                 $('#sendHost').val(el.giaTri);
                             }
-                            else if(el.id == 11) {
+                            else if (el.id == 11) {
                                 $('#sendTitle').val(el.giaTri);
                             }
-                            else if(el.id == 12) {
+                            else if (el.id == 12) {
                                 $('#sendContent').val(el.giaTri);
                             }
-                            else if(el.id == 13) {
+                            else if (el.id == 13) {
                                 $('#sendPort').val(el.giaTri);
                             }
                         })
@@ -171,7 +347,7 @@
                 }
             });
 
-            $("#formAdd").submit(function(e) {
+            $("#formAdd").submit(function (e) {
                 e.preventDefault();
                 dataAdd();
             });
@@ -198,11 +374,11 @@
                 //let schedulerTime = $('#schedulerTime').val();
                 let schedulerTime = 45;
 
-                if (!checkEmptyBlank(sendEmail) && !checkEmptyBlank(sendPassword) && !checkEmptyBlank(sendDisplayName) && !checkEmptyBlank(toEmail) 
-                        && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0 && 
-                        !checkEmptyBlank(sendHost) && !checkEmptyBlank(sendPort) && !checkEmptyBlank(sendTitle) && !checkEmptyBlank(sendContent)) {
+                if (!checkEmptyBlank(sendEmail) && !checkEmptyBlank(sendPassword) && !checkEmptyBlank(sendDisplayName) && !checkEmptyBlank(toEmail)
+                    && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0 &&
+                    !checkEmptyBlank(sendHost) && !checkEmptyBlank(sendPort) && !checkEmptyBlank(sendTitle) && !checkEmptyBlank(sendContent)) {
 
-                    if(Number(radiusMin) >= Number(radiusMax)) {
+                    if (Number(radiusMin) >= Number(radiusMax)) {
                         alert('Giá trị Phạm vi tìm kiếm tối thiểu không thể lớn hơn hoặc bằng giá trị Phạm vi tìm kiếm tối đa')
                     }
                     else {
@@ -223,7 +399,7 @@
                         }
 
                         $.ajax({
-                            type: 'put',
+                            type: 'post',
                             async: false,
                             url: '/api/Setting/capnhat',
                             contentType: 'application/json; charset=utf-8',
@@ -242,17 +418,208 @@
                     alert('Thông tin bắt buộc không được để trống!')
                 }
             }
+
+            //SERVICES
+            $('#dataGrid').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    "paginate": {
+                        next: '<i class="ft-chevron-right paging-chevron">',
+                        previous: '<i class="ft-chevron-left paging-chevron">'
+                    }
+                },
+                "ajax": {
+                    url: "/api/Setting/sergets",
+                    type: "GET",
+                    dataSrc: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            data[i].stt = i + 1;
+                        }
+                        return data;
+                    },
+                },
+                "columnDefs": [
+                    {
+                        targets: 2,
+                        render: function (data, type, row, meta) {
+                            let res = '';
+                            if (data == "-2") {
+                                res = 'Du lịch'
+                            } else if (data == "-3") {
+                                res = 'Dịch vụ'
+                            }
+                            return res;
+                        }
+                    },
+                    {
+                        targets: 3,
+                        render: function (data, type, row, meta) {
+                            return `<i class="ft-edit edit-command-btn blue-text command-icon" id=n-"${meta.row}"></i>
+                                        <i class="ft-trash-2 delete-command-btn red-text command-icon" id=n-"${meta.row}"></i>`;
+                        }
+                    }
+                ],
+                "select": {
+                    style: 'multi'
+                },
+                "columns": [
+                    { "data": "stt", "width": "40px", "class": "stt-text center-align" },
+                    { "data": "name", "class": "left-align" },
+                    { "data": "parentID", "class": "left-align" },
+                    { "data": "id", "width": "110px", "class": "center-align" },
+                ]
+            });
+
+            $('#dataGrid tbody').on('click', '.delete-command-btn', function () {
+                var id = $(this).attr("ID").match(/\d+/)[0];
+                var data = $('#dataGrid').DataTable().row(id).data();
+
+                $('#serviceIdDelete').val(data.id);
+
+                $('#modalDelete').modal('show');
+            });
+
+            $('#dataGrid tbody').on('click', '.edit-command-btn', function () {
+                var id = $(this).attr("ID").match(/\d+/)[0];
+                var data = $('#dataGrid').DataTable().row(id).data();
+
+                $('#serviceIdEdit').val(data.id);
+                $('#serviceNameEdit').val(data.name);
+                $('#serviceUrlEdit').val(data.url);
+                $('#serviceLinhVucEdit').val(data.linhVucKinhDoanhId);
+                $('#serviceParentEdit').val(data.parentID).trigger('change');
+
+                $('#modalEdit').modal('show');
+            });
+
+            $("#formServiceAdd").submit(function (e) {
+                e.preventDefault();
+                dataServiceAdd();
+            });
+
+            function dataServiceAdd() {
+                let name = $('#serviceNameAdd').val();
+                let url = $('#serviceUrlAdd').val();
+                let linhVuc = $('#serviceLinhVucAdd').val();
+                let parentID = $('#serviceParentAdd').val();
+
+                if (!checkEmptyBlank(name) && !checkEmptyBlank(url) && !checkEmptyBlank(linhVuc)) {
+                    const data = {
+                        "name": name,
+                        "url": url,
+                        "linhVucKinhDoanhId": linhVuc,
+                        "parentID": parentID != "0" ? parentID : null,
+                    }
+
+                    $.ajax({
+                        type: 'post',
+                        async: false,
+                        url: '/api/Setting/seradd',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            alert('Thêm mới dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+                else {
+                    alert('Thông tin bắt buộc không được để trống!')
+                }
+            }
+
+            $("#formServiceEdit").submit(function (e) {
+                e.preventDefault();
+                dataServiceEdit();
+            });
+
+            function dataServiceEdit() {
+                let id = $('#serviceIdEdit').val();
+                let name = $('#serviceNameEdit').val();
+                let url = $('#serviceUrlEdit').val();
+                let linhVuc = $('#serviceLinhVucEdit').val();
+                let parentID = $('#serviceParentEdit').val();
+
+                if (!checkEmptyBlank(name) && !checkEmptyBlank(url) && !checkEmptyBlank(linhVuc)) {
+                    const data = {
+                        "id": Number(id),
+                        "name": name,
+                        "url": url,
+                        "linhVucKinhDoanhId": linhVuc,
+                        "parentID": parentID != "0" ? parentID : null,
+                    }
+
+                    console.log(data)
+
+                    $.ajax({
+                        type: 'post',
+                        async: false,
+                        url: '/api/Setting/seredit',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        success: function (data) {
+                            alert('Cập nhật dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+                else {
+                    alert('Thông tin bắt buộc không được để trống!')
+                }
+            }
+
+            $("#formServiceDelete").submit(function (e) {
+                e.preventDefault();
+                dataServiceDelete();
+            });
+
+            function dataServiceDelete() {
+                const id = $('#serviceIdDelete').val();
+
+                if (id) {
+                    $.ajax({
+                        type: 'post',
+                        async: false,
+                        url: '/api/Setting/serdelete/' + id,
+                        success: function (data) {
+                            alert('XoÁ dữ liệu thành công.');
+                            location.reload();
+                        },
+                        error: function (err) {
+                            alert('Lỗi.');
+                        }
+                    });
+                }
+            }
         });
 
         function checkEmptyBlank(str) {
-            if(str) {
+            if (str) {
                 if (str.trim().length === 0 || str == null) {
                     return true
                 }
             }
-            
+
             return false
         }
-        
+
     </script>
 }

@@ -25,7 +25,7 @@ namespace HueCitApp.Controllers
             _webHostEnvironment = hostingEnvironment;
         }
 
-        [HttpGet("danhsach")] 
+        [HttpGet("danhsach")]
         [AllowAnonymous]
         public async Task<IActionResult> SettingGets(CancellationToken ct)
         {
@@ -34,11 +34,47 @@ namespace HueCitApp.Controllers
             return HandlerResult(result);
         }
 
-        [HttpPut("capnhat")]
+        [HttpPost("capnhat")]
         [AllowAnonymous]
         public async Task<IActionResult> UserEdit(CancellationToken ct, [FromBody] SYS_SettingRequest request)
         {
             var result = await Mediator.Send(new SettingEdits.Command { Request = request }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpGet("sergets")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ServiceGets(CancellationToken ct)
+        {
+            var result = await Mediator.Send(new ServiceGets.Query { }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpPost("seradd")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ServiceAdd(CancellationToken ct, [FromBody] SYS_Services request)
+        {
+            var result = await Mediator.Send(new ServiceAdd.Command { Request = request }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpPost("seredit")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ServiceEdit(CancellationToken ct, [FromBody] SYS_Services request)
+        {
+            var result = await Mediator.Send(new ServiceEdit.Command { Request = request }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpPost("serdelete/{request}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ServiceDelete(CancellationToken ct, int request)
+        {
+            var result = await Mediator.Send(new ServiceDelete.Command { Request = request }, ct);
 
             return HandlerResult(result);
         }

@@ -466,7 +466,7 @@
                     }
 
                     $.ajax({
-                        type: 'put',
+                        type: 'post',
                         async: false,
                         url: '/api/User/nguoidungedit',
                         contentType: 'application/json; charset=utf-8',
@@ -499,7 +499,7 @@
 
                 if (id) {
                     $.ajax({
-                        type: 'delete',
+                        type: 'post',
                         async: false,
                         url: '/api/User/nguoidungdelete/' + id,
                         success: function (data) {

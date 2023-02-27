@@ -17,12 +17,9 @@ using Domain.HueCit;
 using Domain;
 using HueCitApp.DTOs;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
 {
@@ -85,7 +82,7 @@ namespace HueCitApp.Controllers
             }
         }
 
-        [HttpPut("nguoidungedit")]
+        [HttpPost("nguoidungedit")]
         [AllowAnonymous]
         public async Task<IActionResult> UserEdit(CancellationToken ct, [FromBody] SYS_User request)
         {
@@ -94,7 +91,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(result);
         }
 
-        [HttpDelete("nguoidungdelete/{request}")]
+        [HttpPost("nguoidungdelete/{request}")]
         [AllowAnonymous]
         public async Task<IActionResult> UserDelete(CancellationToken ct, int request)
         {
@@ -137,7 +134,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(result);
         }
 
-        [HttpPut("vaitroedit")]
+        [HttpPost("vaitroedit")]
         [AllowAnonymous]
         public async Task<IActionResult> RoleEdit(CancellationToken ct, [FromBody] SYS_Roles request)
         {
@@ -146,7 +143,7 @@ namespace HueCitApp.Controllers
             return HandlerResult(result);
         }
 
-        [HttpDelete("vaitrodelete/{request}")]
+        [HttpPost("vaitrodelete/{request}")]
         [AllowAnonymous]
         public async Task<IActionResult> RoleDelete(CancellationToken ct, int request)
         {
