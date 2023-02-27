@@ -41,24 +41,25 @@ namespace HueCitApp.Controllers
             _configuration = configuration;
         }
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Bando()
         {
-            var menu = HttpContext.Session.GetString("menuInfo");
-            if (menu != null && !(string.IsNullOrEmpty(menu)))
-            {
-                if (menu.Contains('1'))
-                {
-                    return View("GisMap");
-                }
-            }
-            return RedirectToAction("Index", "Home");
+            //var menu = HttpContext.Session.GetString("menuInfo");
+            //if (menu != null && !(string.IsNullOrEmpty(menu)))
+            //{
+            //    if (menu.Contains('1'))
+            //    {
+            //        return View("GisMap");
+            //    }
+            //}
+            //return RedirectToAction("Index", "Home");
+            return View("GisMap");
         }
 
         [Authorize]

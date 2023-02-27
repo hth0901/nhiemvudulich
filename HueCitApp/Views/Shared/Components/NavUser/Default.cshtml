@@ -1,13 +1,5 @@
 ﻿@model HueCitApp.ViewModels.NavUserViewModel;
 
-@if (Model.menuinfo.Contains('1'))
-{
-    <li class="nav-item">
-        <a asp-area="" asp-controller="Home" asp-action="Bando">
-            <i class="ft-map"></i><span class="menu-title" data-i18n="">Bản đồ du lịch - dịch vụ</span>
-        </a>
-    </li>
-}
 @if (Model.menuinfo.Contains('2') || Model.menuinfo.Contains('3') || Model.menuinfo.Contains('4') || Model.menuinfo.Contains('5'))
 {
     <li class="nav-item">

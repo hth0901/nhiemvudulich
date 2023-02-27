@@ -386,9 +386,23 @@
         //}
 
         $(document).ready(function () {
+            function getInitPhanAnh() {
+                fetch(`/api/ThongKe/phananhientruongtong/-1`)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('tongSoPhanAnh').innerText = numberWithCommas(data.Tong);
+                        document.getElementById('paDaXuLy').innerText = numberWithCommas(data.DaXuLy);
+                        document.getElementById('paChoXuLy').innerText = numberWithCommas(data.ChuaXuLy);
+                        return fetch(`/api/ThongKe/phananhientruong/-1`)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        mChart.option("dataSource", data);
+                    })
+            }
             const currentYear = (new Date()).getFullYear();
             for (i = 0; i <= 4; i++) {
-                document.getElementById('paSelectYear').insertAdjacentHTML('beforeend', `<option value='${currentYear - i}' ${i === 0 ? 'selected' : ''}>${currentYear - i}</option>`)
+                document.getElementById('paSelectYear').insertAdjacentHTML('beforeend', `<option value='${currentYear - i}' ${i === 0 ? '' : ''}>${currentYear - i}</option>`)
             }
             document.getElementById('paSelectYear').addEventListener('change', evt => {
                 evt.target.disabled = true;
@@ -408,6 +422,7 @@
                         evt.target.disabled = false;
                     })
             })
+            
             const mChart = $('#column-chart').dxChart({
                 dataSource: [],
                 customizeLabel() {
@@ -467,6 +482,7 @@
                     nameField: 'Ten',
                 },
             }).dxChart("instance");
+
 
             const chartHuongDanVienTheoNgonNgu = $('#huongdanvien').dxChart({
                 dataSource: [],
@@ -719,7 +735,7 @@
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    //console.log(data);
                     khachsan_theoloaiphong.option("dataSource", data);
                 })
                 .catch(err => {
@@ -751,7 +767,7 @@
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data)
+                    //console.log(data)
                     huongDanVienTheoSoLuongNgonNgu.option("dataSource", data);
                 })
                 .catch(err => {
@@ -952,6 +968,8 @@
                 .catch(err => {
                     console.error(err);
                 })
+
+                getInitPhanAnh()
         });
     </script>
 }

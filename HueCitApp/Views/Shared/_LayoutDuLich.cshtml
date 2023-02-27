@@ -167,16 +167,14 @@
                                 <span class="user-name" id="txtCurrentTime">Thứ sáu, 20/10/2022, 08:00</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="javascript:void(0)" style="padding: 0.9rem 0.6rem">
+                        @*<li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)" style="padding: 0.9rem 0.6rem">
                                 <span class="avatar avatar-online">
-                                    <img src="~/template-asset/app-assets/images/portrait/weather_05.png"
-                                         alt="avatar" /><i></i>
+                                    <img src="~/template-asset/app-assets/images/portrait/weather_05.png" alt="avatar" /><i></i>
                                 </span>
                                 <span class="user-name">35°C</span>
                             </a>
-                        </li>
+                        </li>*@
                         @await Component.InvokeAsync("DropdownUser")
                     </ul>
                 </div>
@@ -198,6 +196,11 @@
                         <i class="ft-home"></i><span class="menu-title" data-i18n="">Trang chủ</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="Bando">
+                                <i class="ft-map"></i><span class="menu-title" data-i18n="">Bản đồ du lịch - dịch vụ</span>
+                            </a>
+                        </li>
                 @await Component.InvokeAsync("NavUser")
                 @*@{string menu = HttpContextAccessor.HttpContext.Session.GetString("menuInfo");}
                 @if (menu != null && !(string.IsNullOrEmpty(menu)))
