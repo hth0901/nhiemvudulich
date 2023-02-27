@@ -117,6 +117,10 @@ namespace HueCitApp.Controllers
                 {
                     connection.Open();
                     var result = await connection.QueryFirstOrDefaultAsync<AqiHienTaiResponse>("SP_QUANTRACMOITRUONG_AQI_HIENTAI", param: null, commandType: System.Data.CommandType.StoredProcedure);
+                    if (result == null)
+                    {
+                        throw new Exception("Không tìm thấy dữ liệu");
+                    }
                     return Ok(result);
                 }
             }

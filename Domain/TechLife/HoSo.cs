@@ -30,6 +30,8 @@ namespace Domain.TechLife
         public string DuongPho { get; set; }
         public int? PhuongXaId { get; set; }
         public int QuanHuyenId{get;set; }
+        public string CapXa { get; set; }
+        public string CapHuyen { get; set; }
         public int? TinhThanhId { get;set; }
         public string SoDienThoai { get; set; }
         public string Fax { get; set; }
@@ -84,7 +86,23 @@ namespace Domain.TechLife
         public int? NguonDongBo { get; set; }
         public int? DongBoID { get; set; }
 
+        public List<FileUploadModel> Images { get; set; }
+    }
 
+    public class FileUploadModel
+    {
+        public int FileId { get; set; }
+        public string FileName { get; set; }
+        public string FileUrl { get; set; }
+        public string Type { get; set; }
+        public DateTime? NgayTao { get; set; }
+        public int Id { get; set; }
+        public bool IsImage { get; set; }
+        public bool IsStatus { get; set; }
+        //HueCIT
+        public int? FileType { get; set; }
+        public int? NguonDongBo { get; set; }
+        public string MoTa { get; set; }
     }
 
     public class HoSoFilter

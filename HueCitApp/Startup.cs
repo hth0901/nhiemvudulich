@@ -127,7 +127,7 @@ namespace HueCitApp
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromDays(30);
             });
 
 

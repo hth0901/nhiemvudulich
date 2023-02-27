@@ -78,5 +78,13 @@ namespace HueCitApp.Controllers
             return HandlerResult(Result<DanhSach<DiemGiaoDichItemResponse>>.Success(result));
         }
 
+        [HttpGet("get/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DiemGiaoDichGet(CancellationToken ct, int id)
+        {
+            var listResult = await Mediator.Send(new DiemGiaoDichGet.Query { ID = id }, ct);
+            
+            return HandlerResult(listResult);
+        }
     }
 }

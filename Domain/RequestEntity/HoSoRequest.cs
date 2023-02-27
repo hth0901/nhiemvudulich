@@ -15,4 +15,10 @@ namespace Domain.RequestEntity
         public string TienNghi { get; set; }
         public string LoaiPhong { get; set; }
     }
+
+    public class HoSoGetRequest
+    {
+        public int LinhVuc { get; set; }
+        public int Id { get; set; }
+    }
 }

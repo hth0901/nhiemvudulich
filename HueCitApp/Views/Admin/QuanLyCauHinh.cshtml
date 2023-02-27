@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Quản lý cấu hình hệ thống";
+	ViewData["Title"] = "Quản lý cấu hình hệ thống";
 }
 
 @section Css {
-    <link rel="stylesheet" href="~/css/style.css" />
+	<link rel="stylesheet" href="~/css/style.css" />
 }
 <div class="row">
     <div class="col-12">
@@ -51,9 +51,9 @@
                                 <input type="text" class="form-control" id="sendPassword" required>
                             </div>
                             @*<div class="col-md-4">
-                                    <label for="sendDisplayName" class="editor-label">Tên hiển thị</label>
-                                    <input type="text" class="form-control" id="sendDisplayName" required>
-                                </div>*@
+                                <label for="sendDisplayName" class="editor-label">Tên hiển thị</label>
+                                <input type="text" class="form-control" id="sendDisplayName" required>
+                            </div>*@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-6">
@@ -88,16 +88,16 @@
                                 <input type="text" class="form-control" id="toEmail" required>
                             </div>
                             @*<div class="col-md-6">
-                                    <label for="toEmail" class="editor-label">Tên hiển thị</label>
-                                    <input type="text" class="form-control" id="toName" required>
-                                </div>*@
+                                <label for="toEmail" class="editor-label">Tên hiển thị</label>
+                                <input type="text" class="form-control" id="toName" required>
+                            </div>*@
                         </div>
                         @*<div class="row form-group">
-                                <div class="col-12">
-                                    <label for="toEmail" class="editor-label d-block">Thời gian tự động gửi (phút)<span class="red-text"> *</span></label>
-                                    <input type="number" class="form-control" id="schedulerTime" required>
-                                </div>
-                            </div>*@
+                            <div class="col-12">
+                                <label for="toEmail" class="editor-label d-block">Thời gian tự động gửi (phút)<span class="red-text"> *</span></label>
+                                <input type="number" class="form-control" id="schedulerTime" required>
+                            </div>
+                        </div>*@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary m-primary-color">Lưu</button>
                         </div>
@@ -135,21 +135,25 @@
 </div>
 
 <!-- Modal Add-->
-<div class="modal fade text-left"
-     id="modalAdd"
-     role="dialog"
-     aria-labelledby="modalAddLabel"
-     aria-hidden="true">
+<div
+    class="modal fade text-left"
+    id="modalAdd"
+    role="dialog"
+    aria-labelledby="modalAddLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalAddLabel">
                     Thêm mới Service
                 </h4>
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -186,21 +190,25 @@
 </div>
 
 <!-- Modal Edit-->
-<div class="modal fade text-left"
-     id="modalEdit"
-     role="dialog"
-     aria-labelledby="modalEditLabel"
-     aria-hidden="true">
+<div
+    class="modal fade text-left"
+    id="modalEdit"
+    role="dialog"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalEditLabel">
                     Cập nhật Service
                 </h4>
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -238,21 +246,25 @@
 </div>
 
 <!-- Modal Delete-->
-<div class="modal fade text-left"
-     id="modalDelete"
-     role="dialog"
-     aria-labelledby="modalDeleteLabel"
-     aria-hidden="true">
+<div
+    class="modal fade text-left"
+    id="modalDelete"
+    role="dialog"
+    aria-labelledby="modalDeleteLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalDeleteLabel">
                     Xóa Service
                 </h4>
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -274,7 +286,7 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
+        $( document ).ready(function() {
             $('#unitXQ').select2({
                 width: "100%",
                 language: "vi",
@@ -298,45 +310,45 @@
                 async: false,
                 url: '/api/Setting/danhsach',
                 success: function (data) {
-                    if (data) {
+                    if(data) {
                         data.forEach((el) => {
-                            if (el.id == 1) {
+                            if(el.id == 1) {
                                 $('#radiusMin').val(Number(el.giaTri));
-                            }
-                            else if (el.id == 2) {
+                            } 
+                            else if(el.id == 2) {
                                 $('#radiusMax').val(Number(el.giaTri));
                             }
-                            else if (el.id == 3) {
+                            else if(el.id == 3) {
                                 $('#unitXQ').val(el.giaTri).trigger('change');
                             }
-                            else if (el.id == 4) {
+                            else if(el.id == 4) {
                                 $('#sendEmail').val(el.giaTri);
                             }
-                            else if (el.id == 5) {
+                            else if(el.id == 5) {
                                 $('#sendPassword').val(el.giaTri);
                             }
-                            else if (el.id == 6) {
+                            else if(el.id == 6) {
                                 $('#sendDisplayName').val(el.giaTri);
                             }
-                            else if (el.id == 7) {
+                            else if(el.id == 7) {
                                 $('#toEmail').val(el.giaTri);
                             }
-                            else if (el.id == 8) {
+                            else if(el.id == 8) {
                                 $('#toName').val(el.giaTri);
                             }
-                            else if (el.id == 9) {
+                            else if(el.id == 9) {
                                 $('#schedulerTime').val(Number(el.giaTri));
                             }
-                            else if (el.id == 10) {
+                            else if(el.id == 10) {
                                 $('#sendHost').val(el.giaTri);
                             }
-                            else if (el.id == 11) {
+                            else if(el.id == 11) {
                                 $('#sendTitle').val(el.giaTri);
                             }
-                            else if (el.id == 12) {
+                            else if(el.id == 12) {
                                 $('#sendContent').val(el.giaTri);
                             }
-                            else if (el.id == 13) {
+                            else if(el.id == 13) {
                                 $('#sendPort').val(el.giaTri);
                             }
                         })
@@ -347,7 +359,7 @@
                 }
             });
 
-            $("#formAdd").submit(function (e) {
+            $("#formAdd").submit(function(e) {
                 e.preventDefault();
                 dataAdd();
             });
@@ -374,11 +386,11 @@
                 //let schedulerTime = $('#schedulerTime').val();
                 let schedulerTime = 45;
 
-                if (!checkEmptyBlank(sendEmail) && !checkEmptyBlank(sendPassword) && !checkEmptyBlank(sendDisplayName) && !checkEmptyBlank(toEmail)
-                    && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0 &&
-                    !checkEmptyBlank(sendHost) && !checkEmptyBlank(sendPort) && !checkEmptyBlank(sendTitle) && !checkEmptyBlank(sendContent)) {
+                if (!checkEmptyBlank(sendEmail) && !checkEmptyBlank(sendPassword) && !checkEmptyBlank(sendDisplayName) && !checkEmptyBlank(toEmail) 
+                        && Number(radiusMin) > 0 && Number(radiusMax) > 0 && Number(schedulerTime) > 0 && 
+                        !checkEmptyBlank(sendHost) && !checkEmptyBlank(sendPort) && !checkEmptyBlank(sendTitle) && !checkEmptyBlank(sendContent)) {
 
-                    if (Number(radiusMin) >= Number(radiusMax)) {
+                    if(Number(radiusMin) >= Number(radiusMax)) {
                         alert('Giá trị Phạm vi tìm kiếm tối thiểu không thể lớn hơn hoặc bằng giá trị Phạm vi tìm kiếm tối đa')
                     }
                     else {
@@ -455,9 +467,9 @@
                         targets: 2,
                         render: function (data, type, row, meta) {
                             let res = '';
-                            if (data == "-2") {
+                            if(data == "-2") {
                                 res = 'Du lịch'
-                            } else if (data == "-3") {
+                            } else if(data == "-3") {
                                 res = 'Dịch vụ'
                             }
                             return res;
@@ -467,7 +479,7 @@
                         targets: 3,
                         render: function (data, type, row, meta) {
                             return `<i class="ft-edit edit-command-btn blue-text command-icon" id=n-"${meta.row}"></i>
-                                        <i class="ft-trash-2 delete-command-btn red-text command-icon" id=n-"${meta.row}"></i>`;
+                                    <i class="ft-trash-2 delete-command-btn red-text command-icon" id=n-"${meta.row}"></i>`;
                         }
                     }
                 ],
@@ -504,7 +516,7 @@
                 $('#modalEdit').modal('show');
             });
 
-            $("#formServiceAdd").submit(function (e) {
+            $("#formServiceAdd").submit(function(e) {
                 e.preventDefault();
                 dataServiceAdd();
             });
@@ -543,7 +555,7 @@
                 }
             }
 
-            $("#formServiceEdit").submit(function (e) {
+            $("#formServiceEdit").submit(function(e) {
                 e.preventDefault();
                 dataServiceEdit();
             });
@@ -586,7 +598,7 @@
                 }
             }
 
-            $("#formServiceDelete").submit(function (e) {
+            $("#formServiceDelete").submit(function(e) {
                 e.preventDefault();
                 dataServiceDelete();
             });
@@ -612,14 +624,14 @@
         });
 
         function checkEmptyBlank(str) {
-            if (str) {
+            if(str) {
                 if (str.trim().length === 0 || str == null) {
                     return true
                 }
             }
-
+            
             return false
         }
-
+        
     </script>
 }

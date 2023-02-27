@@ -56,6 +56,15 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
+
+        [HttpGet("get/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DiemVeSinhGet(CancellationToken ct, int id)
+        {
+            var listResult = await Mediator.Send(new DiemVeSinhGet.Query { ID = id }, ct);
+
+            return HandlerResult(listResult);
+        }
     }
 }
 

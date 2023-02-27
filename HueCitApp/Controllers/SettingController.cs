@@ -25,7 +25,7 @@ namespace HueCitApp.Controllers
             _webHostEnvironment = hostingEnvironment;
         }
 
-        [HttpGet("danhsach")]
+        [HttpGet("danhsach")] 
         [AllowAnonymous]
         public async Task<IActionResult> SettingGets(CancellationToken ct)
         {

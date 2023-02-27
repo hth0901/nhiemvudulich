@@ -44,4 +44,22 @@ namespace Domain.HueCit
         public string UserName { get; set; }
         public string Password { get; set; }
     }
+    public class Info_User_LoginSSO
+    {
+        public string Success { get; set; }
+        public string Token { get; set; }
+        public string RefreshToken { get; set; }
+        public string Message { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string CellPhone { get; set; }
+        public string Address { get; set; }
+        public string OwnerCode { get; set; }
+        public Boolean Gender { get; set; }
+        public string Avatar { get; set; }
+        public Boolean Verifyed { get; set; }
+        public string IdentifierCode { get; set; }
+        public int ErrCode { get; set; }
+    }
+
 }

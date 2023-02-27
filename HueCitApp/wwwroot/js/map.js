@@ -5,6 +5,7 @@ let graphicsLayer = null;
 let currentLayerSearch = null;
 
 const ROOTHOST = "https://tuongtac.thuathienhue.gov.vn/phan-anh/";
+const BASEFILEAPIURL = "http://apicsdldl.huecit.com";
 
 const linhVucData = [
     {
@@ -355,11 +356,25 @@ function returnDisplayUnit(u) {
     return "(m)";
 }
 
+let arrLayerAdd = [];
+
 let radiusMin = 5;
 let radiusMax = 5000;
 let settingUnit = 'meters';
 
 $(document).ready(function () {
+    $('.owl-carousel').owlCarousel({
+        items: 1,
+        loop: false,
+        //autoplay: false,
+        //autoplayTimeout: 5000,
+        //autoplayHoverPause: false,
+        margin: 0,
+        nav: true,
+        navText: ["<i class='icon icon-prev'></i>", "<i class='icon icon-next'></i>"],
+        dots: false
+    });
+
     $(".select2").select2({
         width: '100%',
     });
@@ -504,18 +519,24 @@ $(document).ready(function () {
                 className: "esri-icon-directions",
                 type: "button",
             },
-            //{
-            //    title: "Hình ảnh",
-            //    id: "images",
-            //    className: "esri-icon-media",
-            //    type: "button",
-            //},
             {
                 title: "Phản ánh",
                 id: "phananh",
                 className: "esri-icon-documentation",
                 type: "button",
             },
+            {
+                title: "Chi tiết",
+                id: "detailThis",
+                className: "esri-icon-link",
+                type: "button",
+            },
+            //{
+            //    title: "Hình ảnh",
+            //    id: "images",
+            //    className: "esri-icon-media",
+            //    type: "button",
+            //},
         ];
 
         //LuuTru
@@ -639,44 +660,44 @@ $(document).ready(function () {
         });
 
         //CoSoAnUong - NhaHang
-        const layer_3 = new FeatureLayer({
-            url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDuLich_HueCIT/DuLich_DichVu/FeatureServer/3",
-            id: "03",
-            outFields: ["*"],
-            popupEnabled: true,
-            popupTemplate: {
-                title: '{ten}',
-                content: [
-                    {
-                        "type": "fields",
-                        "fieldInfos": [
-                            {
-                                "fieldName": "ten",
-                                "label": "Tên",
-                                "visible": true,
-                                "stringFieldOption": "text-box"
-                            },
-                            {
-                                "fieldName": "sonha",
-                                "label": "Địa chỉ",
-                                "visible": true,
-                                "stringFieldOption": "text-box"
-                            },
-                            {
-                                "fieldName": "sodienthoa",
-                                "label": "Số điện thoại",
-                                "visible": true,
-                                "stringFieldOption": "text-box"
-                            }
-                        ]
-                    }
-                ],
-                actions: ACTIONFEATURE,
-            },
-            spatialReference: new SpatialReference({
-                wkt: MAP_SR
-            })
-        });
+        //const layer_3 = new FeatureLayer({
+        //    url: "https://gishue.thuathienhue.gov.vn/server/rest/services/BanDoDuLich_HueCIT/DuLich_DichVu/FeatureServer/3",
+        //    id: "03",
+        //    outFields: ["*"],
+        //    popupEnabled: true,
+        //    popupTemplate: {
+        //        title: '{ten}',
+        //        content: [
+        //            {
+        //                "type": "fields",
+        //                "fieldInfos": [
+        //                    {
+        //                        "fieldName": "ten",
+        //                        "label": "Tên",
+        //                        "visible": true,
+        //                        "stringFieldOption": "text-box"
+        //                    },
+        //                    {
+        //                        "fieldName": "sonha",
+        //                        "label": "Địa chỉ",
+        //                        "visible": true,
+        //                        "stringFieldOption": "text-box"
+        //                    },
+        //                    {
+        //                        "fieldName": "sodienthoa",
+        //                        "label": "Số điện thoại",
+        //                        "visible": true,
+        //                        "stringFieldOption": "text-box"
+        //                    }
+        //                ]
+        //            }
+        //        ],
+        //        actions: ACTIONFEATURE,
+        //    },
+        //    spatialReference: new SpatialReference({
+        //        wkt: MAP_SR
+        //    })
+        //});
 
         //DiemDuLich
         const layer_4 = new FeatureLayer({
@@ -1085,12 +1106,245 @@ $(document).ready(function () {
             })
         });
 
+        let arrLayer = [layer_0, layer_1, layer_2, layer_4, layer_5, layer_6, layer_7, layer_8, layer_9, layer_10, layer_11, layer_12, layer_13];
+
+        let groupData = [
+            {
+                id: 1,
+                fid: "-1",
+                text: "Điểm du lịch",
+                child: [
+                    {
+                        id: 1,
+                        fid: "1_1",
+                        lid: "04",
+                        tid: "561",
+                        text: "Văn hóa",
+                    },
+                    {
+                        id: 2,
+                        fid: "1_2",
+                        lid: "04",
+                        tid: "562",
+                        text: "Làng nghề truyền thống",
+                    },
+                    {
+                        id: 3,
+                        fid: "1_3",
+                        lid: "04",
+                        tid: "563",
+                        text: "Thiên nhiên - Khám phá",
+                    },
+                    {
+                        id: 4,
+                        fid: "1_4",
+                        lid: "04",
+                        tid: "564",
+                        text: "Tâm linh",
+                    },
+                    {
+                        id: 5,
+                        fid: "1_5",
+                        lid: "04",
+                        tid: "565",
+                        text: "Lịch sử",
+                    },
+                ]
+            },
+            {
+                id: 2,
+                fid: "-2",
+                text: "Du lịch",
+                child: [
+                    {
+                        id: 1,
+                        fid: "2_1",
+                        lid: "00",
+                        text: "Lưu trú",
+                    },
+                    {
+                        id: 2,
+                        fid: "2_2",
+                        lid: "01",
+                        text: "Lữ hành",
+                    },
+                ]
+            },
+            {
+                id: 3,
+                fid: "-3",
+                text: "Dịch vụ",
+                child: [
+                    //{
+                    //    id: 1,
+                    //    fid: "3_1",
+                    //    lid: "03",
+                    //    text: "Nhà hàng",
+                    //},
+                    {
+                        id: 2,
+                        fid: "3_2",
+                        lid: "02",
+                        text: "Mua sắm",
+                    },
+                    {
+                        id: 3,
+                        fid: "3_3",
+                        lid: "05",
+                        text: "Vui chơi giải trí",
+                    },
+                    {
+                        id: 4,
+                        fid: "3_4",
+                        lid: "06",
+                        text: "Chăm sóc sức khỏe",
+                    },
+                    {
+                        id: 5,
+                        fid: "3_5",
+                        lid: "07",
+                        text: "Thể thao",
+                    },
+                    {
+                        id: 6,
+                        fid: "3_6",
+                        lid: "08",
+                        text: "Vận chuyển",
+                    },
+                    {
+                        id: 7,
+                        fid: "3_7",
+                        lid: "11",
+                        text: "Vệ sinh công cộng",
+                    },
+                ]
+            },
+            {
+                id: 4,
+                fid: "4",
+                lid: "12",
+                text: "Lễ hội",
+                child: []
+            },
+            {
+                id: 5,
+                fid: "5",
+                lid: "13",
+                text: "Phản ánh hiện trường",
+                child: []
+            },
+        ];
+
+        let sftd = 6;
+
+        $.ajax({
+            type: 'get',
+            async: false,
+            url: '/api/Setting/sergets',
+            success: function (data) {
+                if (data && data.length > 0) {
+                    data.forEach((el) => {
+                        let layer = new FeatureLayer({
+                            url: `${el.url}`,
+                            id: `01A${el.id}`,
+                            outFields: ["*"],
+                            popupEnabled: true,
+                            popupTemplate: {
+                                title: '{ten}',
+                                content: [
+                                    {
+                                        "type": "fields",
+                                        "fieldInfos": [
+                                            {
+                                                "fieldName": "ten",
+                                                "label": "Tên",
+                                                "visible": true,
+                                                "stringFieldOption": "text-box"
+                                            },
+                                            {
+                                                "fieldName": "sonha",
+                                                "label": "Địa chỉ",
+                                                "visible": true,
+                                                "stringFieldOption": "text-box"
+                                            },
+                                            {
+                                                "fieldName": "sodienthoa",
+                                                "label": "Số điện thoại",
+                                                "visible": true,
+                                                "stringFieldOption": "text-box"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                actions: ACTIONFEATURE,
+                            },
+                            spatialReference: new SpatialReference({
+                                wkt: MAP_SR
+                            })
+                        });
+
+                        let it = {
+                            id: `01A${el.id}`,
+                            parent: `${el.parentID}`,
+                            text: `${el.name}`,
+                            linhVucKinhDoanhId: el.linhVucKinhDoanhId
+                        }
+
+                        arrLayerAdd.push(it)
+                        arrLayer.push(layer)
+
+                        let temp = 100 + Number(el.id);
+                        let tempLayerId = `01A${el.id}`;
+                        let tempLID = tempLayerId;
+                        if (el.parentID == "-2") {
+                            tempLID = `2_${tempLayerId}`
+                        } else if (el.parentID == "-3") {
+                            tempLID = `3_${tempLayerId}`
+                        }
+
+                        if (el.parentID) {
+                            let gr = {
+                                id: temp,
+                                fid: `${tempLID}`,
+                                lid: `01A${el.id}`,
+                                text: `${el.name}`,
+                            }
+
+                            const tpa = groupData.find(x => x.fid == el.parentID);
+                            if (tpa) {
+                                tpa.child.push(gr)
+                            }
+                        }
+                        else {
+                            let gr = {
+                                id: sftd,
+                                fid: `${sftd}`,
+                                lid: `01A${el.id}`,
+                                text: `${el.name}`,
+                                child: []
+                            }
+
+                            groupData.push(gr)
+                        }
+
+                        sftd++;
+
+                    });
+                }
+            },
+            error: function (err) {
+                alert('Lỗi.');
+            }
+        });
+
         //Layer Group
 
         const map = new Map({
             basemap: 'arcgis-topographic',
-            layers: [layer_0, layer_1, layer_2, layer_3, layer_4, layer_5, layer_6, layer_7, layer_8, layer_9, layer_10, layer_11, layer_12, layer_13],
+            //layers: [layer_0, layer_1, layer_2, layer_3, layer_4, layer_5, layer_6, layer_7, layer_8, layer_9, layer_10, layer_11, layer_12, layer_13],
         });
+
+        map.addMany(arrLayer);
 
         graphicsLayer = new GraphicsLayer();
         map.add(graphicsLayer);
@@ -1110,6 +1364,7 @@ $(document).ready(function () {
             },
         });
 
+        //Router Popup
         const routerPopup = new Popup({
             view: view,
             content: "",
@@ -1124,136 +1379,28 @@ $(document).ready(function () {
             position: "top-left"
         });
 
+        //Detail popup
+        const detailPopup = new Popup({
+            view: view,
+            content: "",
+            actions: [],
+            title: '',
+            dockOptions: {
+                buttonEnabled: false
+            }
+            /*container: detailCont*/
+        });
+
+        detailPopup.viewModel.includeDefaultActions = false;
+
+        view.ui.add(detailPopup, {
+            position: "bottom-left"
+        });
+
         const myInterval = setInterval(function () {
             if (map.allLayers.items.some(el => el.type === 'feature')) {
                 clearInterval(myInterval);
-                const groupData = [
-                    {
-                        id: 1,
-                        fid: "1",
-                        text: "Điểm du lịch",
-                        child: [
-                            {
-                                id: 1,
-                                fid: "1_1",
-                                lid: "04",
-                                tid: "561",
-                                text: "Văn hóa",
-                            },
-                            {
-                                id: 2,
-                                fid: "1_2",
-                                lid: "04",
-                                tid: "562",
-                                text: "Làng nghề truyền thống",
-                            },
-                            {
-                                id: 3,
-                                fid: "1_3",
-                                lid: "04",
-                                tid: "563",
-                                text: "Thiên nhiên - Khám phá",
-                            },
-                            {
-                                id: 4,
-                                fid: "1_4",
-                                lid: "04",
-                                tid: "564",
-                                text: "Tâm linh",
-                            },
-                            {
-                                id: 5,
-                                fid: "1_5",
-                                lid: "04",
-                                tid: "565",
-                                text: "Lịch sử",
-                            },
-                        ]
-                    },
-                    {
-                        id: 2,
-                        fid: "2",
-                        text: "Du lịch",
-                        child: [
-                            {
-                                id: 1,
-                                fid: "2_1",
-                                lid: "00",
-                                text: "Lưu trú",
-                            },
-                            {
-                                id: 2,
-                                fid: "2_2",
-                                lid: "01",
-                                text: "Lữ hành",
-                            },
-                        ]
-                    },
-                    {
-                        id: 3,
-                        fid: "3",
-                        text: "Dịch vụ",
-                        child: [
-                            {
-                                id: 1,
-                                fid: "3_1",
-                                lid: "03",
-                                text: "Nhà hàng",
-                            },
-                            {
-                                id: 2,
-                                fid: "3_2",
-                                lid: "02",
-                                text: "Mua sắm",
-                            },
-                            {
-                                id: 3,
-                                fid: "3_3",
-                                lid: "05",
-                                text: "Vui chơi giải trí",
-                            },
-                            {
-                                id: 4,
-                                fid: "3_4",
-                                lid: "06",
-                                text: "Chăm sóc sức khỏe",
-                            },
-                            {
-                                id: 5,
-                                fid: "3_5",
-                                lid: "07",
-                                text: "Thể thao",
-                            },
-                            {
-                                id: 6,
-                                fid: "3_6",
-                                lid: "08",
-                                text: "Vận chuyển",
-                            },
-                            {
-                                id: 7,
-                                fid: "3_7",
-                                lid: "11",
-                                text: "Vệ sinh công cộng",
-                            },
-                        ]
-                    },
-                    {
-                        id: 4,
-                        fid: "4",
-                        lid: "12",
-                        text: "Lễ hội",
-                        child: []
-                    },
-                    {
-                        id: 5,
-                        fid: "5",
-                        lid: "13",
-                        text: "Phản ánh hiện trường",
-                        child: []
-                    },
-                ];
-
+                
                 groupData.forEach((el) => {
                     $('#filter-lv-slt').append(
                         `<option value="${el.id}">${el.text}</option>`
@@ -1583,6 +1730,10 @@ $(document).ready(function () {
                         if (!($('#pa-slider').hasClass('toggle-display'))) {
                             $('#pa-slider').addClass('toggle-display')
                         }
+
+                        if (!($('#chitiet-slider').hasClass('toggle-display'))) {
+                            $('#chitiet-slider').addClass('toggle-display')
+                        }
                     });
                     view.ui.add(element, "top-right");
 
@@ -1602,6 +1753,10 @@ $(document).ready(function () {
 
                         if (!($('#pa-slider').hasClass('toggle-display'))) {
                             $('#pa-slider').addClass('toggle-display')
+                        }
+
+                        if (!($('#chitiet-slider').hasClass('toggle-display'))) {
+                            $('#chitiet-slider').addClass('toggle-display')
                         }
                     });
                     view.ui.add(eleFilter, "top-right");
@@ -1753,7 +1908,6 @@ $(document).ready(function () {
                                                         routerFlag = false;
                                                     })
                                                     .catch(er => {
-                                                        console.log(er)
                                                         routerFlag = false;
                                                     })
                                             })
@@ -1896,7 +2050,6 @@ $(document).ready(function () {
                                                                     routerFlag = false;
                                                                 })
                                                                 .catch(er => {
-                                                                    console.log(er)
                                                                     routerFlag = false;
                                                                 })
                                                         })
@@ -1973,11 +2126,23 @@ $(document).ready(function () {
                                             if (found && found.visible == false) {
                                                 setTreeCheck("13")
                                             }
-                                            
+
                                             phanAnhFlag = false;
 
                                             if (!($('.map-sidebar').hasClass('toggle-display'))) {
                                                 $('.map-sidebar').addClass('toggle-display')
+                                            }
+
+                                            if (!($('#filter-slider').hasClass('toggle-display'))) {
+                                                $('#filter-slider').addClass('toggle-display')
+                                            }
+
+                                            if (!($('#pa-slider').hasClass('toggle-display'))) {
+                                                $('#pa-slider').addClass('toggle-display')
+                                            }
+
+                                            if (!($('#chitiet-slider').hasClass('toggle-display'))) {
+                                                $('#chitiet-slider').addClass('toggle-display')
                                             }
 
                                             if (($('#result-slider').hasClass('toggle-display'))) {
@@ -2023,6 +2188,18 @@ $(document).ready(function () {
                                         $('.map-sidebar').addClass('toggle-display')
                                     }
 
+                                    if (!($('#filter-slider').hasClass('toggle-display'))) {
+                                        $('#filter-slider').addClass('toggle-display')
+                                    }
+
+                                    if (!($('#pa-slider').hasClass('toggle-display'))) {
+                                        $('#pa-slider').addClass('toggle-display')
+                                    }
+
+                                    if (!($('#chitiet-slider').hasClass('toggle-display'))) {
+                                        $('#chitiet-slider').addClass('toggle-display')
+                                    }
+
                                     if (($('#result-slider').hasClass('toggle-display'))) {
                                         $('#result-slider').removeClass('toggle-display')
                                     }
@@ -2044,6 +2221,159 @@ $(document).ready(function () {
 
                                 const build = ROOTHOST + toLowerCaseNonAccentVietnamese(tieuDe) + `-a${id}.html`;
                                 window.open(build, "_blank");
+                            }
+                        }
+                        else if (evt.action.id === "detailThis") {
+                            const mPopup = view.popup;
+                            if (mPopup && mPopup.selectedFeature && mPopup.selectedFeature.attributes) {
+                                const id = mPopup.selectedFeature.attributes.id;
+
+                                const layerID = mPopup.selectedFeature.layer.id;
+                                if (layerID == "10") {
+                                    $.ajax({
+                                        type: 'get',
+                                        async: false,
+                                        url: '/api/DiemGiaoDich/get/' + id,
+                                        success: function (data) {
+                                            if (data) {
+                                                //detailPopup.title = data.ten
+                                                //detailPopup.content = returnDetailContent(data, layerID);
+                                                //detailPopup.visible = true;
+                                                returnDetailContent(data, layerID)
+                                                if (!($('#map-slider').hasClass('toggle-display'))) {
+                                                    $('#map-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#filter-slider').hasClass('toggle-display'))) {
+                                                    $('#filter-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#result-slider').hasClass('toggle-display'))) {
+                                                    $('#result-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#pa-slider').hasClass('toggle-display'))) {
+                                                    $('#pa-slider').addClass('toggle-display')
+                                                }
+
+                                                $('#chitiet-slider').removeClass('toggle-display');
+                                            }
+                                        },
+                                        error: function (err) {
+                                            alert('Lỗi! Không tìm thấy dữ liệu tương ứng.');
+                                        }
+                                    });
+                                }
+                                else if (layerID == "11") {
+                                    $.ajax({
+                                        type: 'get',
+                                        async: false,
+                                        url: '/api/DiemVeSinh/get/' + id,
+                                        success: function (data) {
+                                            if (data) {
+                                                //detailPopup.title = data.ten
+                                                //detailPopup.content = returnDetailContent(data, layerID);
+                                                //detailPopup.visible = true;
+                                                returnDetailContent(data, layerID)
+                                                if (!($('#map-slider').hasClass('toggle-display'))) {
+                                                    $('#map-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#filter-slider').hasClass('toggle-display'))) {
+                                                    $('#filter-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#result-slider').hasClass('toggle-display'))) {
+                                                    $('#result-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#pa-slider').hasClass('toggle-display'))) {
+                                                    $('#pa-slider').addClass('toggle-display')
+                                                }
+                                                $('#chitiet-slider').removeClass('toggle-display');
+                                            }
+                                        },
+                                        error: function (err) {
+                                            alert('Lỗi! Không tìm thấy dữ liệu tương ứng.');
+                                        }
+                                    });
+                                }
+                                else if (layerID == "12") {
+                                    $.ajax({
+                                        type: 'get',
+                                        async: false,
+                                        url: '/api/BanDo/lehoiget/' + id,
+                                        success: function (data) {
+                                            if (data) {
+                                                //detailPopup.title = data.tenLeHoi
+                                                //detailPopup.content = returnDetailContent(data, layerID);
+                                                //detailPopup.visible = true;
+                                                returnDetailContent(data, layerID)
+                                                if (!($('#map-slider').hasClass('toggle-display'))) {
+                                                    $('#map-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#filter-slider').hasClass('toggle-display'))) {
+                                                    $('#filter-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#result-slider').hasClass('toggle-display'))) {
+                                                    $('#result-slider').addClass('toggle-display')
+                                                }
+
+                                                if (!($('#pa-slider').hasClass('toggle-display'))) {
+                                                    $('#pa-slider').addClass('toggle-display')
+                                                }
+                                                $('#chitiet-slider').removeClass('toggle-display');
+                                            }
+                                        },
+                                        error: function (err) {
+                                            alert('Lỗi! Không tìm thấy dữ liệu tương ứng.');
+                                        }
+                                    });
+                                }
+                                else {
+                                    const linhVuc = returnLinhVucFromLayer(layerID);
+                                    if (linhVuc) {
+                                        $.ajax({
+                                            type: 'post',
+                                            async: false,
+                                            url: '/api/BanDo/ghs',
+                                            contentType: 'application/json; charset=utf-8',
+                                            data: JSON.stringify({
+                                                "linhVuc": linhVuc,
+                                                "id": id
+                                            }),
+                                            success: function (data) {
+                                                if (data) {
+                                                    //detailPopup.title = data.ten
+                                                    //detailPopup.content = returnDetailContent(data, layerID);
+                                                    //detailPopup.visible = true;
+                                                    returnDetailContent(data, layerID)
+                                                    if (!($('#map-slider').hasClass('toggle-display'))) {
+                                                        $('#map-slider').addClass('toggle-display')
+                                                    }
+
+                                                    if (!($('#filter-slider').hasClass('toggle-display'))) {
+                                                        $('#filter-slider').addClass('toggle-display')
+                                                    }
+
+                                                    if (!($('#result-slider').hasClass('toggle-display'))) {
+                                                        $('#result-slider').addClass('toggle-display')
+                                                    }
+
+                                                    if (!($('#pa-slider').hasClass('toggle-display'))) {
+                                                        $('#pa-slider').addClass('toggle-display')
+                                                    }
+                                                    $('#chitiet-slider').removeClass('toggle-display');
+                                                }
+                                            },
+                                            error: function (err) {
+                                                alert('Lỗi! Không tìm thấy dữ liệu tương ứng.');
+                                            }
+                                        });
+                                    }
+                                }
                             }
                         }
                     });
@@ -2653,7 +2983,7 @@ $(document).ready(function () {
                     return query;
                 }
 
-                const data = [
+                let data = [
                     {
                         id: "-1",
                         text: "Điểm du lịch",
@@ -2712,12 +3042,12 @@ $(document).ready(function () {
                         id: "-3",
                         text: "Dịch vụ",
                         children: [
-                            {
-                                id: "03",
-                                text: "Nhà hàng",
-                                type: "point",
-                                icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAYBJREFUOI3F1M8rg3EcB/D383yfZyw1ashpSrugGVui1DgoLo5cpjg4qLnJ/yCJG61oMkpxc6BWak+01kqR29pENB5botG29jxfh7XHHltP+1Xep0+fvt/X91d9OdQ5XL4IhsLexHvSQSllKkUIy0rtbQa3rb9rVQHDUdE5u3GtYGYDwYCpCYTkWvexFIJiGgvDrSAEcF/FVejF2tgigF9QkmTVzibtRsxMWcDzHGRZhhCIQic8YWt9GgyAx7l9nEW+lPGyDFZ15HJi6tCD54hSowDMpyKwnGiCg3Yz8vcgBKK1ga9vKeh4ApZlAQBi4rs28PjuE0PbPiy7JuA9usSmLwanraV6EACeX5K53caLL78qsJpUBJ7cfGD8UMC801EfMC1RpNJZzTH/e+SaQUmSAQDZrFzQowCATIZqg0yJT8vtF2E9ELB3/qD0PKcRNDZw8IQS2mCnyXi7u9TX+/c/pJRixdldNHHHZVFqwrC02aD3q8DRkR5rySUrTN0f5QdSz3k+moeUYAAAAABJRU5ErkJggg=="
-                            },
+                            //{
+                            //    id: "03",
+                            //    text: "Nhà hàng",
+                            //    type: "point",
+                            //    icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAYBJREFUOI3F1M8rg3EcB/D383yfZyw1ashpSrugGVui1DgoLo5cpjg4qLnJ/yCJG61oMkpxc6BWak+01kqR29pENB5botG29jxfh7XHHltP+1Xep0+fvt/X91d9OdQ5XL4IhsLexHvSQSllKkUIy0rtbQa3rb9rVQHDUdE5u3GtYGYDwYCpCYTkWvexFIJiGgvDrSAEcF/FVejF2tgigF9QkmTVzibtRsxMWcDzHGRZhhCIQic8YWt9GgyAx7l9nEW+lPGyDFZ15HJi6tCD54hSowDMpyKwnGiCg3Yz8vcgBKK1ga9vKeh4ApZlAQBi4rs28PjuE0PbPiy7JuA9usSmLwanraV6EACeX5K53caLL78qsJpUBJ7cfGD8UMC801EfMC1RpNJZzTH/e+SaQUmSAQDZrFzQowCATIZqg0yJT8vtF2E9ELB3/qD0PKcRNDZw8IQS2mCnyXi7u9TX+/c/pJRixdldNHHHZVFqwrC02aD3q8DRkR5rySUrTN0f5QdSz3k+moeUYAAAAABJRU5ErkJggg=="
+                            //},
                             {
                                 id: "02",
                                 text: "Mua sắm",
@@ -2770,11 +3100,44 @@ $(document).ready(function () {
                     },
                 ];
 
+                let dfvaltree = ['561', '562', '563', '564', '565', '00', '01', '02', '03', '05', '06', '07', '08', '11', '12'];
+
+                map.layers.items.forEach((el) => {
+                    if (el.type === "feature" && arrLayerAdd.some(e => e.id === el.id)) {
+                        const curr = arrLayerAdd.find(e => e.id === el.id);
+
+                        let icon = null;
+                        if (el && el.sourceJSON && el.sourceJSON.drawingInfo && el.sourceJSON.drawingInfo.renderer && el.sourceJSON.drawingInfo.renderer.symbol && el.sourceJSON.drawingInfo.renderer.symbol.imageData) {
+                            icon = `${el.sourceJSON.drawingInfo.renderer.symbol.imageData}`;
+                        } else if (el && el.sourceJSON && el.sourceJSON.drawingInfo && el.sourceJSON.drawingInfo.renderer && el.sourceJSON.drawingInfo.renderer.defaultSymbol && el.sourceJSON.drawingInfo.renderer.defaultSymbol.imageData) {
+                            icon = `${el.sourceJSON.drawingInfo.renderer.defaultSymbol.imageData}`;
+                        }
+
+                        const item = {
+                            id: `${curr.id}`,
+                            text: `${curr.text}`,
+                            type: "point",
+                            icon: `data:image/png;base64,${icon}`,
+                        }
+
+                        const par = data.find(e => e.id === curr.parent);
+
+                        if (par) {
+                            par.children.push(item)
+                        }
+                        else {
+                            data.push(item)
+                        }
+
+                        dfvaltree.push(`${curr.id}`)
+                    }
+                });
+
                 let tree = new Tree('#map-sidebar', {
                     data: data,
                     closeDepth: 3,
                     loaded: function () {
-                        this.values = ['561', '562', '563', '564', '565', '00', '01', '02', '03', '05', '06', '07', '08', '11', '12'];
+                        this.values = dfvaltree;
                     },
                     onChange: function () {
                         map.layers.items.forEach((el, idx) => {
@@ -2890,6 +3253,253 @@ $(document).ready(function () {
                     str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
                     return str;
                 }
+
+                function returnDetailContent(data, layer) {
+                    console.log(data)
+                    let htmlMain = ``;
+                    let htmlSub = ``;
+                    let htmlImg = '';
+
+                    $('#chitiet-maintab-img-slider').empty();
+                    $('#chitiet-maintab-content').empty();
+                    $('#chitiet-subtab-content').empty();
+
+                    $('.owl-carousel').owlCarousel('destroy');
+
+                    if (layer == '10') {
+                        html =  `
+                                    <span>${data.soNha}</span>
+                                `;
+                    }
+                    else if (layer == '11') {
+                        htmlMain = `
+                                    <div class="form-group">
+										<h2 class="title">${data.ten}</h2>
+									</div>
+                                    <div class="form-group">
+										<label class="d-block col-form-label">Vị trí</label>
+										<label class="form-content-detail">${data.viTri ? data.viTri : ''}</label>
+									</div>
+									<div class="form-group">
+										<label class="d-block col-form-label">Hiện trạng</label>
+										<label class="form-content-detail">${data.hienTrang ? data.hienTrang : ''}</label>
+									</div>
+                                    <div class="form-group">
+										<label class="d-block col-form-label">Đơn vị quản lý</label>
+										<label class="form-content-detail">${data.donVi ? data.donVi : ''}</label>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-12">
+											<label class="d-block col-form-label">Ghi chú</label>
+											<label class="form-content-detail">${data.ghiChu ? data.ghiChu : ''}</label>
+										</div>
+									</div>
+                                `;
+                    }
+                    else if (layer == '12') {
+                        htmlMain = `
+                                    <div class="form-group">
+										<h2 class="title">${data.tenLeHoi}</h2>
+									</div>
+                                    <div class="form-group">
+										<label class="d-block col-form-label">Loại lễ hội</label>
+										<label class="form-content-detail">${data.loaiLeHoi ? data.loaiLeHoi : ''}</label>
+									</div>
+									<div class="form-group">
+										<label class="d-block col-form-label">Địa điểm</label>
+										<label class="form-content-detail">${data.diaDiem ? data.diaDiem : ''}</label>
+									</div>
+                                    <div class="form-group">
+										<label class="d-block col-form-label">Nội dung</label>
+										<label class="form-content-detail">${data.noiDung ? data.noiDung : ''}</label>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-12">
+											<label class="d-block col-form-label">Cấp quản lý</label>
+											<label class="form-content-detail">${returnCapQuanLyLeHoi(data.capQuanLy)}</label>
+										</div>
+									</div>
+                                `;
+                        if (data.files && data.files.length > 0) {
+                            data.files.forEach((el) => {
+                                const check = getFileType(el.duongDan);
+                                if (check == 'img' || el.loaiFile == 1) {
+                                    if (el.duongDan.includes('https')) {
+                                        htmlImg += `
+                                                    <div class="item">
+											            <img src="${el.duongDan}" alt="">
+										            </div>
+                                                `
+                                    }
+                                    else {
+                                        htmlImg += `
+                                                    <div class="item">
+											            <img src="${BASEFILEAPIURL}${el.duongDan}" alt="">
+										            </div>
+                                                `
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                    else {
+                        htmlMain =  `
+                                    <div class="form-group">
+										<h2 class="title">${data.ten}</h2>
+									</div>
+                                    <div class="form-group">
+										<label class="d-block col-form-label">Tên viết tắt</label>
+										<label class="form-content-detail">${data.tenVietTat ? data.tenVietTat : ''}</label>
+									</div>
+									<div class="form-group">
+										<label class="d-block col-form-label">Địa chỉ</label>
+										<label class="form-content-detail">${returnDiaChiHoSo(data.soNha, data.duongPho, data.capXa, data.capHuyen)}</label>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-3">
+											<label class="d-block col-form-label">Số điện thoại</label>
+											<label class="form-content-detail">${data.soDienThoai ? data.soDienThoai : ''}</label>
+										</div>
+										<div class="form-group col-md-9">
+											<label class="d-block col-form-label">Fax</label>
+											<label class="form-content-detail">${data.fax ? data.fax : ''}</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="d-block col-form-label">Email</label>
+										<div class="group-email">
+											<label class="form-content-detail text-blue">${data.email ? data.email : ''}</label>
+										</div>
+									</div>
+                                `;
+                        htmlSub =   `
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Mã doanh nghiệp</label>
+									    <label class="form-content-detail">${data.maDoanhNghiep ? data.maDoanhNghiep : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Thời điểm bắt đầu kinh doanh</label>
+									    <label class="form-content-detail">${data.thoiDiemBatDauKinhDoanh ? data.thoiDiemBatDauKinhDoanh : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Giới thiệu</label>
+									    <label class="form-content-detail">${data.gioiThieu ? data.gioiThieu : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Ghi chú</label>
+									    <label class="form-content-detail">${data.ghiChu ? data.ghiChu : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Hạng sao</label>
+									    <label class="form-content-detail">${data.hangSao ? data.hangSao : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Tổng số giường</label>
+									    <label class="form-content-detail">${data.tongSoGiuong ? data.tongSoGiuong : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Tổng số phòng</label>
+									    <label class="form-content-detail">${data.tongSoPhong ? data.tongSoPhong : ''}</label>
+								    </div>
+                                    <div class="form-group">
+                                        <label class="d-block col-form-label">Giờ hoạt động</label>
+                                        <div class="group-email">
+                                            <label class="form-content-detail">Từ: ${data.gioMoCua ? data.gioMoCua : ''}</label>
+                                            <label class="form-content-detail">Đến: ${data.gioDongCua ? data.gioDongCua : ''}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Mã số cấp phép</label>
+									    <label class="form-content-detail">${data.maSoCapPhep ? data.maSoCapPhep : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Đơn vị cấp phép</label>
+									    <label class="form-content-detail">${data.donViCapPhep ? data.donViCapPhep : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Người đại diện</label>
+									    <label class="form-content-detail">${data.hoTenNguoiDaiDien ? data.hoTenNguoiDaiDien : ''}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Chức vụ người đại diện</label>
+									    <label class="form-content-detail">${data.chucVuNguoiDaiDien ? data.chucVuNguoiDaiDien : ''}</label>
+								    </div>
+                                    <div class="form-group">
+                                        <label class="d-block col-form-label">Số lượng lao động</label>
+                                        <div class="group-email">
+                                            <label class="form-content-detail">Tổng: ${data.soLuongLaoDong}</label>
+                                            <label class="form-content-detail">Trực tiếp: ${data.soLDTrucTiep}</label>
+                                            <label class="form-content-detail">Gián tiếp: ${data.soLDGianTiep}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="d-block col-form-label">Độ tuổi trung bình của lao động</label>
+                                        <div class="group-email">
+                                            <label class="form-content-detail">Nam: ${data.doTuoiTBNam}</label>
+                                            <label class="form-content-detail">Nữ: ${data.doTuoiTBNu}</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Diện tích mặt bằng</label>
+									    <label class="form-content-detail">${data.dienTichMatBang}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Diện tích xây dựng</label>
+									    <label class="form-content-detail">${data.dienTichXayDung}</label>
+								    </div>
+                                    <div class="form-group">
+									    <label class="d-block col-form-label">Diện tích mặt bằng xây dựng</label>
+									    <label class="form-content-detail">${data.dienTichMatBangXayDung}</label>
+								    </div>
+                                    `;
+                        if (data.images && data.images.length > 0) {
+                            data.images.forEach((el) => {
+                                const check = getFileType(el.fileUrl);
+                                if (check == 'img' || el.fileType == 1) {
+                                    if (el.fileUrl.includes('https')) {
+                                        htmlImg += `
+                                                    <div class="item">
+											            <img src="${el.fileUrl}" alt="">
+										            </div>
+                                                `
+                                    }
+                                    else {
+                                        htmlImg += `
+                                                    <div class="item">
+											            <img src="${BASEFILEAPIURL}${el.fileUrl}" alt="">
+										            </div>
+                                                `
+                                    }
+                                    
+                                }
+                            });
+                        }
+                    }
+
+                    if (htmlImg && htmlImg != '') {
+                        $('#chitiet-maintab-img-slider').append(htmlImg);
+                        //$('.owl-carousel').owlCarousel().trigger('refresh.owl.carousel');
+                        $('.owl-carousel').owlCarousel({
+                            items: 1,
+                            loop: false,
+                            //autoplay: false,
+                            //autoplayTimeout: 5000,
+                            //autoplayHoverPause: false,
+                            margin: 0,
+                            nav: true,
+                            navText: ["<i class='icon icon-prev'></i>", "<i class='icon icon-next'></i>"],
+                            dots: false
+                        });
+                        $('#chitiet-maintab-img-slider').removeClass('d-none');
+                  
+                    } else {
+                        $('#chitiet-maintab-img-slider').addClass('d-none');
+                    }
+                    
+                    $('#chitiet-maintab-content').append(htmlMain);
+                    $('#chitiet-subtab-content').append(htmlSub);
+                }
             }
 
         }, 2000)
@@ -2908,3 +3518,117 @@ document.getElementById('result-sidebar-header').addEventListener('click', evt =
     document.querySelector('#filter-slider').classList.toggle('toggle-display');
     document.querySelector('#result-slider').classList.toggle('toggle-display');
 })
+
+document.getElementById('chitiet-sidebar-header').addEventListener('click', evt => {
+    document.querySelector('#chitiet-slider').classList.toggle('toggle-display');
+})
+
+function returnLinhVucFromLayer(layerId) {
+    switch (layerId) {
+        case "00":
+            return 1;
+        case "01":
+            return 2;
+        case "02":
+            return 3;
+        case "03":
+            return 4;
+        case "04":
+            return 5;
+        case "05":
+            return 9;
+        case "06":
+            return 10;
+        case "07":
+            return 11;
+        case "08":
+            return 12;
+        case "09":
+            return 15;
+        default:
+            let kq = null;
+            const found = arrLayerAdd.find(x => x.id == layerId);
+            if (found && found.linhVucKinhDoanhId) {
+                kq = found.linhVucKinhDoanhId;
+            }
+            return kq;
+    }
+}
+
+function returnCapQuanLyLeHoi(data) {
+    switch (data) {
+        case 1:
+            return 'Quốc gia';
+        case 2:
+            return 'Khu vực';
+        case 3:
+            return 'Tỉnh';
+        case 4:
+            return 'Huyện';
+        case 5:
+            return 'Xã';
+        default:
+            return '';
+    }
+}
+
+function returnDiaChiHoSo(sn, dp, xp, qh) {
+    let flag = false;
+    let dc = '';
+    if (sn) {
+        dc += sn;
+        flag = true;
+    }
+
+    if (dp && flag == true) {
+        dc += `, ${dp}`
+    } else if (dp && flag == false) {
+        dc += `${dp}`
+        flag = true;
+    }
+
+    if (xp && flag == true) {
+        dc += `, ${xp}`
+    } else if (xp && flag == false) {
+        dc += `${xp}`
+        flag = true;
+    }
+
+    if (qh && flag == true) {
+        dc += `, ${qh}`
+    } else if (qh && flag == false) {
+        dc += `${qh}`
+    }
+
+    return dc;
+}
+
+function getFileType(name) {
+    if (name.includes("doc") || name.includes("docx") || name.includes("DOC") || name.includes("DOCX")) {
+        return "doc";
+    }
+    else if (name.includes("pdf") || name.includes("PDF")) {
+        return "pdf";
+    }
+    else if (name.includes("xls") || name.includes("xlsx") || name.includes("XLS") || name.includes("XLSX")) {
+        return "xls";
+    }
+    else if (name.includes("mp3") || name.includes("MP3")) {
+        return "msc";
+    }
+    else if (name.includes("png") || name.includes("jpg") || name.includes("jpeg") || name.includes("PNG") || name.includes("JPG") || name.includes("JPEG")) {
+        return "img";
+    }
+    else if (name.includes("mov") || name.includes("mp4") || name.includes("MOV") || name.includes("MP4")) {
+        return "vds";
+    }
+    else if (name.includes("vob") || name.includes("mts") || name.includes("VOB") || name.includes("MTS")) {
+        return "vd";
+    }
+    else if (name.includes("stb") || name.includes("STB")) {
+        return "stb";
+    }
+    else {
+        return "nf";
+    }
+}

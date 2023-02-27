@@ -84,5 +84,28 @@ namespace HueCitApp.Controllers
 
             return HandlerResult(result);
         }
+
+        [HttpPost("ghs")]
+        [AllowAnonymous]
+        public async Task<IActionResult> HoSoGet(CancellationToken ct, HoSoGetRequest request)
+        {
+            var result = await Mediator.Send(new BanDoDataGet.Query
+            {
+                LinhVuc = request.LinhVuc,
+                ID = request.Id,
+            }, ct);
+
+            return HandlerResult(result);
+        }
+
+        [HttpGet("lehoiget/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LeHoiGet(CancellationToken ct, string id)
+        {
+            var result = await Mediator.Send(new LeHoiGet.Query{ ID = id, }, ct);
+
+            return HandlerResult(result);
+        }
+
     }
 }
