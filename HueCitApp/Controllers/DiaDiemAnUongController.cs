@@ -39,9 +39,17 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
+
+        [HttpGet("chitiet/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChiTiet(int id)
+        {
+            var result = await Mediator.Send(new Application.HoSo.HoSoChiTiet.Query { Id = id });
+            return HandlerResult(result);
+        }
+
         [HttpGet("ganvitridukhach")]
         [AllowAnonymous]
-
         public async Task<IActionResult> DanhSachDiemAnUongGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
         {
             var listResult = await Mediator.Send(new DiemAnUongGanViTriDuKhachGets.Query { infor = _request }, ct);

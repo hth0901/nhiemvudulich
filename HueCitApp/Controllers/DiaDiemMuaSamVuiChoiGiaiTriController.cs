@@ -35,7 +35,7 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
-   
+
         }
         [HttpGet("ganvitridukhach")]
         [AllowAnonymous]
@@ -52,6 +52,13 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+        [HttpGet("chitiet/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChiTiet(int id)
+        {
+            var result = await Mediator.Send(new Application.HoSo.HoSoChiTiet.Query { Id = id });
+            return HandlerResult(result);
         }
     }
 }

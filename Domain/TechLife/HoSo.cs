@@ -9,7 +9,7 @@ namespace Domain.TechLife
 {
     public class HoSo
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string Ten { get; set; }
         public int? LinhVucKinhDoanhId { get; set; }
         public int? HangSao { get; set; }
@@ -23,14 +23,14 @@ namespace Domain.TechLife
         public decimal? DienTichXayDung { get; set; }
         public int? SoTang { get; set; }
         public int? TongSoPhong { get; set; }
-        public int?   TongSoGiuong { get; set; }
+        public int? TongSoGiuong { get; set; }
         public string SoGiayPhep { get; set; }
         public int? SoLanChuyenChu { get; set; }
         public string SoNha { get; set; }
         public string DuongPho { get; set; }
         public int? PhuongXaId { get; set; }
-        public int QuanHuyenId{get;set; }
-        public int? TinhThanhId { get;set; }
+        public int QuanHuyenId { get; set; }
+        public int? TinhThanhId { get; set; }
         public string SoDienThoai { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
@@ -45,11 +45,11 @@ namespace Domain.TechLife
         public bool? KhamSucKhoeDinhKy { get; set; }
         public bool? TrangPhucRieng { get; set; }
         public bool? PhongChayNo { get; set; }
-        public bool? CNVSMoiTruong { get;set;}
+        public bool? CNVSMoiTruong { get; set; }
         public string GhiChu { get; set; }
         public bool? IsStatus { get; set; }
-        public bool? IsDelete  { get; set; }
-        public DateTime? ThoiDiemBatDauKinhDoanh  { get; set; }
+        public bool? IsDelete { get; set; }
+        public DateTime? ThoiDiemBatDauKinhDoanh { get; set; }
         public string GioDongCua { get; set; }
         public string GioMoCua { get; set; }
         public int? SoLDGianTiep { get; set; }
@@ -76,6 +76,7 @@ namespace Domain.TechLife
         public int? NhaCungCapId { get; set; }
         public string GioiThieu { get; set; }
         public string NgonNguId { get; set; }
+        public decimal? GiaThamKhao { get; set; }
         public string GiaThamKhaoTu { get; set; }
         public string GiaThamKhaoDen { get; set; }
         public int? LoaiDiaDiemAnUong { get; set; }
@@ -83,12 +84,15 @@ namespace Domain.TechLife
         public string MaDoanhNghiep { get; set; }
         public int? NguonDongBo { get; set; }
         public int? DongBoID { get; set; }
-
-
     }
 
     public class HoSoFilter
     {
         public int Id { get; set; }
+    }
+
+    public class HoSoChiTiet : HoSo
+    {
+        public string TenLinhVucKinhDoanh { get; set; }
     }
 }
