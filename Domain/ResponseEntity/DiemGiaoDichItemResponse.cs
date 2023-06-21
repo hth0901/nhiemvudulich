@@ -10,6 +10,8 @@ namespace Domain.ResponseEntity
     {
         public int ID { get; set; }
         public string TenDiaDiem { get; set; }
+        public double? ToaDoX { get; set; }
+        public double? ToaDoY { get; set; }
         public int TotalRows { get; set; }
     }
 

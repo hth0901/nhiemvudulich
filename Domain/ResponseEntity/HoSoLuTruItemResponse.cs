@@ -11,6 +11,8 @@ namespace Domain.ResponseEntity
     { 
         public int Id { get; set; }
         public string Ten { get;set; }
+        public double? ToaDoX { get; set; }
+        public double? ToaDoY { get; set; }
         public int TotalRows { get; set; }
     }
 }
