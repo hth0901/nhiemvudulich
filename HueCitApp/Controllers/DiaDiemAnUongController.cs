@@ -21,13 +21,13 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        
+
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
 
         public async Task<IActionResult> danhsachDiaDiemAnUong(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
-          
+
             var listResult = await Mediator.Send(new DiaDiemAnUongGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
             result.TotalRows = 0;
@@ -39,6 +39,17 @@ namespace HueCitApp.Controllers
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
         }
+
+
+        [HttpGet("chitiet/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChiTiet(int id)
+        {
+            var result = await Mediator.Send(new Application.HoSoApplication.HoSoChiTiet.Query { Id = id });
+            return HandlerResult(result);
+        }
+
+
         [HttpGet("ganvitridukhach")]
         [AllowAnonymous]
 

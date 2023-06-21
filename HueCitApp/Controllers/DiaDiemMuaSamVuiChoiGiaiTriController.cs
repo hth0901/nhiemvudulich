@@ -20,9 +20,9 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
+
         [HttpGet("danhsach/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
-
         public async Task<IActionResult> DanhSachVuiChoiGiaiTri(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
             var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
@@ -35,11 +35,11 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
-   
+
         }
+
         [HttpGet("ganvitridukhach")]
         [AllowAnonymous]
-
         public async Task<IActionResult> DanhSachDiemGiaoDichGanDuKhach(CancellationToken ct, [FromBody] Distance_Request _request)
         {
             var listResult = await Mediator.Send(new DiaDiemMuaSamGiaiTriGanViTriDuKhachGets.Query { infor = _request }, ct);
@@ -52,6 +52,14 @@ namespace HueCitApp.Controllers
             }
             //return HandlerResult(listResult);
             return HandlerResult(Result<DanhSach<HoSoLuTruItemResponse>>.Success(result));
+        }
+
+        [HttpGet("chitiet/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChiTiet(int id)
+        {
+            var result = await Mediator.Send(new Application.HoSoApplication.HoSoChiTiet.Query { Id = id });
+            return HandlerResult(result);
         }
     }
 }

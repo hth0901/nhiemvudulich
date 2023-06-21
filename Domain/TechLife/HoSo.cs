@@ -78,6 +78,7 @@ namespace Domain.TechLife
         public int? NhaCungCapId { get; set; }
         public string GioiThieu { get; set; }
         public string NgonNguId { get; set; }
+        public decimal? GiaThamKhao { get; set; }
         public string GiaThamKhaoTu { get; set; }
         public string GiaThamKhaoDen { get; set; }
         public int? LoaiDiaDiemAnUong { get; set; }
@@ -108,5 +109,10 @@ namespace Domain.TechLife
     public class HoSoFilter
     {
         public int Id { get; set; }
+    }
+
+    public class HoSoChiTiet
+    {
+        public string TenLinhVucKinhDoanh { get; set; }
     }
 }
