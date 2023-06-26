@@ -64,8 +64,8 @@ namespace Domain.TechLife
         public int? SoLDTrucTiep { get; set; }
         public string TenVietTat { get; set; }
         public string ViTriTrenBanDo { get; set; }
-        public float? ToaDoX { get; set; }
-        public float? ToaDoY { get; set; }
+        public double? ToaDoX { get; set; }
+        public double? ToaDoY { get; set; }
         public string DonViCapPhep { get; set; }
         public string MaSoCapPhep { get; set; }
         public DateTime? NgayCapPhep { get; set; }

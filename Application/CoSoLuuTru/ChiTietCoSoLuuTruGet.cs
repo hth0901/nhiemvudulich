@@ -30,7 +30,8 @@ namespace Application.CoSoLuuTru
             }
 
             public async Task<Result<HoSo>> Handle(Query request, CancellationToken cancellationToken)
-            {   DynamicParameters dynamicParameters = new DynamicParameters();
+            {   
+                DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@Id", request.ID);
                 string spName = "SP_DSCoSoLuuTruGet";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
