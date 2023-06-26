@@ -111,7 +111,7 @@ namespace Domain.TechLife
         public int Id { get; set; }
     }
 
-    public class HoSoChiTiet
+    public class HoSoChiTiet : HoSo
     {
         public string TenLinhVucKinhDoanh { get; set; }
     }
