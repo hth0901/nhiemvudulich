@@ -1,18 +1,13 @@
 ﻿using Application.Core;
 using Dapper;
-using Domain;
-using Domain.HueCit;
 using Domain.ResponseEntity;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Application.DuongDayNong
 {
@@ -37,9 +32,10 @@ namespace Application.DuongDayNong
             }
 
             public async Task<Result<List<DuongDayNongItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
-            {   DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@@PPAGEINDEX", request.pagesize);
-                parameters.Add("@PPAGESIZE",request.pageindex);
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@PPAGEINDEX", request.pageindex);
+                parameters.Add("@PPAGESIZE", request.pagesize);
                 string spName = "SP_DSDuongDayNongGets";
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
