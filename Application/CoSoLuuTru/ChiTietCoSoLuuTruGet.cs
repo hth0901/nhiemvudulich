@@ -34,10 +34,20 @@ namespace Application.CoSoLuuTru
                 DynamicParameters dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("@Id", request.ID);
                 string spName = "SP_DSCoSoLuuTruGet";
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("TechLifeConnection")))
                 {   
                     connection.Open();
                     var result = await connection.QueryFirstOrDefaultAsync<HoSo>(new CommandDefinition(spName, parameters: dynamicParameters, commandType: System.Data.CommandType.StoredProcedure));
+
+                    if (result!=null)
+                    {
+                        //connection.ConnectionString = _configuration.GetConnectionString("TechLifeConnection");
+                        DynamicParameters param = new DynamicParameters();
+                        param.Add("@ID", request.ID);
+                        List<FileUploadModel> files = (connection.Query<FileUploadModel>("SP_BanDoGetFiles", param, commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                        result.Images = files;
+                    }
+
                     return Result<HoSo>.Success(result);// compare of list  
 
                 }
