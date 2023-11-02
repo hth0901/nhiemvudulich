@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 
 namespace Application.CoSoLuuTru
 {
-    public class CoSoLuuTruGets
+    public class CoSoLuuTruDuLichGets
     {
-        public class Query : IRequest<Result<List<HoSoCoSoLuuTruItemResponse>>>
+        public class Query : IRequest<Result<List<HoSoLuTruItemResponse>>>
         {// su li tham so dau vao
             public int pagesize { get; set; }
             public int pageindex { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<HoSoCoSoLuuTruItemResponse>>>
+        public class Handler : IRequestHandler<Query, Result<List<HoSoLuTruItemResponse>>>
         {
             private readonly IConfiguration _configuration;
             public Handler(IConfiguration configuration)
@@ -27,23 +27,22 @@ namespace Application.CoSoLuuTru
                 _configuration = configuration;
             }
 
-            public async Task<Result<List<HoSoCoSoLuuTruItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<HoSoLuTruItemResponse>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                string spName = "SP_DSCoSoLuuTruChiTietGets";
+                string spName = "SP_DSCoSoLuuTruGets";
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@PPAGEINDEX", request.pageindex);
                 parameters.Add("@PPAGESIZE", request.pagesize);
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("HuecitConnection")))
                 {
                     connection.Open();
-                    var result = await connection.QueryAsync<HoSoCoSoLuuTruItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
-                    return Result<List<HoSoCoSoLuuTruItemResponse>>.Success(result.ToList());// compare of list  
+                    var result = await connection.QueryAsync<HoSoLuTruItemResponse>(new CommandDefinition(spName, parameters, commandType: System.Data.CommandType.StoredProcedure));
+                    return Result<List<HoSoLuTruItemResponse>>.Success(result.ToList());// compare of list  
 
                 }
 
             }
         }
-
 
     }
 }

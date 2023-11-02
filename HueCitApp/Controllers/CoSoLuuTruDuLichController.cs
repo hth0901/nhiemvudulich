@@ -1,15 +1,13 @@
-﻿using Application.LoaiHinhCoSoLuuTru;
-using MediatR;
+﻿using Application.Core;
+using Application.CoSoLuuTru;
+using Application.LoaiHinhCoSoLuuTru;
+using Domain.RequestEntity;
+using Domain.ResponseEntity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System.Threading;
-using Application.CoSoLuuTru;
-using Domain.ResponseEntity;
-using Application.Core;
-using Application.DiaDiemDuLich;
-using Domain.RequestEntity;
+using System.Threading.Tasks;
 
 namespace HueCitApp.Controllers
 {
@@ -20,11 +18,11 @@ namespace HueCitApp.Controllers
         {
             _webHostEnvironment = hostingEnvironment;
         }
-        [HttpGet("danhsachcosoluutru/{pagesize?}/{pageindex?}")] 
+        [HttpGet("danhsachcosoluutru/{pagesize?}/{pageindex?}")]
         [AllowAnonymous]
         public async Task<IActionResult> DanhSachCoSoLuuTru(CancellationToken ct, int pagesize = 10, int pageindex = 1)
         {
-            var listResult = await Mediator.Send(new CoSoLuuTruGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
+            var listResult = await Mediator.Send(new CoSoLuuTruDuLichGets.Query { pagesize = pagesize, pageindex = pageindex }, ct);
             var result = new DanhSach<HoSoLuTruItemResponse>();
             result.TotalRows = 0;
             if (listResult.Value.Count > 0)
@@ -37,7 +35,7 @@ namespace HueCitApp.Controllers
         }
         [HttpGet("{ID}")]
         [AllowAnonymous]
-        public async Task<IActionResult> ChiTietCoSoLuuTru(int ID,CancellationToken ct)
+        public async Task<IActionResult> ChiTietCoSoLuuTru(int ID, CancellationToken ct)
         {
             var listResult = await Mediator.Send(new ChiTietCoSoLuuTruGet.Query { ID = ID }, ct);
             return HandlerResult(listResult);
